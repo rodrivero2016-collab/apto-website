@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Apto AI Toolkit · Apto Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0A0A0A;--navy2:#141414;--navy3:#1d1d1d;--orange:#E85D20;--orange2:#ff7a3d;
+--white:#F0F0EE;--grey:#999;--grey2:#666;--line:rgba(255,255,255,0.09);--green:#3ba55c;--red:#d9534f}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',system-ui,sans-serif;background:var(--navy);color:var(--white);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1060px;margin:0 auto;padding:0 28px}
+header{padding:56px 0 28px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:10px}
+h1{font-family:'Barlow',sans-serif;font-size:clamp(34px,5vw,54px);font-weight:800;line-height:1.02}
+h1 em{color:var(--orange);font-style:italic}
+.sub{color:var(--grey);font-size:15px;margin-top:14px;max-width:640px;line-height:1.6}
+section{padding:54px 0;border-bottom:1px solid var(--line)}
+h2{font-family:'Barlow',sans-serif;font-size:26px;font-weight:700;margin-bottom:6px}
+.bar{width:34px;height:2px;background:var(--orange);margin:12px 0 22px}
+.note{font-size:12px;color:var(--grey2);margin-top:16px;line-height:1.5}
+.pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.pill{font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:7px 14px;border:1px solid var(--line);background:none;color:var(--grey);cursor:pointer;transition:all .2s;font-family:'Outfit'}
+.pill.active,.pill:hover{background:var(--orange);color:#fff;border-color:var(--orange)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);text-align:left;padding:10px 12px;border-bottom:1px solid var(--orange)}
+td{padding:13px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:#ccc}
+tr:hover td{background:var(--navy2)}
+.tool-ic{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:7px;font-family:'Barlow';font-weight:800;font-size:13px;margin-right:10px;color:#fff;flex:0 0 30px}
+.tool-name{display:flex;align-items:center;font-weight:500;color:var(--white)}
+.tool-name a{color:var(--white);text-decoration:none;border-bottom:1px dotted var(--grey2)}
+.tool-name a:hover{color:var(--orange2);border-color:var(--orange2)}
+.cost{color:var(--orange2);font-weight:500;white-space:nowrap}
+.tag{display:inline-block;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);border:1px solid var(--line);padding:2px 8px;border-radius:3px;margin-bottom:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{background:var(--navy2);border:1px solid var(--line);padding:22px}
+.card h3{font-family:'Barlow';font-size:16px;font-weight:700;margin-bottom:10px}
+.do h3{color:var(--green)} .dont h3{color:var(--red)}
+.card li{font-size:13.5px;color:#bbb;line-height:1.55;margin:0 0 9px 18px}
+.q-card{background:var(--navy2);border:1px solid var(--line);padding:26px;margin-bottom:10px}
+.q-num{font-size:10px;letter-spacing:.18em;color:var(--orange);text-transform:uppercase}
+.q-text{font-size:16px;margin:8px 0 14px;line-height:1.45}
+.yn{display:flex;gap:8px}
+.yn button{flex:1;padding:11px;font-family:'Outfit';font-size:13px;letter-spacing:.06em;text-transform:uppercase;background:none;border:1px solid var(--line);color:var(--grey);cursor:pointer;transition:all .15s}
+.yn button.sel-yes{background:var(--green);border-color:var(--green);color:#fff}
+.yn button.sel-no{background:var(--red);border-color:var(--red);color:#fff}
+.verdict{padding:26px;border:1px solid var(--line);margin-top:14px;text-align:center;display:none}
+.verdict.show{display:block}
+.verdict .v-title{font-family:'Barlow';font-size:24px;font-weight:800}
+.verdict .v-sub{color:var(--grey);font-size:13.5px;margin-top:8px;line-height:1.5}
+.v-buy{border-color:var(--green)} .v-buy .v-title{color:var(--green)}
+.v-no{border-color:var(--red)} .v-no .v-title{color:var(--red)}
+.btn{display:inline-block;padding:12px 26px;background:var(--orange);color:#fff;border:none;font-family:'Outfit';font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+.btn:hover{background:var(--orange2)}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--grey)}
+.btn.ghost:hover{border-color:var(--orange);color:var(--orange)}
+input[type=text],input[type=number],select{width:100%;padding:10px 12px;background:var(--navy3);border:1px solid var(--line);color:var(--white);font-family:'Outfit';font-size:13.5px}
+select option{background:var(--navy3)}
+.audit-row{display:grid;grid-template-columns:2fr 1.4fr 1fr 1.2fr 36px;gap:8px;margin-bottom:8px;align-items:center}
+.audit-head{display:grid;grid-template-columns:2fr 1.4fr 1fr 1.2fr 36px;gap:8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+.del-x{background:none;border:1px solid var(--line);color:var(--grey);cursor:pointer;height:38px;font-size:15px}
+.del-x:hover{border-color:var(--red);color:var(--red)}
+.totals{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.tot{background:var(--navy2);border:1px solid var(--line);padding:18px;text-align:center}
+.tot .n{font-family:'Barlow';font-size:30px;font-weight:800;color:var(--orange)}
+.tot .l{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin-top:4px}
+.kpi-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:8px;align-items:center;margin-bottom:8px}
+.kpi-head{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+.kpi-label{font-size:13.5px;color:#ccc}
+.acro{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:18px 0}
+.acro3{grid-template-columns:repeat(3,1fr)}
+.acro div{background:var(--navy2);border:1px solid var(--line);border-top:2px solid var(--orange);padding:16px 12px}
+.acro .big{font-family:'Barlow';font-size:30px;font-weight:800;color:var(--orange)}
+.acro .w{font-size:13px;font-weight:600;color:var(--white);margin:4px 0}
+.acro .d{font-size:11.5px;color:var(--grey);line-height:1.45}
+.diagram{margin-top:8px;border:1px solid var(--line)}
+.dg-band{background:var(--navy3);border:1px solid var(--orange);padding:16px;text-align:center;margin-bottom:14px}
+.dg-band b{font-family:'Barlow';font-size:15px;letter-spacing:.06em}
+.dg-band span{display:block;font-size:11.5px;color:var(--grey);margin-top:4px}
+.dg-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;padding:0 0 14px}
+.dg-col h4{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin-bottom:8px;text-align:center}
+.dg-box{background:var(--navy2);border:1px solid var(--line);padding:12px;margin-bottom:8px;font-size:12.5px;text-align:center;color:#ccc}
+.dg-box b{display:block;color:var(--white);font-size:13px;margin-bottom:2px}
+.dg-tier{background:var(--orange);border:none;color:#fff}
+.dg-tier b{color:#fff}
+.dg-arrow{text-align:center;color:var(--orange);font-size:16px;margin:2px 0 8px}
+.dg-row{display:grid;grid-template-columns:1fr 26px 1fr 26px 1fr;gap:8px;align-items:stretch;margin-bottom:8px}
+.dg-ar{display:flex;align-items:center;justify-content:center;color:var(--orange);font-size:15px}
+.dg-lane{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin:16px 0 8px;font-weight:600}
+.dg-row .dg-box{margin-bottom:0;display:flex;flex-direction:column;justify-content:center}
+footer{padding:36px 0;font-size:11.5px;color:var(--grey2);line-height:1.6}
+@media(max-width:760px){.grid2,.acro,.acro3,.dg-cols,.totals{grid-template-columns:1fr}
+.audit-row,.audit-head{grid-template-columns:1.6fr 1fr 1fr 36px}.audit-head span:nth-child(2),.audit-row select{display:none}
+.kpi-grid,.kpi-head{grid-template-columns:1.3fr 1fr 1fr}
+.dg-row{grid-template-columns:1fr}.dg-ar{transform:rotate(90deg);padding:2px 0}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <span class="eyebrow">Apto Academy · Companion to AI for Non-Technical Leaders</span>
+  <h1>The Apto <em>AI Toolkit</em></h1>
+  <p class="sub">Interactive tools from the course: the tool directory, the Stack Test, the Stack Audit, and the KPI Matrix — plus the BRIEF and DVD quick-reference cards. Nothing here is stored or sent anywhere; it all runs in your browser.</p>
+</div></header>
+
+<!-- ============ 1. TOOLS DIRECTORY ============ -->
+<section id="directory"><div class="wrap">
+  <span class="eyebrow">01 · Reference</span>
+  <h2>AI Tools Directory</h2>
+  <div class="bar"></div>
+  <div class="pill-row" id="catPills">
+    <button class="pill active" data-cat="all">All</button>
+    <button class="pill" data-cat="assistant">Tier 1 · Assistants</button>
+    <button class="pill" data-cat="automation">Tier 2 · Automation</button>
+    <button class="pill" data-cat="research">Research & Knowledge</button>
+    <button class="pill" data-cat="content">Content & Design</button>
+    <button class="pill" data-cat="video">Video</button>
+  </div>
+  <table id="toolTable">
+    <thead><tr><th style="width:26%">Tool</th><th style="width:18%">Cost (USD/mo)</th><th>What it's for</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <p class="note">Prices verified June 2026 and change frequently — confirm on each vendor's site before buying. Letter badges are used in place of logos; all names are trademarks of their owners. Apto Strategic is not affiliated with and does not represent any listed company.</p>
+</div></section>
+
+<!-- ============ 2. WHICH AI FOR WHAT ============ -->
+<section id="whichai"><div class="wrap">
+  <span class="eyebrow">02 · Reference</span>
+  <h2>Which AI for What?</h2>
+  <div class="bar"></div>
+  <p class="sub" style="margin-bottom:18px">Pick the task — get the tool the field consensus favors. All four frontier assistants can do all of these; this is about where each one shines.</p>
+  <div style="max-width:480px;margin-bottom:18px"><select id="taskPick">
+    <option value="">— Select your task —</option>
+    <option value="write">Long-form writing & editing (reports, proposals, articles)</option>
+    <option value="brainstorm">Brainstorming, general Q&A, everyday prompting</option>
+    <option value="code">Coding, scripts & automation logic</option>
+    <option value="docs">Analyzing long documents & contracts</option>
+    <option value="google">Working inside Google Workspace (Gmail, Docs, Sheets)</option>
+    <option value="ms">Working inside Microsoft 365 (Word, Excel, Outlook)</option>
+    <option value="research">Cited web research & fact-finding</option>
+    <option value="owndocs">Q&A grounded in YOUR documents</option>
+    <option value="image">Image generation & visual content</option>
+    <option value="slides">Slide decks from an outline</option>
+  </select></div>
+  <div id="taskOut" class="q-card" style="display:none"></div>
+</div></section>
+
+<!-- ============ 3. THE CONNECTED STACK ============ -->
+<section id="stack"><div class="wrap">
+  <span class="eyebrow">03 · The Architecture</span>
+  <h2>The Connected AI Stack</h2>
+  <div class="bar"></div>
+  <div class="diagram" style="border:none">
+    <div class="dg-band"><b>THE HUMAN DECISION LAYER — YOU</b><span>Frames the problem · Supplies context · Verifies claims · Makes the call · Owns the outcome</span></div>
+    <div class="dg-cols" style="display:block;padding-bottom:14px">
+      <div style="display:grid;grid-template-columns:1fr 26px 1fr 26px 1fr;gap:8px;margin-bottom:4px" class="dg-row">
+        <h4 style="margin:0;text-align:center;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey)">What goes in</h4><span></span>
+        <h4 style="margin:0;text-align:center;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey)">Who does the work</h4><span></span>
+        <h4 style="margin:0;text-align:center;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey)">What comes out</h4>
+      </div>
+      <div class="dg-lane">Interactive — you, present, prompting</div>
+      <div class="dg-row">
+        <div class="dg-box"><b>Your BRIEF</b>Background · Role · Intent · Expectations · Format</div><div class="dg-ar">→</div>
+        <div class="dg-box dg-tier"><b>Tier 1 — AI Assistant</b>Claude · ChatGPT · Gemini · Copilot</div><div class="dg-ar">→</div>
+        <div class="dg-box"><b>A draft you edit</b>you verify, you sign, you ship</div>
+      </div>
+      <div class="dg-lane">Automated — runs while you don’t · build in order 1 → 2 → 3</div>
+      <div class="dg-row">
+        <div class="dg-box"><b>Industry sources</b>RSS · news · journals</div><div class="dg-ar">→</div>
+        <div class="dg-box"><b>Pattern 1 · Signal Monitor</b>Make.com / Zapier + AI</div><div class="dg-ar">→</div>
+        <div class="dg-box"><b>Monday briefing</b>one email, ranked & summarized</div>
+      </div>
+      <div class="dg-row">
+        <div class="dg-box"><b>One source draft</b>memo · article · notes</div><div class="dg-ar">→</div>
+        <div class="dg-box"><b>Pattern 2 · Content Engine</b>Apps Script / Make + AI</div><div class="dg-ar">→</div>
+        <div class="dg-box"><b>Five formats out</b>newsletter · posts · scripts · decks</div>
+      </div>
+      <div class="dg-row">
+        <div class="dg-box"><b>Your documents</b>SOPs · proposals · policies</div><div class="dg-ar">→</div>
+        <div class="dg-box"><b>Pattern 3 · The Brain</b>NotebookLM / RAG</div><div class="dg-ar">→</div>
+        <div class="dg-box"><b>Answers with sources</b>institutional memory on demand</div>
+      </div>
+    </div>
+    <div class="dg-band" style="border-color:var(--line)"><b style="color:var(--orange)">GOVERNANCE WRAPPER — THE DVD RULE</b><span>Data (know what never goes in) · Verify (AI drafts, humans sign) · Disclose (decide once, in advance)</span></div>
+  </div>
+</div></section>
+
+<!-- ============ 4. BRIEF & DVD CARDS ============ -->
+<section id="cards"><div class="wrap">
+  <span class="eyebrow">04 · Memory Aids</span>
+  <h2>Write a BRIEF. Follow the DVD.</h2>
+  <div class="bar"></div>
+  <p class="sub">Prompting is briefing — so write a BRIEF. The five letters are a checklist, not a script: cover all five in any order.</p>
+  <div class="acro">
+    <div><div class="big">B</div><div class="w">Background</div><div class="d">The context. Paste the data, the history, the prior emails.</div></div>
+    <div><div class="big">R</div><div class="w">Role</div><div class="d">Who the AI should be. "You are a communications director…"</div></div>
+    <div><div class="big">I</div><div class="w">Intent</div><div class="d">The mission — the specific deliverable and its audience.</div></div>
+    <div><div class="big">E</div><div class="w">Expectations</div><div class="d">The constraints — length, tone, format, what to avoid.</div></div>
+    <div><div class="big">F</div><div class="w">Format &amp; standard</div><div class="d">What excellent looks like — an example, or the criteria you'll judge by.</div></div>
+  </div>
+  <p class="sub" style="margin-top:30px">Your one-page AI policy has three rules — the DVD Rule. Dated like the disc; impossible to forget.</p>
+  <div class="acro acro3">
+    <div><div class="big">D</div><div class="w">Data</div><div class="d">Know what never goes in: client PII, employee records, financials under NDA, credentials. Exposed credentials get rotated immediately.</div></div>
+    <div><div class="big">V</div><div class="w">Verify</div><div class="d">AI drafts, humans sign. Names, numbers, dates, and citations get independently checked before anything ships.</div></div>
+    <div><div class="big">D</div><div class="w">Disclose</div><div class="d">Decide once, in advance, where you disclose AI assistance — and write the decision down.</div></div>
+  </div>
+</div></section>
+
+<!-- ============ 5. DOs & DON'Ts ============ -->
+<section id="dosdonts"><div class="wrap">
+  <span class="eyebrow">05 · Field Discipline</span>
+  <h2>DOs &amp; DON'Ts of Using AI</h2>
+  <div class="bar"></div>
+  <div class="grid2">
+    <div class="card do"><h3>✓ DO</h3><ul>
+      <li><b>Treat the first output as a staff estimate</b> — iterate in the same conversation instead of restarting.</li>
+      <li><b>Paste context generously.</b> The model only knows what it was trained on plus what you give it.</li>
+      <li><b>Make it interrogate you:</b> "Before drafting, ask me the five questions you need answered."</li>
+      <li><b>Use it for T-tasks</b> — drafts, summaries, options, reformatting — where unverified output is tolerable.</li>
+      <li><b>Verify names, numbers, dates, and citations</b> independently, every time, before anything ships.</li>
+      <li><b>Master one assistant deeply</b> before adding any other tool.</li>
+      <li><b>Capture a baseline</b> before rollout so progress claims are credible.</li>
+      <li><b>Tell your team what you use it for.</b> Modeled behavior beats mandated behavior.</li>
+    </ul></div>
+    <div class="card dont"><h3>✗ DON'T</h3><ul>
+      <li><b>Don't paste client PII, employee records, NDA material, or credentials</b> into consumer AI tools. Ever.</li>
+      <li><b>Don't ship AI output unreviewed.</b> Accountability is not transferable — "the AI suggested it" survives nothing.</li>
+      <li><b>Don't trust confident citations, statistics, or legal/medical claims</b> without checking. Confidence is not accuracy.</li>
+      <li><b>Don't buy six tools to feel like you're adopting.</b> Subscriptions are easy to start and invisible to carry.</li>
+      <li><b>Don't use it as a search engine</b> and conclude it's overhyped. Shallow usage produces shallow results.</li>
+      <li><b>Don't mandate by ambush</b> — a tool announced Monday, mandatory Friday, builds resistance, not adoption.</li>
+      <li><b>Don't investigate an exposed API key or password.</b> Rotate it immediately; investigate after.</li>
+      <li><b>Don't let the tool decide.</b> It generates options; you own outcomes.</li>
+    </ul></div>
+  </div>
+</div></section>
+
+<!-- ============ 6. THE APTO STACK TEST ============ -->
+<section id="stacktest"><div class="wrap">
+  <span class="eyebrow">06 · Module 3 Tool</span>
+  <h2>The Apto Stack Test</h2>
+  <div class="bar"></div>
+  <p class="sub" style="margin-bottom:20px">Thinking about a new AI subscription? Answer four questions, in order. The test runs at the door — not at renewal.</p>
+  <div style="max-width:480px;margin-bottom:18px"><input type="text" id="stName" placeholder="Tool you're considering (e.g., 'MagicSlides Pro')"/></div>
+  <div class="q-card"><div class="q-num">Question 1 of 4</div><div class="q-text">Can your Tier 1 assistant (Claude / ChatGPT / Gemini / Copilot) already do this well enough?</div><div class="yn" data-q="0"><button data-v="yes">Yes</button><button data-v="no">No</button></div></div>
+  <div class="q-card"><div class="q-num">Question 2 of 4</div><div class="q-text">Does a tool you already pay for do this? (Check the AI features inside Workspace / 365 / Canva first.)</div><div class="yn" data-q="1"><button data-v="yes">Yes</button><button data-v="no">No</button></div></div>
+  <div class="q-card"><div class="q-num">Question 3 of 4</div><div class="q-text">Will it save more hours per month than it costs in dollars AND attention?</div><div class="yn" data-q="2"><button data-v="yes">Yes</button><button data-v="no">No / Not sure</button></div></div>
+  <div class="q-card"><div class="q-num">Question 4 of 4</div><div class="q-text">Will you still be using it in 90 days?</div><div class="yn" data-q="3"><button data-v="yes">Yes</button><button data-v="no">No / Not sure</button></div></div>
+  <div class="verdict" id="stVerdict"></div>
+  <p style="margin-top:14px"><button class="btn ghost" onclick="resetStackTest()">Reset Test</button></p>
+</div></section>
+
+<!-- ============ 7. STACK AUDIT ============ -->
+<section id="audit"><div class="wrap">
+  <span class="eyebrow">07 · Module 3 Tool</span>
+  <h2>The Stack Audit</h2>
+  <div class="bar"></div>
+  <p class="sub" style="margin-bottom:20px">List every subscription your organization pays for. Most leaders discover they already pay for AI they've never turned on.</p>
+  <div class="audit-head"><span>Subscription</span><span>Category</span><span>$ / month</span><span>Includes AI features?</span><span></span></div>
+  <div id="auditRows"></div>
+  <p style="margin:14px 0 6px"><button class="btn ghost" onclick="addAuditRow()">+ Add subscription</button></p>
+  <div class="totals">
+    <div class="tot"><div class="n" id="totSpend">$0</div><div class="l">Total monthly spend</div></div>
+    <div class="tot"><div class="n" id="totYear">$0</div><div class="l">Annualized</div></div>
+    <div class="tot"><div class="n" id="totAI">0</div><div class="l">Tools with unused AI inside</div></div>
+  </div>
+  <div class="q-card" id="auditInsight" style="margin-top:14px;display:none"></div>
+</div></section>
+
+<!-- ============ 8. KPI MATRIX ============ -->
+<section id="kpi"><div class="wrap">
+  <span class="eyebrow">08 · Module 7 Tool</span>
+  <h2>The KPI Matrix — Is It Working?</h2>
+  <div class="bar"></div>
+  <p class="sub" style="margin-bottom:20px">Four numbers, fifteen minutes a month. Enter your baseline and current values; the verdict updates live.</p>
+  <div class="kpi-head"><span>Metric</span><span>Baseline (Day 0)</span><span>Current</span></div>
+  <div class="kpi-grid"><span class="kpi-label">Team hours/week on AI-assisted tasks</span><input type="number" id="hb" min="0" placeholder="e.g., 40"/><input type="number" id="hc" min="0" placeholder="e.g., 28"/></div>
+  <div class="kpi-grid"><span class="kpi-label">AI stack cost ($/month)</span><input type="number" id="cb" min="0" placeholder="e.g., 0"/><input type="number" id="cc" min="0" placeholder="e.g., 60"/></div>
+  <div class="kpi-grid"><span class="kpi-label">Flagship process cycle time (days)</span><input type="number" id="tb" min="0" placeholder="e.g., 10"/><input type="number" id="tc" min="0" placeholder="e.g., 6"/></div>
+  <div class="kpi-grid"><span class="kpi-label">Quality incidents this month (#)</span><input type="number" id="ib" min="0" placeholder="e.g., 0"/><input type="number" id="ic" min="0" placeholder="e.g., 1"/></div>
+  <div class="kpi-grid"><span class="kpi-label">Loaded value of one team hour ($)</span><input type="number" id="hr" min="0" placeholder="e.g., 75"/><span></span></div>
+  <div class="totals">
+    <div class="tot"><div class="n" id="kHours">—</div><div class="l">Hours recovered / week</div></div>
+    <div class="tot"><div class="n" id="kValue">—</div><div class="l">Value recovered / month</div></div>
+    <div class="tot"><div class="n" id="kROI">—</div><div class="l">Return per $1 of stack</div></div>
+  </div>
+  <div class="verdict show" id="kVerdict" style="margin-top:14px;border-color:var(--line)"><div class="v-title" style="color:var(--grey)">Enter your numbers</div><div class="v-sub">The verdict appears here as you type.</div></div>
+</div></section>
+
+<footer><div class="wrap">
+  © 2026 Apto Strategic Consulting LLC · Lakeway, Texas · Service-Disabled Veteran-Owned Small Business · aptostrategic.com<br/>
+  Companion to the Apto Academy course "AI for Non-Technical Leaders." All calculations run locally in your browser; nothing is stored or transmitted. All product names and trademarks are property of their respective owners; pricing shown as of June 2026 — verify before purchasing.
+</div></footer>
+
+<script>
+/* ---------- 1. Tools directory ---------- */
+const TOOLS=[
+ {n:"Claude",c:"assistant",ic:"C",col:"#D97757",url:"https://claude.ai",cost:"Free · Pro $20 · Max from $100",f:"Long-form writing, coding, and long-document analysis; Pro includes Claude Code for developers."},
+ {n:"ChatGPT",c:"assistant",ic:"G",col:"#10A37F",url:"https://chatgpt.com",cost:"Free · Go $8 · Plus $20 · Pro $100+",f:"The all-rounder with the biggest ecosystem — custom GPTs, voice, image generation, broad plugin support."},
+ {n:"Google Gemini",c:"assistant",ic:"♦",col:"#4285F4",url:"https://gemini.google.com",cost:"Free · AI Pro $19.99",f:"Deep Google Workspace integration and a very large context window; generous free tier."},
+ {n:"Microsoft Copilot",c:"assistant",ic:"M",col:"#0078D4",url:"https://copilot.microsoft.com",cost:"Free · w/ M365 Personal $19.99 · Business ~$21/seat",f:"AI inside Word, Excel, Outlook, and Teams — strongest pick if your organization lives in Microsoft 365."},
+ {n:"Make.com",c:"automation",ic:"Mk",col:"#6D00CC",url:"https://www.make.com",cost:"Free · Core $12 · Pro ~$19",f:"Visual automation canvas; powers the Signal Monitor and Content Engine patterns. Pay-per-operation pricing."},
+ {n:"Zapier",c:"automation",ic:"Z",col:"#FF4F00",url:"https://zapier.com",cost:"Free (100 tasks) · Starter $19.99 · Pro $49",f:"The easiest automation entry point with the largest app library; simpler than Make, pricier at volume."},
+ {n:"Google Apps Script",c:"automation",ic:"As",col:"#34A853",url:"https://script.google.com",cost:"Free with Google account",f:"Free automation inside Google Workspace — schedules, email, Drive. Pairs with any AI API."},
+ {n:"NotebookLM",c:"research",ic:"N",col:"#1A73E8",url:"https://notebooklm.google.com",cost:"Free · more via Google AI plans",f:"Q&A grounded in YOUR documents with citations, plus Audio Overviews — the gentlest entry to the Brain pattern."},
+ {n:"Perplexity",c:"research",ic:"P",col:"#20808D",url:"https://www.perplexity.ai",cost:"Free · Pro $20",f:"Web research with inline citations — built for sourced fact-finding rather than drafting."},
+ {n:"Canva",c:"content",ic:"Cv",col:"#8B3DFF",url:"https://www.canva.com",cost:"Free · Pro $15",f:"Design suite with AI features (Magic Studio) — graphics, social posts, documents, simple video."},
+ {n:"Gamma",c:"content",ic:"Γ",col:"#7B61FF",url:"https://gamma.app",cost:"Free credits · paid from ~$10",f:"Generates polished slide decks and docs from an outline in under a minute; exports to PPT/PDF."},
+ {n:"CapCut",c:"video",ic:"Cc",col:"#00E5D0",url:"https://www.capcut.com",cost:"Free · Pro ~$10 (verify)",f:"Video editing with AI captions, cuts, and templates — the short-form content workhorse."},
+ {n:"Animoto",c:"video",ic:"A",col:"#19B5A4",url:"https://animoto.com",cost:"Free · paid from ~$9 (verify)",f:"Template-driven video builder — fast promo and social videos without an editing learning curve."},
+];
+const tbody=document.querySelector('#toolTable tbody');
+function renderTools(cat){
+  tbody.innerHTML='';
+  TOOLS.filter(t=>cat==='all'||t.c===cat).forEach(t=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td><span class="tool-name"><span class="tool-ic" style="background:'+t.col+'">'+t.ic+'</span><a href="'+t.url+'" target="_blank" rel="noopener">'+t.n+' ↗</a></span></td>'+
+      '<td class="cost">'+t.cost+'</td><td>'+t.f+'</td>';
+    tbody.appendChild(tr);
+  });
+}
+renderTools('all');
+document.querySelectorAll('#catPills .pill').forEach(p=>p.addEventListener('click',()=>{
+  document.querySelectorAll('#catPills .pill').forEach(x=>x.classList.remove('active'));
+  p.classList.add('active'); renderTools(p.dataset.cat);
+}));
+
+/* ---------- 2. Which AI for what ---------- */
+const TASKMAP={
+ write:["Claude","Field consensus favors Claude for long-form writing and editing — strong sustained voice and structure over long documents. ChatGPT is a close second.","#D97757","C"],
+ brainstorm:["ChatGPT","The everyday all-rounder: fastest ecosystem, custom GPTs, voice mode. Great default for general prompting and ideation.","#10A37F","G"],
+ code:["Claude","Widely favored for coding and multi-step automation logic; Claude Code ships with the Pro plan. GitHub Copilot ($10) is the in-IDE alternative.","#D97757","C"],
+ docs:["Claude","Long-context document analysis is a core strength — contracts, reports, and multi-file review. Gemini's large context window is the alternative.","#D97757","C"],
+ google:["Gemini","If you live in Gmail, Docs, and Sheets, Gemini is built in — drafting, summarizing, and data help inside the tools you already pay for.","#4285F4","♦"],
+ ms:["Copilot","Inside Word, Excel, Outlook, and Teams, Copilot is the native choice — AI where your files already live.","#0078D4","M"],
+ research:["Perplexity","Built for cited, sourced web research. Ask, get an answer with footnotes, follow the trail. Gemini Deep Research is the alternative.","#20808D","P"],
+ owndocs:["NotebookLM","Grounded answers from YOUR uploaded documents, with citations and audio overviews — the gentlest version of the Brain pattern, free.","#1A73E8","N"],
+ image:["ChatGPT","Strong native image generation in the chat flow. Canva's Magic Studio is the alternative when the image lives inside a design.","#10A37F","G"],
+ slides:["Gamma","Outline in, polished deck out in under a minute, exportable to PPT. NotebookLM generates decks grounded in your documents as the accuracy-first alternative.","#7B61FF","Γ"],
+};
+document.getElementById('taskPick').addEventListener('change',e=>{
+  const out=document.getElementById('taskOut'), v=e.target.value;
+  if(!v){out.style.display='none';return}
+  const[t,d,col,ic]=TASKMAP[v];
+  out.style.display='block';
+  out.innerHTML='<div class="tool-name" style="margin-bottom:10px"><span class="tool-ic" style="background:'+col+'">'+ic+'</span><b style="font-size:18px">'+t+'</b></div><div style="font-size:14px;color:#bbb;line-height:1.6">'+d+'</div><div class="note">All frontier assistants are capable across tasks — this reflects common field positioning as of mid-2026, not a limitation.</div>';
+});
+
+/* ---------- 6. Stack Test ---------- */
+const stAns=[null,null,null,null];
+document.querySelectorAll('.yn').forEach(g=>{
+  g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    g.querySelectorAll('button').forEach(x=>x.classList.remove('sel-yes','sel-no'));
+    b.classList.add(b.dataset.v==='yes'?'sel-yes':'sel-no');
+    stAns[+g.dataset.q]=b.dataset.v;
+    stVerdictCheck();
+  }));
+});
+function stVerdictCheck(){
+  if(stAns.some(a=>a===null))return;
+  const v=document.getElementById('stVerdict');
+  const name=document.getElementById('stName').value.trim()||'This tool';
+  v.classList.add('show');
+  // Pass requires: Q1 no, Q2 no, Q3 yes, Q4 yes
+  const pass=stAns[0]==='no'&&stAns[1]==='no'&&stAns[2]==='yes'&&stAns[3]==='yes';
+  if(pass){v.className='verdict show v-buy';
+    v.innerHTML='<div class="v-title">CLEARED TO BUY</div><div class="v-sub">'+name+' passed all four gates: nothing you have covers it, the hours beat the cost, and you\u2019ll still use it in 90 days. Set a calendar reminder for day 90 to re-run this test before renewal.</div>';
+  }else{
+    let why=[];
+    if(stAns[0]==='yes')why.push('your Tier 1 assistant already does this');
+    if(stAns[1]==='yes')why.push('a tool you already pay for does this');
+    if(stAns[2]!=='yes')why.push('the hours don\u2019t clearly beat the cost');
+    if(stAns[3]!=='yes')why.push('you\u2019re not confident you\u2019ll use it in 90 days');
+    v.className='verdict show v-no';
+    v.innerHTML='<div class="v-title">DON\u2019T BUY — NOT YET</div><div class="v-sub">'+name+' failed the test: '+why.join('; ')+'. A \u201Cno\u201D or \u201Cnot sure\u201D anywhere is a no. Master what you have; re-test in a quarter if the need persists.</div>';
+  }
+  v.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function resetStackTest(){
+  stAns.fill(null);
+  document.querySelectorAll('.yn button').forEach(x=>x.classList.remove('sel-yes','sel-no'));
+  document.getElementById('stVerdict').className='verdict';
+  document.getElementById('stName').value='';
+}
+
+/* ---------- 7. Stack Audit ---------- */
+const CATS=["AI assistant","Automation","Design / content","Video","Office suite","CRM / sales","Accounting","Project mgmt","Communication","Storage / cloud","Other"];
+function addAuditRow(name='',cat='Other',cost='',ai='unknown'){
+  const r=document.createElement('div');r.className='audit-row';
+  r.innerHTML='<input type="text" placeholder="e.g., Canva Pro" value="'+name+'"/>'+
+    '<select>'+CATS.map(c=>'<option'+(c===cat?' selected':'')+'>'+c+'</option>').join('')+'</select>'+
+    '<input type="number" min="0" placeholder="0" value="'+cost+'"/>'+
+    '<select class="aiq"><option value="unknown"'+(ai==='unknown'?' selected':'')+'>Not sure</option><option value="yes-using"'+(ai==='yes-using'?' selected':'')+'>Yes — we use them</option><option value="yes-unused"'+(ai==='yes-unused'?' selected':'')+'>Yes — unused</option><option value="no"'+(ai==='no'?' selected':'')+'>No</option></select>'+
+    '<button class="del-x" title="Remove">×</button>';
+  r.querySelector('.del-x').addEventListener('click',()=>{r.remove();auditCalc()});
+  r.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',auditCalc));
+  document.getElementById('auditRows').appendChild(r);
+  auditCalc();
+}
+function auditCalc(){
+  let spend=0,unused=0,unusedNames=[],unknown=0;
+  document.querySelectorAll('.audit-row').forEach(r=>{
+    const cost=parseFloat(r.children[2].value)||0;spend+=cost;
+    const ai=r.querySelector('.aiq').value;
+    if(ai==='yes-unused'){unused++;unusedNames.push(r.children[0].value||'unnamed tool')}
+    if(ai==='unknown')unknown++;
+  });
+  document.getElementById('totSpend').textContent='$'+spend.toFixed(0);
+  document.getElementById('totYear').textContent='$'+(spend*12).toFixed(0);
+  document.getElementById('totAI').textContent=unused;
+  const ins=document.getElementById('auditInsight');
+  if(document.querySelectorAll('.audit-row').length===0){ins.style.display='none';return}
+  ins.style.display='block';
+  let msg='';
+  if(unused>0)msg+='<b style="color:var(--orange)">You are already paying for AI you don\u2019t use</b> — '+unusedNames.join(', ')+'. Turn those on before buying anything new. ';
+  if(unknown>0)msg+='<b>'+unknown+' subscription'+(unknown>1?'s':'')+' marked \u201Cnot sure\u201D</b> — fifteen minutes on each vendor\u2019s site will tell you what AI you already own. ';
+  if(spend>0)msg+='Your stack costs <b>$'+(spend*12).toFixed(0)+'/year</b>. The Module 7 question: do recovered hours beat that number?';
+  ins.innerHTML='<div style="font-size:14px;line-height:1.65;color:#bbb">'+msg+'</div>';
+}
+addAuditRow();addAuditRow();addAuditRow();
+
+/* ---------- 8. KPI Matrix ---------- */
+['hb','hc','cb','cc','tb','tc','ib','ic','hr'].forEach(id=>document.getElementById(id).addEventListener('input',kpiCalc));
+function kpiCalc(){
+  const g=id=>parseFloat(document.getElementById(id).value);
+  const hb=g('hb'),hc=g('hc'),cb=g('cb')||0,cc=g('cc'),tb=g('tb'),tc=g('tc'),ib=g('ib'),ic=g('ic'),hr=g('hr');
+  const v=document.getElementById('kVerdict');
+  const hoursSaved=(!isNaN(hb)&&!isNaN(hc))?(hb-hc):NaN;
+  document.getElementById('kHours').textContent=isNaN(hoursSaved)?'—':(hoursSaved>0?hoursSaved.toFixed(1):'0');
+  const monthlyValue=(!isNaN(hoursSaved)&&!isNaN(hr))?hoursSaved*hr*4.33:NaN;
+  document.getElementById('kValue').textContent=isNaN(monthlyValue)?'—':'$'+Math.max(0,monthlyValue).toFixed(0);
+  const netStack=(!isNaN(cc))?(cc-cb):NaN;
+  const roi=(!isNaN(monthlyValue)&&!isNaN(netStack)&&netStack>0)?(monthlyValue/netStack):NaN;
+  document.getElementById('kROI').textContent=isNaN(roi)?'—':'$'+roi.toFixed(2);
+  // verdict
+  let title='Enter your numbers',sub='The verdict appears here as you type.',cls='';
+  const cycleImproved=(!isNaN(tb)&&!isNaN(tc))?tb-tc:NaN;
+  const incidentsUp=(!isNaN(ib)&&!isNaN(ic))?ic>ib:false;
+  if(!isNaN(hoursSaved)){
+    if(hoursSaved<=0&&(isNaN(cycleImproved)||cycleImproved<=0)){
+      title='NOT WORKING YET';cls='v-no';
+      sub='Hours are flat and cycle time hasn\u2019t moved. The usual cause is shallow usage — the team is treating AI as a search engine. The fix is re-training on Module 4 (BRIEF), not a new subscription.';
+    }else if(!isNaN(roi)&&roi>=3){
+      title='WORKING — SCALE IT';cls='v-buy';
+      sub='You\u2019re recovering roughly $'+roi.toFixed(2)+' for every $1 of stack. Standardize what\u2019s working, add the next automation pattern this quarter'+(incidentsUp?' — and tighten the Verify rule: incidents are rising.':'.');
+    }else if(!isNaN(roi)&&roi>=1){
+      title='BREAK-EVEN — PUSH DEEPER';cls='';
+      sub='Return is positive but thin ($'+roi.toFixed(2)+' per $1). Look for the next automation (Module 5) and check whether the team has moved past one-shot prompting.'+(incidentsUp?' Incidents are rising — re-issue the DVD rule.':'');
+    }else{
+      title='EARLY SIGNAL — KEEP MEASURING';cls='';
+      sub='Some movement detected. Fill in the hourly value and stack cost to compute return per dollar.'+(incidentsUp?' Watch incidents — they\u2019re rising.':'');
+    }
+  }
+  v.className='verdict show '+cls;
+  v.innerHTML='<div class="v-title"'+(cls?'':' style="color:var(--grey)"')+'>'+title+'</div><div class="v-sub">'+sub+'</div>';
+}
+</script>
+</body>
+</html>

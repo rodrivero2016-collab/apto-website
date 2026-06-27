@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Member Tools · Apto Strategic</title>
+<style>
+:root{
+  --orange:#E85D20;--navy:#0A0A0A;--navy2:#111111;--navy3:#1a1a1a;
+  --white:#F0EEE8;--grey:#888;--line:rgba(255,255,255,0.08);
+  --sans:'Inter',system-ui,sans-serif;--serif:Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--navy);color:var(--white);min-height:100vh}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,10,10,.95);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--serif);font-size:20px;font-weight:600;letter-spacing:.04em;line-height:1.3;padding-top:3px;text-decoration:none;color:var(--white)}
+.nav-logo span{color:var(--orange)}
+.nav-back{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);text-decoration:none;padding:7px 14px;border:1px solid var(--line);border-radius:999px;transition:color .2s}
+.nav-back:hover{color:var(--white)}
+
+/* GATE */
+#gate{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.gate-box{background:var(--navy2);border:1px solid var(--line);border-top:3px solid var(--orange);padding:48px 40px;max-width:400px;width:100%;text-align:center}
+.gate-logo{font-family:var(--serif);font-size:24px;font-weight:600;margin-bottom:6px}
+.gate-logo span{color:var(--orange)}
+.gate-sub{font-size:12px;color:var(--grey);letter-spacing:.1em;text-transform:uppercase;margin-bottom:32px}
+.gate-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);display:block;text-align:left;margin-bottom:8px}
+.gate-input{width:100%;background:var(--navy);border:1px solid var(--line);color:var(--white);padding:12px 14px;font-family:var(--sans);font-size:14px;border-radius:4px;outline:none;transition:border-color .2s}
+.gate-input:focus{border-color:var(--orange)}
+.gate-btn{width:100%;margin-top:16px;padding:12px;background:var(--orange);color:#fff;border:none;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;border-radius:4px;transition:opacity .2s}
+.gate-btn:hover{opacity:.88}
+.gate-err{font-size:12px;color:#e05;margin-top:10px;display:none}
+
+/* TOOLS */
+#tools{display:none;padding-top:72px;min-height:100vh}
+.tools-header{max-width:1100px;margin:0 auto;padding:40px 40px 0}
+.tools-title{font-family:var(--serif);font-size:28px;font-weight:600;margin-bottom:6px}
+.tools-title span{color:var(--orange)}
+.tools-sub{font-size:13px;color:var(--grey);margin-bottom:8px}
+.member-note{background:var(--navy2);border:1px solid var(--line);border-left:3px solid var(--orange);padding:14px 18px;font-size:13px;color:var(--grey);line-height:1.6;margin-top:20px;border-radius:0 4px 4px 0}
+.member-note strong{color:var(--white)}
+
+/* TABS */
+.tab-bar{max-width:1100px;margin:0 auto;padding:24px 40px 0;display:flex;gap:8px;border-bottom:1px solid var(--line)}
+.tab-btn{padding:10px 20px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:transparent;border:1px solid transparent;color:var(--grey);cursor:pointer;border-radius:4px 4px 0 0;font-family:var(--sans);transition:all .2s;position:relative;bottom:-1px}
+.tab-btn.active{color:var(--orange);border-color:var(--line);border-bottom-color:var(--navy);background:var(--navy2)}
+.tab-btn:hover:not(.active){color:var(--white)}
+.tab-content{max-width:1100px;margin:0 auto;padding:32px 40px 60px}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* CONTENT ENGINE - NEW */
+.ce-header{text-align:center;margin-bottom:28px}
+.ce-icon{font-size:36px;margin-bottom:10px}
+.ce-title{font-family:var(--serif);font-size:24px;font-weight:600;margin-bottom:10px;color:var(--white)}
+.ce-desc{font-size:14px;color:var(--grey);line-height:1.6;max-width:620px;margin:0 auto}
+
+.ce-lang-row{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.ce-lang-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);white-space:nowrap}
+.ce-lang-toggle{display:flex;gap:6px}
+.ce-lang-btn{background:var(--navy2);border:1px solid var(--line);color:var(--grey);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 14px;border-radius:4px;cursor:pointer;font-family:var(--sans);transition:all .15s}
+.ce-lang-btn:hover{border-color:var(--orange);color:var(--orange)}
+.ce-lang-btn.active{background:var(--orange);border-color:var(--orange);color:#fff}
+
+.ce-field-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:8px}
+.ce-textarea{width:100%;background:var(--navy);border:1px solid var(--line);color:var(--white);padding:14px;font-family:var(--sans);font-size:14px;border-radius:4px;outline:none;transition:border-color .2s;resize:vertical;min-height:180px;line-height:1.6}
+.ce-textarea:focus{border-color:var(--orange)}
+.ce-char{font-size:11px;color:#444;text-align:right;margin-top:6px}
+
+.ce-generate-btn{width:100%;margin-top:20px;padding:16px;background:var(--orange);color:#fff;border:none;font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-radius:4px;transition:opacity .2s}
+.ce-generate-btn:hover{opacity:.88}
+.ce-generate-btn:disabled{opacity:.45;cursor:not-allowed}
+
+.ce-spinner{display:none;width:28px;height:28px;border:2px solid var(--line);border-top-color:var(--orange);border-radius:50%;animation:spin .7s linear infinite;margin:32px auto}
+.ce-step-msg{text-align:center;font-size:12px;color:var(--orange);margin-top:8px;display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.ce-results{display:none;margin-top:32px}
+.ce-out-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.ce-out-tab{padding:6px 16px;border:1px solid var(--line);border-radius:999px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;background:var(--navy2);color:var(--grey);white-space:nowrap;transition:all .2s;font-family:var(--sans)}
+.ce-out-tab.on{border-color:var(--orange);color:var(--orange);background:rgba(232,93,32,.06)}
+.ce-out-pane{display:none}
+.ce-out-pane.on{display:block}
+
+.ce-card{background:var(--navy2);border:1px solid var(--line);border-radius:4px;padding:20px;position:relative;margin-bottom:12px}
+.ce-card-title{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:12px}
+.ce-card-badge{display:inline-block;background:var(--orange);color:#fff;font-size:9px;letter-spacing:.06em;padding:2px 8px;border-radius:20px;margin-left:8px;vertical-align:middle}
+.ce-card-badge-info{display:inline-block;background:var(--navy3);color:var(--grey);font-size:9px;letter-spacing:.06em;padding:2px 8px;border-radius:20px;margin-left:8px;vertical-align:middle;font-style:italic}
+.ce-card-body{font-size:14px;line-height:1.75;color:var(--white);white-space:pre-wrap}
+.ce-copy-btn{position:absolute;top:14px;right:14px;background:transparent;border:1px solid var(--line);color:var(--grey);padding:4px 12px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:4px;transition:all .2s;font-family:var(--sans)}
+.ce-copy-btn:hover{border-color:var(--orange);color:var(--orange)}
+.ce-divider{height:1px;background:var(--line);margin:20px 0}
+.ce-reset-btn{background:transparent;border:1px solid var(--line);color:var(--grey);padding:8px 20px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-radius:4px;font-family:var(--sans);transition:all .2s;margin-top:16px}
+.ce-reset-btn:hover{border-color:var(--white);color:var(--white)}
+.ce-error{background:rgba(232,93,32,.08);border:1px solid rgba(232,93,32,.25);border-radius:4px;padding:12px 16px;color:var(--orange);font-size:13px;margin-top:16px;display:none}
+
+/* CHIEF OF STAFF */
+.cos-wrap{display:flex;flex-direction:column;gap:12px}
+.cos-history{background:var(--navy2);border:1px solid var(--line);border-radius:4px;padding:20px;min-height:400px;max-height:520px;overflow-y:auto;display:flex;flex-direction:column;gap:16px}
+.cos-msg{max-width:82%}
+.cos-msg.user{align-self:flex-end;background:rgba(232,93,32,.12);border:1px solid rgba(232,93,32,.25);border-radius:4px;padding:12px 16px;font-size:14px;line-height:1.6}
+.cos-msg.assistant{align-self:flex-start;background:var(--navy3);border:1px solid var(--line);border-radius:4px;padding:12px 16px;font-size:14px;line-height:1.7;color:var(--white)}
+.cos-msg.assistant strong{color:var(--orange)}
+.cos-empty{text-align:center;color:var(--grey);font-size:13px;margin:auto;padding:40px 0}
+.cos-input-row{display:flex;gap:10px}
+.cos-input-row textarea{min-height:72px;resize:none;flex:1;background:var(--navy);border:1px solid var(--line);color:var(--white);padding:12px 14px;font-family:var(--sans);font-size:14px;border-radius:4px;outline:none;transition:border-color .2s}
+.cos-input-row textarea:focus{border-color:var(--orange)}
+.cos-send{padding:0 20px;background:var(--orange);color:#fff;border:none;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-radius:4px;transition:opacity .2s;white-space:nowrap;align-self:stretch}
+.cos-send:hover{opacity:.88}
+.cos-send:disabled{opacity:.45;cursor:not-allowed}
+.cos-clear{font-size:11px;color:var(--grey);background:transparent;border:none;cursor:pointer;text-transform:uppercase;letter-spacing:.08em;padding:4px 0;font-family:var(--sans)}
+.cos-clear:hover{color:var(--white)}
+.cos-typing{display:none;align-self:flex-start;padding:12px 16px;background:var(--navy3);border:1px solid var(--line);border-radius:4px}
+.cos-typing span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--orange);animation:bounce .9s infinite;margin:0 2px}
+.cos-typing span:nth-child(2){animation-delay:.2s}
+.cos-typing span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+
+/* AI TOOLKIT */
+.toolkit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:4px}
+.toolkit-card{background:var(--navy2);border:1px solid var(--line);border-radius:4px;padding:20px;transition:border-color .2s}
+.toolkit-card:hover{border-color:rgba(232,93,32,.4)}
+.toolkit-card-icon{font-size:22px;margin-bottom:10px;color:var(--orange)}
+.toolkit-card-title{font-size:14px;font-weight:600;margin-bottom:6px;color:var(--white)}
+.toolkit-card-desc{font-size:13px;color:var(--grey);line-height:1.6;margin-bottom:14px}
+.toolkit-card-link{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);text-decoration:none;border-bottom:1px solid rgba(232,93,32,.3);padding-bottom:2px;transition:border-color .2s}
+.toolkit-card-link:hover{border-color:var(--orange)}
+.toolkit-section-title{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin:28px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+
+@media(max-width:640px){
+  .nav-inner{padding:0 20px}
+  .tools-header,.tab-bar,.tab-content{padding-left:20px;padding-right:20px}
+  .tab-bar{gap:4px;overflow-x:auto;flex-wrap:nowrap}
+  .tab-btn{white-space:nowrap;font-size:10px;padding:8px 12px}
+  .cos-input-row{flex-direction:column}
+  .cos-send{padding:12px}
+  .ce-lang-row{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span>APTO</span> Strategic Consulting</a>
+    <a href="index.html" class="nav-back">← Back to Site</a>
+  </div>
+</nav>
+
+<!-- GATE -->
+<div id="gate">
+  <div class="gate-box">
+    <div class="gate-logo"><span>APTO</span> Strategic</div>
+    <div class="gate-sub">Member Tools · Private Access</div>
+    <label class="gate-label" for="gate-pw">Password</label>
+    <input class="gate-input" type="password" id="gate-pw" placeholder="Enter password" onkeydown="if(event.key==='Enter')unlock()"/>
+    <button class="gate-btn" onclick="unlock()">Access Tools</button>
+    <div class="gate-err" id="gate-err">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<!-- TOOLS -->
+<div id="tools">
+  <div class="tools-header">
+    <div class="tools-title"><span>APTO</span> Member Tools</div>
+    <div class="tools-sub">Private workspace · Juan R. Cuellar · Founder & CEO</div>
+    <div class="member-note">
+      <strong>Welcome back, JC.</strong> Paste any Substack article into the Content Engine and generate a full week of bilingual content in one click. Chief of Staff is your AI strategic advisor. AI Toolkit links to all your tools.
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('ce')">Content Engine</button>
+    <button class="tab-btn" onclick="switchTab('cos')">Chief of Staff</button>
+    <button class="tab-btn" onclick="switchTab('toolkit')">AI Toolkit</button>
+  </div>
+
+  <div class="tab-content">
+
+    <!-- CONTENT ENGINE -->
+    <div class="tab-pane active" id="pane-ce">
+
+      <div class="ce-header">
+        <div class="ce-icon">⚡</div>
+        <div class="ce-title">Apto Content Engine</div>
+        <div class="ce-desc">Paste your Substack article. One click generates your full week of content - LinkedIn article, four short posts, a 30-second YouTube Shorts script, an OfficeTok outline, and a 3D cartoon video production brief. All bilingual EN/ES.</div>
+      </div>
+
+      <!-- INPUT SECTION -->
+      <div id="ce-input">
+        <div class="ce-lang-row">
+          <span class="ce-lang-label">Output language</span>
+          <div class="ce-lang-toggle">
+            <button class="ce-lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+            <button class="ce-lang-btn" id="btn-es" onclick="setLang('es')">ES</button>
+            <button class="ce-lang-btn" id="btn-both" onclick="setLang('both')">EN + ES</button>
+          </div>
+        </div>
+
+        <label class="ce-field-label" for="ce-article">Your Substack Article</label>
+        <textarea id="ce-article" class="ce-textarea" placeholder="Paste your full article here..."></textarea>
+        <div class="ce-char"><span id="ce-char">0</span> characters</div>
+
+        <button class="ce-generate-btn" id="ce-btn" onclick="runCE()">
+          <span id="ce-btn-text">Generate All Content →</span>
+        </button>
+        <div class="ce-error" id="ce-error"></div>
+      </div>
+
+      <!-- SPINNER -->
+      <div class="ce-spinner" id="ce-spinner"></div>
+      <div class="ce-step-msg" id="ce-step"></div>
+
+      <!-- RESULTS -->
+      <div class="ce-results" id="ce-results">
+        <div class="ce-out-tabs" id="ce-out-tabs"></div>
+        <div id="ce-out-panes"></div>
+        <button class="ce-reset-btn" onclick="resetCE()">← Generate New Content</button>
+      </div>
+
+    </div>
+
+    <!-- CHIEF OF STAFF -->
+    <div class="tab-pane" id="pane-cos">
+      <div class="cos-wrap">
+        <div class="cos-history" id="cos-history">
+          <div class="cos-empty" id="cos-empty">Ask your Chief of Staff anything - strategy, operations, content, decisions, priorities.</div>
+          <div class="cos-typing" id="cos-typing">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        <div class="cos-input-row">
+          <textarea id="cos-input" placeholder="Ask anything..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendCOS()}"></textarea>
+          <button class="cos-send" id="cos-send" onclick="sendCOS()">Send</button>
+        </div>
+        <button class="cos-clear" onclick="clearCOS()">Clear conversation</button>
+      </div>
+    </div>
+
+    <!-- AI TOOLKIT -->
+    <div class="tab-pane" id="pane-toolkit">
+      <div class="toolkit-section-title">Apto AI Operating System</div>
+      <div class="toolkit-grid">
+        <div class="toolkit-card">
+          <div class="toolkit-card-icon">🧠</div>
+          <div class="toolkit-card-title">Chief of Staff Agent</div>
+          <div class="toolkit-card-desc">Claude Sonnet + LlamaIndex + Pinecone RAG. Deployed on Railway. Your strategic AI advisor with full Apto context.</div>
+          <a href="#" onclick="switchTab('cos');return false" class="toolkit-card-link">Open Chief of Staff →</a>
+        </div>
+        <div class="toolkit-card">
+          <div class="toolkit-card-icon">⚡</div>
+          <div class="toolkit-card-title">Content Engine</div>
+          <div class="toolkit-card-desc">One article - LinkedIn posts, YouTube Shorts script, OfficeTok outline, 3D cartoon video brief. Bilingual EN/ES. Runs right here.</div>
+          <a href="#" onclick="switchTab('ce');return false" class="toolkit-card-link">Open Content Engine →</a>
+        </div>
+        <div class="toolkit-card">
+          <div class="toolkit-card-icon">📡</div>
+          <div class="toolkit-card-title">AI Signal Monitor</div>
+          <div class="toolkit-card-desc">Make.com → Claude Haiku → Monday 7AM CT email briefing on AI news relevant to Apto Strategic.</div>
+          <a href="https://make.com" target="_blank" class="toolkit-card-link">Open Make.com →</a>
+        </div>
+        <div class="toolkit-card">
+          <div class="toolkit-card-icon">📚</div>
+          <div class="toolkit-card-title">NotebookLM Companions</div>
+          <div class="toolkit-card-desc">AI research companions for every Apto Academy course. Bilingual EN/ES. Students interrogate the source material.</div>
+          <a href="https://notebooklm.google.com" target="_blank" class="toolkit-card-link">Open NotebookLM →</a>
+        </div>
+        <div class="toolkit-card">
+          <div class="toolkit-card-icon">🎨</div>
+          <div class="toolkit-card-title">Canva · Course Production</div>
+          <div class="toolkit-card-desc">Thumbnails, workbook covers, social graphics. All Apto Academy course visuals built here.</div>
+          <a href="https://canva.com" target="_blank" class="toolkit-card-link">Open Canva →</a>
+        </div>
+        <div class="toolkit-card">
+          <div class="toolkit-card-icon">🎓</div>
+          <div class="toolkit-card-title">Gumroad · Apto Academy</div>
+          <div class="toolkit-card-desc">Six courses live. BRIDGE™, ANCHOR™, CLEAR™, LOOP™, VECTOR™, PRESSUREPOINT™. Bilingual EN/ES.</div>
+          <a href="https://jcuellar1.gumroad.com" target="_blank" class="toolkit-card-link">Open Gumroad →</a>
+        </div>
+        <div class="toolkit-card">
+          <div class="toolkit-card-icon">🗄️</div>
+          <div class="toolkit-card-title">Pinecone · Apto Brain</div>
+          <div class="toolkit-card-desc">Vector database powering the Chief of Staff RAG agent. Index: apto-brain · 384 dimensions · serverless us-east-1.</div>
+          <a href="https://app.pinecone.io" target="_blank" class="toolkit-card-link">Open Pinecone →</a>
+        </div>
+        <div class="toolkit-card">
+          <div class="toolkit-card-icon">🚂</div>
+          <div class="toolkit-card-title">Railway · CoS Deployment</div>
+          <div class="toolkit-card-desc">Chief of Staff agent live at web-production-7b5c8.up.railway.app. Monitor deployment and logs here.</div>
+          <a href="https://railway.app" target="_blank" class="toolkit-card-link">Open Railway →</a>
+        </div>
+      </div>
+      <div class="toolkit-section-title">Public Toolkit Page</div>
+      <div class="toolkit-grid">
+        <div class="toolkit-card">
+          <div class="toolkit-card-icon">🌐</div>
+          <div class="toolkit-card-title">Apto AI Toolkit (Public)</div>
+          <div class="toolkit-card-desc">The public-facing AI toolkit page on aptostrategic.com - curated tools for leaders and practitioners.</div>
+          <a href="apto-ai-toolkit.html" class="toolkit-card-link">View Public Toolkit →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ---- GATE ---- */
+const PASS = 'Debanhi!234';
+
+function unlock(){
+  const val = document.getElementById('gate-pw').value;
+  const err = document.getElementById('gate-err');
+  if(val === PASS){
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('tools').style.display = 'block';
+    sessionStorage.setItem('apto-auth','1');
+  } else {
+    err.style.display = 'block';
+    document.getElementById('gate-pw').value = '';
+    document.getElementById('gate-pw').focus();
+  }
+}
+
+if(sessionStorage.getItem('apto-auth')==='1'){
+  document.getElementById('gate').style.display='none';
+  document.getElementById('tools').style.display='block';
+}
+
+/* ---- TABS ---- */
+function switchTab(id){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{
+    const ids=['ce','cos','toolkit'];
+    b.classList.toggle('active', ids[i]===id);
+  });
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.getElementById('pane-'+id).classList.add('active');
+}
+
+/* ---- CONTENT ENGINE ---- */
+let ceLanguage = 'en';
+
+function setLang(lang){
+  ceLanguage = lang;
+  document.querySelectorAll('.ce-lang-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-'+lang).classList.add('active');
+}
+
+document.getElementById('ce-article').addEventListener('input', function(){
+  document.getElementById('ce-char').textContent = this.value.length.toLocaleString();
+});
+
+async function callClaude(prompt){
+  const r = await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,messages:[{role:'user',content:prompt}]})
+  });
+  const d = await r.json();
+  if(!r.ok) throw new Error(d.error?.message || 'API error');
+  return d.content?.[0]?.text || '';
+}
+
+function showCEError(msg){
+  const el = document.getElementById('ce-error');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+async function runCE(){
+  const article = document.getElementById('ce-article').value.trim();
+  if(!article || article.length < 100){
+    showCEError('Please paste your full article before generating (minimum 100 characters).');
+    return;
+  }
+
+  const btn = document.getElementById('ce-btn');
+  const btnText = document.getElementById('ce-btn-text');
+  document.getElementById('ce-error').style.display = 'none';
+  btn.disabled = true;
+  btnText.textContent = 'Generating your content...';
+  document.getElementById('ce-spinner').style.display = 'block';
+  document.getElementById('ce-step').style.display = 'block';
+  document.getElementById('ce-results').style.display = 'none';
+
+  const langLine = ceLanguage === 'en'
+    ? 'Generate ALL outputs in English only.'
+    : ceLanguage === 'es'
+    ? 'Generate ALL outputs in Spanish only.'
+    : 'Generate ALL outputs in both English AND Spanish. Label each clearly with [EN] and [ES].';
+
+  const outputs = [
+    {
+      key:'linkedin',
+      label:'LinkedIn',
+      step:'Generating LinkedIn content...',
+      prompt:`You are a bilingual ghostwriter for Juan R. Cuellar, Founder and CEO of Apto Strategic Consulting, a veteran-owned SDVOSB based in Lakeway, Texas. Juan has 20+ years of Marine Corps and Army service. Voice: direct, confident, human. No buzzwords. Active voice. Hyphens not em-dashes.
+
+${langLine}
+
+Article:
+${article}
+
+Generate the following. Use these exact headers.
+
+[LINKEDIN ARTICLE]
+Full LinkedIn long-form post (700-900 words). Strong hook in the first line - no generic opener. Speak to leaders at small-to-mid-size organizations (10-150 people) who are growing, transitioning, or stuck. End with a clear call to action. This runs Tuesday.
+
+[LINKEDIN - WEDNESDAY]
+Short LinkedIn post (150-200 words). One sharp insight from the article. Strong hook. Max 3 hashtags at end.
+
+[LINKEDIN - THURSDAY]
+Short LinkedIn post (150-200 words). Different insight, different angle from Wednesday. Max 3 hashtags.
+
+[LINKEDIN - FRIDAY]
+Short LinkedIn post (150-200 words). End-of-week reflection tone. Ties back to article theme. Max 3 hashtags.
+
+[LINKEDIN - BONUS]
+Short LinkedIn post (150-200 words). Question-based or contrarian angle that sparks conversation. Max 3 hashtags.`
+    },
+    {
+      key:'shorts',
+      label:'YouTube Shorts',
+      step:'Writing YouTube Shorts script...',
+      prompt:`You are a video script writer for Juan R. Cuellar, Apto Strategic Consulting. Voice: direct, confident, human. No buzzwords.
+
+${langLine}
+
+Article:
+${article}
+
+[YOUTUBE SHORTS SCRIPT]
+A spoken 30-second script (75-85 words at normal pace). Hook in the first 3 seconds. One core idea from the article. Clear verbal CTA at the end. Written to be read naturally out loud - no bullet points, flowing spoken language only.`
+    },
+    {
+      key:'officetok',
+      label:'OfficeTok',
+      step:'Building OfficeTok outline...',
+      prompt:`You are a YouTube content strategist for Juan R. Cuellar, Apto Strategic Consulting. Channel: OfficeTok - professional leadership content for leaders and aspiring professionals. Voice: authoritative but approachable.
+
+${langLine}
+
+Article:
+${article}
+
+[OFFICETOK OUTLINE]
+Structured YouTube long-form video outline. Include: video title, hook for the first 30 seconds, 3-4 main segments with talking points, closing CTA. Target audience: professionals and aspiring leaders.`
+    },
+    {
+      key:'video',
+      label:'Video Brief',
+      step:'Writing video production brief...',
+      prompt:`You are a video production director for Juan R. Cuellar, Apto Strategic Consulting.
+
+${langLine}
+
+Article:
+${article}
+
+[VIDEO PRODUCTION BRIEF]
+A scene-by-scene production brief for a 30-second 3D cartoon animation. Style: 3D cartoon, professional office setting with diverse characters in business casual. Mood: motivating and energetic. Music: instrumental, upbeat with no lyrics. Format for use with Pictory, HeyGen, or Runway.
+
+Include: overall concept (2-3 sentences), 4-5 scenes each with action description and on-screen text, suggested music tempo and mood, voice-over notes if applicable.`
+    }
+  ];
+
+  const results = [];
+  for(let i=0; i<outputs.length; i++){
+    const o = outputs[i];
+    document.getElementById('ce-step').textContent = o.step + ' (' + (i+1) + '/' + outputs.length + ')';
+    try{
+      results.push({key:o.key, label:o.label, content: await callClaude(o.prompt)});
+    } catch(e){
+      results.push({key:o.key, label:o.label, content:'Generation failed. Please try again.'});
+    }
+  }
+
+  document.getElementById('ce-spinner').style.display = 'none';
+  document.getElementById('ce-step').style.display = 'none';
+
+  const tabsEl = document.getElementById('ce-out-tabs');
+  const panesEl = document.getElementById('ce-out-panes');
+  tabsEl.innerHTML = '';
+  panesEl.innerHTML = '';
+
+  results.forEach((r, i) => {
+    const first = i === 0;
+    tabsEl.innerHTML += `<div class="ce-out-tab${first?' on':''}" data-key="${r.key}" onclick="switchCETab('${r.key}')">${r.label}</div>`;
+
+    let cardHTML = '';
+    if(r.key === 'linkedin'){
+      const sections = parseLinkedIn(r.content);
+      cardHTML = renderLinkedIn(sections);
+    } else if(r.key === 'video'){
+      cardHTML = `<div class="ce-card">
+        <div class="ce-card-title">Video Production Brief <span class="ce-card-badge-info">Hand to Pictory, HeyGen, or Runway</span></div>
+        <button class="ce-copy-btn" onclick="copyCard(this)">Copy</button>
+        <div class="ce-card-body">${escapeHTML(r.content)}</div>
+      </div>`;
+    } else {
+      const titleMap = {shorts:'30-Second YouTube Shorts Script', officetok:'OfficeTok - YouTube Long-Form Outline'};
+      cardHTML = `<div class="ce-card">
+        <div class="ce-card-title">${titleMap[r.key]||r.label}</div>
+        <button class="ce-copy-btn" onclick="copyCard(this)">Copy</button>
+        <div class="ce-card-body">${escapeHTML(r.content)}</div>
+      </div>`;
+    }
+
+    panesEl.innerHTML += `<div class="ce-out-pane${first?' on':''}" id="cep-${r.key}">${cardHTML}</div>`;
+  });
+
+  document.getElementById('ce-results').style.display = 'block';
+  document.getElementById('ce-results').scrollIntoView({behavior:'smooth', block:'start'});
+  btn.disabled = false;
+  btnText.textContent = 'Generate All Content →';
+}
+
+function parseLinkedIn(text){
+  const keys = ['LINKEDIN ARTICLE','LINKEDIN - WEDNESDAY','LINKEDIN - THURSDAY','LINKEDIN - FRIDAY','LINKEDIN - BONUS'];
+  const days = ['Tuesday (Article)','Wednesday','Thursday','Friday','Bonus'];
+  const results = [];
+  keys.forEach((k,i) => {
+    const regex = new RegExp(`\\[${k}\\]([\\s\\S]*?)(?=\\n\\[LINKEDIN|$)`, 'i');
+    const match = text.match(regex);
+    results.push({day: days[i], content: match ? match[1].trim() : ''});
+  });
+  return results;
+}
+
+function renderLinkedIn(sections){
+  let html = '';
+  sections.forEach((s, i) => {
+    const isFirst = i === 0;
+    html += `<div class="ce-card">
+      <div class="ce-card-title">${s.day}${isFirst ? ' <span class="ce-card-badge">Long-form</span>' : ''}</div>
+      <button class="ce-copy-btn" onclick="copyCard(this)">Copy</button>
+      <div class="ce-card-body">${escapeHTML(s.content)}</div>
+    </div>`;
+    if(i === 0) html += '<div class="ce-divider"></div>';
+  });
+  return html;
+}
+
+function switchCETab(key){
+  document.querySelectorAll('.ce-out-tab').forEach(t=>t.classList.toggle('on', t.dataset.key===key));
+  document.querySelectorAll('.ce-out-pane').forEach(p=>p.classList.remove('on'));
+  document.getElementById('cep-'+key).classList.add('on');
+}
+
+function copyCard(btn){
+  const body = btn.nextElementSibling;
+  navigator.clipboard.writeText(body.innerText).then(()=>{
+    btn.textContent = 'Copied!';
+    setTimeout(()=>btn.textContent='Copy', 2000);
+  });
+}
+
+function escapeHTML(str){
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function resetCE(){
+  document.getElementById('ce-article').value = '';
+  document.getElementById('ce-char').textContent = '0';
+  document.getElementById('ce-results').style.display = 'none';
+  document.getElementById('ce-error').style.display = 'none';
+  document.getElementById('ce-article').focus();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ---- CHIEF OF STAFF ---- */
+const COS_SYSTEM=`You are the AI Chief of Staff for Juan R. Cuellar, founder and CEO of Apto Strategic Consulting LLC, a veteran-owned SDVOSB based in Lakeway, Texas.
+
+Juan has 20+ years of combined Marine Corps and Army service. He holds Harvard Business School Online certificates in Strategy Execution and Disruptive Strategy, dual Scrum.org certifications, and has adjunct faculty experience at SNHU.
+
+Apto Strategic Consulting: UEI R24FMKHGQCG3, EIN 41-4862868, NAICS 541611, SAM.gov registered, TX VetHUB designated, pursuing SBA SDVOSB certification. Bilingual EN/ES delivery is a core differentiator.
+
+Current priorities:
+- COMPASS course (Course 7) - needs NotebookLM companions and Gumroad URLs
+- SBA SDVOSB certification completion
+- Substack publication build-out (aptostrategic78.substack.com)
+- Federal and state government contracting pursuit
+- EBV Program at Texas A&M McFerrin Center (Summer 2026)
+
+Products: Six Apto Academy courses live (ANCHOR, CLEAR, LOOP, VECTOR, PRESSUREPOINT, BRIDGE). COMPASS coming. Gumroad: jcuellar1.gumroad.com.
+
+AI Stack: Claude API (Sonnet for CoS, Haiku for content), Pinecone apto-brain index, LlamaIndex, Railway deployment, Make.com automation, Google Apps Script content engine.
+
+Respond as a sharp, direct, veteran-aware Chief of Staff. Be concise, action-oriented, and always bilingual-aware. Use plain language. Never use em dashes - use hyphens instead.`;
+
+let cosHistory=[];
+
+async function sendCOS(){
+  const input=document.getElementById('cos-input');
+  const msg=input.value.trim();
+  if(!msg)return;
+  input.value='';
+  document.getElementById('cos-empty').style.display='none';
+  const hist=document.getElementById('cos-history');
+  const typing=document.getElementById('cos-typing');
+  hist.insertBefore(makeMsg('user',msg),typing);
+  hist.scrollTop=hist.scrollHeight;
+  cosHistory.push({role:'user',content:msg});
+  document.getElementById('cos-send').disabled=true;
+  typing.style.display='block';
+  hist.scrollTop=hist.scrollHeight;
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,system:COS_SYSTEM,messages:cosHistory})
+    });
+    const d=await r.json();
+    const reply=d.content?.[0]?.text||'Error - please try again.';
+    cosHistory.push({role:'assistant',content:reply});
+    typing.style.display='none';
+    hist.insertBefore(makeMsg('assistant',reply),typing);
+    hist.scrollTop=hist.scrollHeight;
+  }catch(e){
+    typing.style.display='none';
+    hist.insertBefore(makeMsg('assistant','Connection error. Please try again.'),typing);
+  }
+  document.getElementById('cos-send').disabled=false;
+  input.focus();
+}
+
+function makeMsg(role,text){
+  const div=document.createElement('div');
+  div.className='cos-msg '+role;
+  div.textContent=text;
+  return div;
+}
+
+function clearCOS(){
+  cosHistory=[];
+  const hist=document.getElementById('cos-history');
+  [...hist.querySelectorAll('.cos-msg')].forEach(m=>m.remove());
+  document.getElementById('cos-empty').style.display='block';
+}
+</script>
+</body>
+</html>

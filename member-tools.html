@@ -277,7 +277,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,10,10,.95
 </div>
 
 <script>
-const APPS_SCRIPT_URL = 'https://script.google.com/a/macros/aptostrategic.com/s/AKfycbyXwFrkJvWA831pS8vp8gbsr6CRJQywQBbPSuvvIm5OurGCPjJwvRlw0973D-NgNgzj/exec';
+const RAILWAY_URL = 'https://web-production-7b5c8.up.railway.app';
 
 /* ---- GATE ---- */
 const PASS = 'Debanhi!234';
@@ -315,14 +315,14 @@ document.getElementById('ce-article').addEventListener('input', function(){
 });
 
 async function callAppsScript(articleText, target){
-  const response = await fetch(APPS_SCRIPT_URL, {
+  const response = await fetch(RAILWAY_URL + '/content-engine', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ articleText: articleText, target: target }),
-    redirect: 'follow'
+    body: JSON.stringify({ articleText: articleText, target: target })
   });
   if(!response.ok) throw new Error('Request failed: ' + response.status);
-  return await response.text();
+  const data = await response.json();
+  return data.result;
 }
 
 const CE_OUTPUTS = [

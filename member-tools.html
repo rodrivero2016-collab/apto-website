@@ -315,9 +315,10 @@ document.getElementById('ce-article').addEventListener('input', function(){
 });
 
 async function callAppsScript(articleText, target){
-  const params = new URLSearchParams({ articleText: articleText, target: target });
-  const response = await fetch(APPS_SCRIPT_URL + '?' + params.toString(), {
-    method: 'GET',
+  const response = await fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ articleText: articleText, target: target }),
     redirect: 'follow'
   });
   if(!response.ok) throw new Error('Request failed: ' + response.status);

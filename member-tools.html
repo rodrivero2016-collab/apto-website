@@ -333,12 +333,17 @@ const CE_OUTPUTS = [
   { key:'substack', label:'Substack Email', step:'Writing Substack newsletter...' }
 ];
 
-async function runCE(){
-  const article = document.getElementById('ce-article').value.trim();
-  if(!article || article.length < 100){
-    showCEError('Please paste your full article before generating (minimum 100 characters).');
-    return;
-  }
+async function callAppsScript(articleText, target){
+  // Trim to 3000 chars to stay within URL limits
+  const trimmed = articleText.substring(0, 3000);
+  const params = new URLSearchParams({ articleText: trimmed, target: target });
+  const response = await fetch(APPS_SCRIPT_URL + '?' + params.toString(), {
+    method: 'GET',
+    redirect: 'follow'
+  });
+  if(!response.ok) throw new Error('Request failed: ' + response.status);
+  return await response.text();
+}
 
   const btn = document.getElementById('ce-btn');
   const btnText = document.getElementById('ce-btn-text');

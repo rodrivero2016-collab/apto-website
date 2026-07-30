@@ -245,6 +245,13 @@ details.cfg .in{padding:18px;border:1px solid var(--line);border-radius:4px;marg
 .wsum{font-size:11px;letter-spacing:.06em;color:var(--grey);margin-top:10px;text-align:right}
 .wsum.bad{color:#e05}
 
+/* ---------- embed mode: loaded in an iframe from member-tools.html ----------
+   The parent page already gated the user, so the gate and the nav are hidden
+   and the padding collapses. Add ?embed=1 to the URL to trigger it. */
+html.embed #gate,html.embed header{display:none!important}
+html.embed .wrap{padding-top:0!important;padding-left:0!important;padding-right:0!important;max-width:none}
+html.embed body{padding-bottom:8px;background:transparent}
+
 @media(max-width:640px){
   .wrap,.hrow{padding-left:20px;padding-right:20px}
   .grid2{grid-template-columns:1fr}
@@ -256,6 +263,11 @@ details.cfg .in{padding:18px;border:1px solid var(--line);border-radius:4px;marg
 </style>
 </head>
 <body>
+<script>
+/* Runs before paint so the gate never flashes when embedded. */
+if(new URLSearchParams(location.search).has('embed'))
+  document.documentElement.classList.add('embed');
+</script>
 
 <!-- ============ GATE ============ -->
 <div id="gate">
@@ -1168,6 +1180,23 @@ function resetAll(){
   syncText();
   window.scrollTo({top:0,behavior:'smooth'});
 }
+/* ---------------- embed mode ---------------- */
+const EMBED = new URLSearchParams(location.search).has('embed');
+if(EMBED){
+  try{sessionStorage.setItem('apto_bid_gate','1')}catch(e){}
+  document.getElementById('gate').style.display='none';
+  // Report our height so the parent iframe can grow with the content.
+  const postH=()=>{
+    try{parent.postMessage({aptoBidAgent:'height',
+      value:Math.max(document.documentElement.scrollHeight,document.body.scrollHeight)+24},'*')}catch(e){}
+  };
+  if(window.ResizeObserver)new ResizeObserver(postH).observe(document.body);
+  window.addEventListener('load',postH);
+  document.addEventListener('click',()=>setTimeout(postH,120));
+  setInterval(postH,1200);
+  postH();
+}
+
 load(); syncText();
 </script>
 </body>

@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Apto Bid Agent | Member Tools</title>
+<style>
+:root{
+  --bg:#0b1220; --bg2:#111c30; --card:rgba(255,255,255,.055);
+  --line:rgba(255,255,255,.11); --line2:rgba(255,255,255,.06);
+  --txt:#e8eef7; --mut:#94a3b8; --dim:#64748b;
+  --gold:#c9a24a; --gold2:#e0be6d;
+  --green:#34d399; --amber:#fbbf24; --red:#f87171; --blue:#60a5fa;
+  --r:14px; --shadow:0 8px 32px rgba(0,0,0,.34);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:
+    radial-gradient(1100px 600px at 12% -8%, #1b2a47 0%, transparent 58%),
+    radial-gradient(900px 500px at 92% 4%, #21324f 0%, transparent 55%),
+    linear-gradient(180deg,var(--bg) 0%, var(--bg2) 100%);
+  background-attachment:fixed;
+  color:var(--txt);
+  font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  min-height:100vh; padding:0 0 80px;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+a{color:var(--gold2);text-decoration:none}
+h1,h2,h3,h4{margin:0;line-height:1.25;font-weight:650;letter-spacing:-.01em}
+button{font-family:inherit}
+
+/* ---------- gate ---------- */
+#gate{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(180deg,#0b1220,#111c30);padding:24px}
+#gate .box{max-width:400px;width:100%;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r);padding:32px;backdrop-filter:blur(14px);text-align:center;box-shadow:var(--shadow)}
+#gate .mark{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+#gate h2{font-size:20px;margin-bottom:6px}
+#gate p{color:var(--mut);font-size:13px;margin:0 0 20px}
+#gate input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);
+  background:rgba(0,0,0,.28);color:var(--txt);font-size:15px;margin-bottom:12px}
+#gate .err{color:var(--red);font-size:12px;min-height:16px;margin-top:8px}
+
+/* ---------- header ---------- */
+header{border-bottom:1px solid var(--line2);backdrop-filter:blur(14px);
+  background:rgba(11,18,32,.62);position:sticky;top:0;z-index:60}
+.hrow{display:flex;align-items:center;gap:16px;padding:14px 0;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:10px;margin-right:auto}
+.brand .n{font-size:18px;font-weight:700}
+.brand .t{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.hbtn{background:transparent;border:1px solid var(--line);color:var(--mut);border-radius:9px;
+  padding:7px 12px;font-size:12.5px;cursor:pointer;transition:.16s}
+.hbtn:hover{color:var(--txt);border-color:var(--gold);background:rgba(201,162,74,.1)}
+.langtog{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.langtog button{background:transparent;border:0;color:var(--mut);padding:7px 13px;font-size:12.5px;cursor:pointer}
+.langtog button.on{background:var(--gold);color:#14100a;font-weight:650}
+
+/* ---------- cards ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:22px;backdrop-filter:blur(12px);box-shadow:var(--shadow);margin-bottom:18px}
+.card>h3{font-size:15px;display:flex;align-items:center;gap:9px;margin-bottom:4px}
+.step{width:22px;height:22px;border-radius:50%;background:var(--gold);color:#14100a;
+  display:inline-flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:750;flex:none}
+.sub{color:var(--mut);font-size:12.5px;margin:0 0 16px}
+
+/* ---------- controls ---------- */
+.seg{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.seg button{flex:1;min-width:140px;text-align:left;background:rgba(0,0,0,.22);
+  border:1px solid var(--line);border-radius:11px;padding:12px 14px;color:var(--mut);cursor:pointer;transition:.16s}
+.seg button .k{display:block;font-size:13.5px;font-weight:650;color:var(--txt);margin-bottom:2px}
+.seg button .d{display:block;font-size:11.5px;line-height:1.45}
+.seg button.on{border-color:var(--gold);background:rgba(201,162,74,.13)}
+.seg button.on .k{color:var(--gold2)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fld label{display:block;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:6px}
+.fld input,.fld select,.fld textarea{width:100%;padding:10px 12px;border-radius:10px;
+  border:1px solid var(--line);background:rgba(0,0,0,.26);color:var(--txt);font-size:14px;font-family:inherit}
+.fld textarea{min-height:150px;resize:vertical;font-size:13px;line-height:1.55}
+.fld+.fld{margin-top:12px}
+
+.drop{border:1.5px dashed var(--line);border-radius:12px;padding:26px 18px;text-align:center;
+  cursor:pointer;transition:.16s;background:rgba(0,0,0,.14)}
+.drop:hover,.drop.over{border-color:var(--gold);background:rgba(201,162,74,.09)}
+.drop .ic{font-size:26px;margin-bottom:6px;opacity:.8}
+.drop .m{font-size:13.5px;font-weight:600}
+.drop .s{font-size:11.5px;color:var(--dim);margin-top:3px}
+.filechip{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:6px 11px;
+  border-radius:20px;background:rgba(52,211,153,.13);border:1px solid rgba(52,211,153,.35);
+  font-size:12px;color:var(--green)}
+
+.btn{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#14100a;border:0;
+  border-radius:11px;padding:13px 26px;font-size:14.5px;font-weight:700;cursor:pointer;transition:.16s}
+.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 20px rgba(201,162,74,.32)}
+.btn:disabled{opacity:.42;cursor:not-allowed}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--mut);font-weight:600}
+.btn.ghost:hover:not(:disabled){color:var(--txt);border-color:var(--gold);box-shadow:none;transform:none}
+.btn.sm{padding:8px 15px;font-size:12.5px;border-radius:9px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;gap:5px;border-bottom:1px solid var(--line2);margin-bottom:20px;
+  overflow-x:auto;padding-bottom:1px}
+.tabs button{background:transparent;border:0;border-bottom:2px solid transparent;color:var(--mut);
+  padding:11px 15px;font-size:13.5px;cursor:pointer;white-space:nowrap;transition:.16s;font-weight:550}
+.tabs button:hover{color:var(--txt)}
+.tabs button.on{color:var(--gold2);border-bottom-color:var(--gold)}
+.tabs button .cnt{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:9px;
+  background:rgba(255,255,255,.1);font-size:10.5px}
+.pane{display:none}.pane.on{display:block}
+
+/* ---------- verdict ---------- */
+.verdict{display:grid;grid-template-columns:190px 1fr;gap:26px;align-items:center}
+.dial{position:relative;width:180px;height:180px}
+.dial svg{transform:rotate(-90deg)}
+.dial .mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.dial .num{font-size:40px;font-weight:750;line-height:1;letter-spacing:-.02em}
+.dial .of{font-size:11px;color:var(--dim);margin-top:3px}
+.vpill{display:inline-block;padding:7px 17px;border-radius:22px;font-size:13px;font-weight:750;
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.v-bid{background:rgba(52,211,153,.17);color:var(--green);border:1px solid rgba(52,211,153,.42)}
+.v-cond{background:rgba(251,191,36,.17);color:var(--amber);border:1px solid rgba(251,191,36,.42)}
+.v-no{background:rgba(248,113,113,.17);color:var(--red);border:1px solid rgba(248,113,113,.42)}
+.vline{font-size:15px;line-height:1.6;color:var(--txt);margin:0 0 10px}
+.vmeta{display:flex;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin-top:12px}
+.vmeta b{display:block;color:var(--txt);font-size:14px;font-weight:650}
+
+/* ---------- factors ---------- */
+.fac{padding:13px 0;border-bottom:1px solid var(--line2)}
+.fac:last-child{border-bottom:0}
+.fac .top{display:flex;align-items:center;gap:12px;margin-bottom:5px}
+.fac .nm{font-size:13.5px;font-weight:600;flex:1}
+.fac .wt{font-size:11px;color:var(--dim);flex:none}
+.fac .sc{font-size:13px;font-weight:750;width:34px;text-align:right;flex:none}
+.bar{height:6px;border-radius:4px;background:rgba(255,255,255,.075);overflow:hidden;margin-bottom:6px}
+.bar i{display:block;height:100%;border-radius:4px;transition:width .5s ease}
+.fac .why{font-size:12.5px;color:var(--mut);line-height:1.55}
+.fac.crit{background:rgba(248,113,113,.06);border-left:2px solid var(--red);padding-left:12px;
+  margin-left:-14px;border-radius:0 6px 6px 0}
+
+/* ---------- lists ---------- */
+.blk{margin-top:22px}
+.blk h4{font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:var(--gold);margin-bottom:11px}
+ul.cl{list-style:none;padding:0;margin:0}
+ul.cl li{position:relative;padding:7px 0 7px 22px;font-size:13.5px;color:var(--txt);
+  border-bottom:1px solid var(--line2);line-height:1.55}
+ul.cl li:last-child{border-bottom:0}
+ul.cl li:before{content:"";position:absolute;left:4px;top:15px;width:5px;height:5px;
+  border-radius:50%;background:var(--gold)}
+ul.cl.warn li:before{background:var(--red)}
+ul.cl.ok li:before{background:var(--green)}
+
+.alert{border-radius:11px;padding:14px 16px;font-size:13.5px;line-height:1.6;margin-bottom:16px}
+.alert.red{background:rgba(248,113,113,.11);border:1px solid rgba(248,113,113,.34);color:#fecaca}
+.alert.amb{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.32);color:#fde68a}
+.alert.blu{background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:#bfdbfe}
+.alert b{color:#fff}
+
+/* ---------- table ---------- */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:11px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:840px}
+th{background:rgba(0,0,0,.3);text-align:left;padding:10px 11px;font-size:10.5px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--dim);font-weight:650;
+  border-bottom:1px solid var(--line);position:sticky;top:0}
+td{padding:10px 11px;border-bottom:1px solid var(--line2);vertical-align:top;line-height:1.5}
+tr:last-child td{border-bottom:0}
+tr.done td{opacity:.44}
+tr.done td .rq{text-decoration:line-through}
+td input[type=checkbox]{width:16px;height:16px;accent-color:var(--gold);cursor:pointer}
+.tag{display:inline-block;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:750;letter-spacing:.05em}
+.tag.M{background:rgba(248,113,113,.18);color:#fca5a5}
+.tag.D{background:rgba(96,165,250,.18);color:#93c5fd}
+.tag.I{background:rgba(148,163,184,.18);color:#cbd5e1}
+
+/* ---------- proposal ---------- */
+.sec{border:1px solid var(--line);border-radius:11px;margin-bottom:11px;overflow:hidden;background:rgba(0,0,0,.15)}
+.sec>.h{display:flex;align-items:center;gap:11px;padding:13px 15px;cursor:pointer;
+  background:rgba(255,255,255,.03);transition:.16s}
+.sec>.h:hover{background:rgba(255,255,255,.055)}
+.sec>.h .no{width:21px;height:21px;border-radius:5px;background:rgba(201,162,74,.19);color:var(--gold2);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:750;flex:none}
+.sec>.h .ti{flex:1;font-size:13.5px;font-weight:600}
+.sec>.h .ar{color:var(--dim);font-size:11px;transition:.2s}
+.sec.open>.h .ar{transform:rotate(90deg)}
+.sec>.b{display:none;padding:16px;border-top:1px solid var(--line2)}
+.sec.open>.b{display:block}
+.sec>.b .body{white-space:pre-wrap;font-size:13.5px;line-height:1.72;color:#dbe4f0}
+.sec>.b .body h5{color:var(--gold2);font-size:12.5px;margin:16px 0 6px;letter-spacing:.04em;text-transform:uppercase}
+.fill{background:rgba(251,191,36,.2);border-bottom:1px dashed var(--amber);padding:0 3px;border-radius:3px;color:#fde68a}
+
+/* ---------- misc ---------- */
+.spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(20,16,10,.28);
+  border-top-color:#14100a;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px;margin-right:8px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.prog{margin-top:14px;font-size:13px;color:var(--mut);display:none}
+.prog.on{display:block}
+.prog .li{padding:4px 0;display:flex;gap:9px;align-items:center}
+.prog .li .d{width:6px;height:6px;border-radius:50%;background:var(--dim);flex:none}
+.prog .li.run .d{background:var(--gold);animation:pu 1s infinite}
+.prog .li.ok .d{background:var(--green)}
+.prog .li.ok{color:var(--green)}
+.prog .li.run{color:var(--gold2)}
+@keyframes pu{50%{opacity:.3}}
+
+.empty{text-align:center;padding:56px 22px;color:var(--dim)}
+.empty .ic{font-size:34px;opacity:.35;margin-bottom:12px}
+.empty p{font-size:13.5px;margin:0}
+
+.foot{margin-top:26px;padding-top:18px;border-top:1px solid var(--line2);
+  font-size:11.5px;color:var(--dim);line-height:1.65}
+
+details.cfg{margin-top:14px}
+details.cfg summary{cursor:pointer;font-size:12px;color:var(--dim);padding:6px 0}
+details.cfg summary:hover{color:var(--mut)}
+details.cfg .in{padding:14px;border:1px solid var(--line2);border-radius:10px;margin-top:8px;background:rgba(0,0,0,.18)}
+
+.wrow{display:flex;align-items:center;gap:12px;padding:7px 0}
+.wrow .l{flex:1;font-size:12.5px}
+.wrow input[type=range]{width:130px;accent-color:var(--gold)}
+.wrow .v{width:40px;text-align:right;font-size:12px;color:var(--gold2);font-weight:650}
+.wsum{font-size:11.5px;color:var(--dim);margin-top:8px;text-align:right}
+.wsum.bad{color:var(--red)}
+
+@media(max-width:760px){
+  .grid2{grid-template-columns:1fr}
+  .verdict{grid-template-columns:1fr;justify-items:center;text-align:center;gap:18px}
+  .vmeta{justify-content:center}
+  .seg button{min-width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ GATE ============ -->
+<div id="gate">
+  <div class="box">
+    <div class="mark">Apto Member Tools</div>
+    <h2 data-i18n="gateT">Bid Agent</h2>
+    <p data-i18n="gateS">Enter your member access code to continue.</p>
+    <input type="password" id="gpw" placeholder="Access code" autocomplete="current-password">
+    <button class="btn" style="width:100%" onclick="unlock()" data-i18n="gateB">Unlock</button>
+    <div class="err" id="gerr"></div>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="wrap hrow">
+    <div class="brand">
+      <span class="n">Apto</span>
+      <span class="t" data-i18n="hdr">Bid Agent</span>
+    </div>
+    <div class="langtog">
+      <button id="lEN" class="on" onclick="setLang('en')">EN</button>
+      <button id="lES" onclick="setLang('es')">ES</button>
+    </div>
+    <button class="hbtn" onclick="resetAll()" data-i18n="newBid">New bid</button>
+    <a class="hbtn" href="member-tools.html" style="display:inline-block" data-i18n="back">Member Tools</a>
+  </div>
+</header>
+
+<div class="wrap" style="padding-top:24px">
+
+<!-- ============ INPUT ============ -->
+<div class="card" id="inputCard">
+  <h3><span class="step">1</span><span data-i18n="s1T">Solicitation type</span></h3>
+  <p class="sub" data-i18n="s1S">The type sets the workflow. RFP runs the full response. RFQ is price-led. RFI is capability-led.</p>
+  <div class="seg" id="modeSeg">
+    <button data-mode="RFP" class="on">
+      <span class="k">RFP</span>
+      <span class="d" data-i18n="mRFP">Request for Proposal. Full technical response, approach, qualifications, price. Evaluated on best value.</span>
+    </button>
+    <button data-mode="RFQ">
+      <span class="k">RFQ</span>
+      <span class="d" data-i18n="mRFQ">Request for Quotation. Scope is fixed and known. Competition is on price and terms.</span>
+    </button>
+    <button data-mode="RFI">
+      <span class="k">RFI</span>
+      <span class="d" data-i18n="mRFI">Request for Information or Sources Sought. Market research. Position for the future solicitation.</span>
+    </button>
+  </div>
+</div>
+
+<div class="card">
+  <h3><span class="step">2</span><span data-i18n="s2T">Load the solicitation</span></h3>
+  <p class="sub" data-i18n="s2S">Upload the PDF or Word file, or paste the text. The document is read in your browser. Only the extracted text is sent for analysis.</p>
+
+  <div class="drop" id="drop" onclick="document.getElementById('fin').click()">
+    <div class="ic">&#128196;</div>
+    <div class="m" data-i18n="dropM">Drop the solicitation here or click to browse</div>
+    <div class="s" data-i18n="dropS">PDF, DOCX, or TXT. Up to about 300 pages.</div>
+  </div>
+  <input type="file" id="fin" accept=".pdf,.docx,.txt,.md" style="display:none">
+  <div id="fileInfo"></div>
+
+  <div class="fld" style="margin-top:16px">
+    <label data-i18n="lblText">Solicitation text</label>
+    <textarea id="rfpText" placeholder="Paste the solicitation text here if you do not have a file, or edit the extracted text below."></textarea>
+    <div style="font-size:11.5px;color:var(--dim);margin-top:6px" id="charCount">0 characters</div>
+  </div>
+
+  <div class="grid2" style="margin-top:14px">
+    <div class="fld">
+      <label data-i18n="lblAgency">Issuing agency (optional)</label>
+      <input id="agency" placeholder="e.g. Travis County, Texas">
+    </div>
+    <div class="fld">
+      <label data-i18n="lblSol">Solicitation number (optional)</label>
+      <input id="solno" placeholder="e.g. RFP 2026-014">
+    </div>
+    <div class="fld">
+      <label data-i18n="lblDue">Response due date (optional)</label>
+      <input id="dueDate" type="date">
+    </div>
+    <div class="fld">
+      <label data-i18n="lblVal">Estimated value in USD (optional)</label>
+      <input id="estVal" type="number" placeholder="e.g. 85000">
+    </div>
+  </div>
+
+  <details class="cfg">
+    <summary data-i18n="advT">Advanced: scoring weights and connection</summary>
+    <div class="in">
+      <div style="font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:10px" data-i18n="wT">Fit calculator weights</div>
+      <div id="weights"></div>
+      <div class="wsum" id="wsum"></div>
+      <div class="fld" style="margin-top:16px">
+        <label data-i18n="lblEp">Backend endpoint</label>
+        <input id="endpoint" value="https://web-production-7b5c8.up.railway.app/bid-agent">
+        <div style="font-size:11px;color:var(--dim);margin-top:6px" data-i18n="epNote">Your Railway Flask app. The Anthropic key stays on the server and is never exposed here.</div>
+      </div>
+    </div>
+  </details>
+
+  <div class="actions">
+    <button class="btn" id="runBtn" onclick="runAll()" disabled data-i18n="runB">Run the analysis</button>
+    <button class="btn ghost sm" onclick="runOne('fit')" id="fitOnly" disabled data-i18n="fitB">Fit score only</button>
+    <span style="font-size:12px;color:var(--dim)" data-i18n="runNote">Fit score runs first. If it says no-bid, you can stop there.</span>
+  </div>
+
+  <div class="prog" id="prog">
+    <div class="li" data-k="fit"><span class="d"></span><span data-i18n="pFit">Scoring fit against the Apto profile</span></div>
+    <div class="li" data-k="compliance"><span class="d"></span><span data-i18n="pComp">Extracting the compliance matrix</span></div>
+    <div class="li" data-k="proposal"><span class="d"></span><span data-i18n="pProp">Drafting the response sections</span></div>
+    <div class="li" data-k="qa"><span class="d"></span><span data-i18n="pQa">Building the submission checklist</span></div>
+  </div>
+</div>
+
+<!-- ============ RESULTS ============ -->
+<div id="results" style="display:none">
+  <div class="tabs">
+    <button class="on" data-tab="fit" data-i18n="tFit">Fit and bid decision</button>
+    <button data-tab="compliance" data-i18n="tComp">Compliance matrix<span class="cnt" id="cComp">0</span></button>
+    <button data-tab="proposal" data-i18n="tProp">Proposal builder</button>
+    <button data-tab="qa" data-i18n="tQa">Submission QA</button>
+  </div>
+
+  <div class="pane on" id="pane-fit"></div>
+  <div class="pane" id="pane-compliance"></div>
+  <div class="pane" id="pane-proposal"></div>
+  <div class="pane" id="pane-qa"></div>
+</div>
+
+<div class="foot">
+  <span data-i18n="disc">Decision support only. Not legal, accounting, or contractual advice. Verify every certification status, legal term, dollar threshold, deadline, and submission requirement against the official solicitation documents and the issuing agency before submitting. Apto Strategic Consulting LLC assumes no liability for reliance on this output. Nothing generated here is submitted automatically.</span>
+</div>
+
+</div><!-- /wrap -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script>
+/* =====================================================================
+   APTO BID AGENT
+   Front end only. All Anthropic calls proxy through the Railway Flask
+   app so the API key never reaches the browser.
+   ===================================================================== */
+
+const ACCESS_CODE = "Debanhi!234"; // matches the existing member-tools gate
+
+const FACTORS = [
+  {k:"capability_fit",        w:25, en:"Capability fit with Apto services",    es:"Ajuste de capacidad con los servicios de Apto"},
+  {k:"set_aside_advantage",   w:15, en:"Set-aside and certification advantage",es:"Ventaja por certificaciones y reservas"},
+  {k:"past_performance_match",w:15, en:"Past performance match",               es:"Coincidencia de experiencia previa"},
+  {k:"competitive_landscape", w:10, en:"Competitive landscape",                es:"Panorama competitivo"},
+  {k:"effort_vs_value",       w:15, en:"Effort versus contract value",         es:"Esfuerzo frente al valor del contrato"},
+  {k:"timeline_feasibility",  w:10, en:"Timeline feasibility",                 es:"Viabilidad del calendario"},
+  {k:"financial_contractual_risk",w:10,en:"Financial and contractual risk",    es:"Riesgo financiero y contractual"}
+];
+
+const I18N = {
+  en:{},
+  es:{
+    back:"Herramientas de miembro", newBid:"Nueva licitacion",
+    gateS:"Ingrese su codigo de acceso de miembro para continuar.", gateB:"Desbloquear",
+    lblAgency:"Agencia emisora (opcional)", lblDue:"Fecha limite de respuesta (opcional)",
+    wT:"Pesos de la calculadora de ajuste", fitB:"Solo puntuacion de ajuste",
+    tComp:"Matriz de cumplimiento", tProp:"Constructor de propuesta", tQa:"Control de entrega",
+    gateT:"Agente de Licitaciones", gateS:"Ingrese su codigo de acceso de miembro para continuar.", gateB:"Desbloquear",
+    hdr:"Agente de Licitaciones", newBid:"Nueva licitacion", back:"Herramientas",
+    s1T:"Tipo de solicitud",
+    s1S:"El tipo define el flujo de trabajo. RFP ejecuta la respuesta completa. RFQ se centra en el precio. RFI se centra en la capacidad.",
+    mRFP:"Solicitud de Propuesta. Respuesta tecnica completa, enfoque, calificaciones y precio. Se evalua por mejor valor.",
+    mRFQ:"Solicitud de Cotizacion. El alcance es fijo y conocido. La competencia es por precio y terminos.",
+    mRFI:"Solicitud de Informacion o busqueda de fuentes. Investigacion de mercado. Posicionarse para la solicitud futura.",
+    s2T:"Cargar la solicitud",
+    s2S:"Cargue el archivo PDF o Word, o pegue el texto. El documento se lee en su navegador. Solo se envia el texto extraido para analisis.",
+    dropM:"Suelte la solicitud aqui o haga clic para buscar",
+    dropS:"PDF, DOCX o TXT. Hasta unas 300 paginas.",
+    lblText:"Texto de la solicitud", lblAgency:"Agencia emisora (opcional)",
+    lblSol:"Numero de solicitud (opcional)", lblDue:"Fecha limite de respuesta (opcional)",
+    lblVal:"Valor estimado en USD (opcional)",
+    advT:"Avanzado: pesos de puntuacion y conexion", wT:"Pesos de la calculadora de ajuste",
+    lblEp:"Punto de conexion del servidor",
+    epNote:"Su aplicacion Flask en Railway. La clave de Anthropic permanece en el servidor y nunca se expone aqui.",
+    runB:"Ejecutar el analisis", fitB:"Solo puntuacion de ajuste",
+    runNote:"La puntuacion de ajuste corre primero. Si indica no licitar, puede detenerse ahi.",
+    pFit:"Puntuando el ajuste contra el perfil de Apto",
+    pComp:"Extrayendo la matriz de cumplimiento",
+    pProp:"Redactando las secciones de la respuesta",
+    pQa:"Construyendo la lista de verificacion de entrega",
+    tFit:"Ajuste y decision", tComp:"Matriz de cumplimiento", tProp:"Constructor de propuesta", tQa:"Control de entrega",
+    disc:"Solo apoyo a la decision. No constituye asesoria legal, contable ni contractual. Verifique cada estado de certificacion, termino legal, umbral monetario, fecha limite y requisito de entrega contra los documentos oficiales de la solicitud y la agencia emisora antes de presentar. Apto Strategic Consulting LLC no asume responsabilidad por el uso de este resultado. Nada de lo generado aqui se envia automaticamente."
+  }
+};
+
+let LANG="en", MODE="RFP", DOCTEXT="", WEIGHTS={}, STATE={};
+
+/* ---------------- gate ---------------- */
+function unlock(){
+  const v=document.getElementById('gpw').value;
+  if(v===ACCESS_CODE){
+    document.getElementById('gate').style.display='none';
+    try{sessionStorage.setItem('apto_bid_gate','1')}catch(e){}
+  }else{
+    document.getElementById('gerr').textContent = LANG==='es'?'Codigo incorrecto.':'Incorrect code.';
+    document.getElementById('gpw').value='';
+  }
+}
+document.getElementById('gpw').addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});
+try{if(sessionStorage.getItem('apto_bid_gate')==='1')document.getElementById('gate').style.display='none'}catch(e){}
+
+/* ---------------- language ---------------- */
+function setLang(l){
+  LANG=l;
+  document.getElementById('lEN').classList.toggle('on',l==='en');
+  document.getElementById('lES').classList.toggle('on',l==='es');
+  document.documentElement.lang=l;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(l==='es'&&I18N.es[k])el.textContent=I18N.es[k];
+    else if(l==='en'&&el.dataset.orig)el.textContent=el.dataset.orig;
+  });
+  buildWeights();
+  if(STATE.fit)renderFit(STATE.fit);
+  if(STATE.compliance)renderCompliance(STATE.compliance);
+  if(STATE.qa)renderQA(STATE.qa);
+}
+document.querySelectorAll('[data-i18n]').forEach(el=>{el.dataset.orig=el.textContent});
+
+/* ---------------- mode ---------------- */
+document.getElementById('modeSeg').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-mode]'); if(!b)return;
+  MODE=b.dataset.mode;
+  document.querySelectorAll('#modeSeg button').forEach(x=>x.classList.toggle('on',x===b));
+});
+
+/* ---------------- weights ---------------- */
+FACTORS.forEach(f=>WEIGHTS[f.k]=f.w);
+function buildWeights(){
+  const box=document.getElementById('weights'); box.innerHTML='';
+  FACTORS.forEach(f=>{
+    const r=document.createElement('div'); r.className='wrow';
+    r.innerHTML=`<span class="l">${LANG==='es'?f.es:f.en}</span>
+      <input type="range" min="0" max="40" step="5" value="${WEIGHTS[f.k]}" data-k="${f.k}">
+      <span class="v">${WEIGHTS[f.k]}%</span>`;
+    r.querySelector('input').addEventListener('input',ev=>{
+      WEIGHTS[f.k]=+ev.target.value;
+      r.querySelector('.v').textContent=WEIGHTS[f.k]+'%';
+      sumW();
+      if(STATE.fit)renderFit(STATE.fit);
+    });
+    box.appendChild(r);
+  });
+  sumW();
+}
+function sumW(){
+  const t=Object.values(WEIGHTS).reduce((a,b)=>a+b,0);
+  const el=document.getElementById('wsum');
+  el.textContent=(LANG==='es'?'Total: ':'Total: ')+t+'%'+(t!==100?(LANG==='es'?' (debe sumar 100)':' (should total 100)'):'');
+  el.classList.toggle('bad',t!==100);
+}
+buildWeights();
+
+/* ---------------- file intake ---------------- */
+const drop=document.getElementById('drop'), fin=document.getElementById('fin');
+['dragover','dragenter'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over')}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('over')}));
+drop.addEventListener('drop',e=>{if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0])});
+fin.addEventListener('change',e=>{if(e.target.files[0])handleFile(e.target.files[0])});
+
+async function handleFile(f){
+  const info=document.getElementById('fileInfo');
+  info.innerHTML=`<div class="filechip"><span class="spin" style="border-color:rgba(52,211,153,.3);border-top-color:var(--green)"></span>${LANG==='es'?'Leyendo':'Reading'} ${esc(f.name)}</div>`;
+  try{
+    let txt="";
+    const n=f.name.toLowerCase();
+    if(n.endsWith('.pdf')){
+      pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      const buf=await f.arrayBuffer();
+      const pdf=await pdfjsLib.getDocument({data:buf}).promise;
+      const parts=[];
+      for(let i=1;i<=pdf.numPages;i++){
+        const pg=await pdf.getPage(i);
+        const tc=await pg.getTextContent();
+        parts.push(`\n[Page ${i}]\n`+tc.items.map(t=>t.str).join(' '));
+        if(i%12===0)info.querySelector('.filechip').lastChild.textContent=` ${LANG==='es'?'Leyendo pagina':'Reading page'} ${i} / ${pdf.numPages}`;
+      }
+      txt=parts.join('\n');
+    }else if(n.endsWith('.docx')){
+      const buf=await f.arrayBuffer();
+      const r=await mammoth.extractRawText({arrayBuffer:buf});
+      txt=r.value;
+    }else{
+      txt=await f.text();
+    }
+    txt=txt.replace(/[ \t]{3,}/g,'  ').replace(/\n{4,}/g,'\n\n\n').trim();
+    if(!txt||txt.length<200){
+      info.innerHTML=`<div class="alert amb" style="margin-top:10px"><b>${LANG==='es'?'Poco texto extraido.':'Very little text extracted.'}</b> ${LANG==='es'?'El archivo puede ser un PDF escaneado sin capa de texto. Haga OCR primero o pegue el texto manualmente abajo.':'The file may be a scanned PDF with no text layer. Run OCR on it first, or paste the text manually below.'}</div>`;
+    }else{
+      info.innerHTML=`<div class="filechip">&#10003; ${esc(f.name)} &middot; ${txt.length.toLocaleString()} ${LANG==='es'?'caracteres':'characters'}</div>`;
+    }
+    document.getElementById('rfpText').value=txt;
+    syncText();
+    autoDetect(txt);
+  }catch(err){
+    info.innerHTML=`<div class="alert red" style="margin-top:10px"><b>${LANG==='es'?'No se pudo leer el archivo.':'Could not read the file.'}</b> ${esc(err.message)}. ${LANG==='es'?'Pegue el texto manualmente abajo.':'Paste the text manually below.'}</div>`;
+  }
+}
+
+/* light client-side pre-fill so JC does not retype what the doc already says */
+function autoDetect(t){
+  const head=t.slice(0,9000);
+  const m=head.match(/\b(?:RFP|RFQ|RFI|IFB|RFO|Solicitation|Sources\s+Sought)\b/i);
+  if(m){
+    const w=m[0].toUpperCase();
+    let mode = w==='RFQ'?'RFQ' : (w==='RFI'||/SOURCES/.test(w))?'RFI' : 'RFP';
+    const b=document.querySelector(`#modeSeg button[data-mode="${mode}"]`);
+    if(b){MODE=mode;document.querySelectorAll('#modeSeg button').forEach(x=>x.classList.toggle('on',x===b))}
+  }
+  const s=head.match(/(?:solicitation|rfp|rfq|rfi|bid|quote)\s*(?:no\.?|number|#)\s*[:\-]?\s*([A-Za-z0-9][A-Za-z0-9\-\/\.]{3,24})/i);
+  if(s&&!document.getElementById('solno').value)document.getElementById('solno').value=s[1];
+}
+
+document.getElementById('rfpText').addEventListener('input',syncText);
+function syncText(){
+  DOCTEXT=document.getElementById('rfpText').value.trim();
+  document.getElementById('charCount').textContent=
+    DOCTEXT.length.toLocaleString()+' '+(LANG==='es'?'caracteres':'characters');
+  const ok=DOCTEXT.length>200;
+  document.getElementById('runBtn').disabled=!ok;
+  document.getElementById('fitOnly').disabled=!ok;
+}
+
+/* ---------------- backend ---------------- */
+async function call(task){
+  const ep=document.getElementById('endpoint').value.trim();
+  const res=await fetch(ep,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      task, mode:MODE, lang:LANG,
+      weights:WEIGHTS,
+      context:{
+        agency:document.getElementById('agency').value.trim(),
+        solicitation_no:document.getElementById('solno').value.trim(),
+        due_date:document.getElementById('dueDate').value,
+        estimated_value:document.getElementById('estVal').value,
+        today:new Date().toISOString().slice(0,10)
+      },
+      fit_summary: task!=='fit' && STATE.fit ? {
+        recommendation:STATE.fit.recommendation,
+        win_themes:STATE.fit.win_themes||[],
+        summary:STATE.fit.summary||{}
+      } : null,
+      document: DOCTEXT
+    })
+  });
+  const raw=await res.text();
+  if(!res.ok)throw new Error(`Server returned ${res.status}. ${raw.slice(0,300)}`);
+  let d; try{d=JSON.parse(raw)}catch(e){throw new Error('Server did not return valid JSON. '+raw.slice(0,300))}
+  if(d.error)throw new Error(d.error);
+  return d;
+}
+
+function pset(k,s){
+  const el=document.querySelector(`.prog .li[data-k="${k}"]`); if(!el)return;
+  el.classList.remove('run','ok'); if(s)el.classList.add(s);
+}
+
+async function runOne(task){
+  document.getElementById('prog').classList.add('on');
+  const btn=document.getElementById(task==='fit'?'fitOnly':'runBtn');
+  const old=btn.innerHTML; btn.disabled=true;
+  btn.innerHTML=`<span class="spin"></span>${LANG==='es'?'Analizando':'Analyzing'}`;
+  pset(task,'run');
+  try{
+    const d=await call(task);
+    STATE[task]=d; pset(task,'ok');
+    document.getElementById('results').style.display='block';
+    ({fit:renderFit,compliance:renderCompliance,proposal:renderProposal,qa:renderQA})[task](d);
+    showTab(task);
+    save();
+    return d;
+  }catch(e){
+    pset(task,'');
+    err(task,e.message);
+    return null;
+  }finally{
+    btn.disabled=false; btn.innerHTML=old;
+  }
+}
+
+async function runAll(){
+  document.getElementById('prog').classList.add('on');
+  const btn=document.getElementById('runBtn'); btn.disabled=true;
+  const seq=['fit','compliance','proposal','qa'];
+  for(const t of seq){
+    btn.innerHTML=`<span class="spin"></span>${LANG==='es'?'Paso':'Step'} ${seq.indexOf(t)+1}/4`;
+    pset(t,'run');
+    try{
+      const d=await call(t);
+      STATE[t]=d; pset(t,'ok');
+      document.getElementById('results').style.display='block';
+      ({fit:renderFit,compliance:renderCompliance,proposal:renderProposal,qa:renderQA})[t](d);
+      if(t==='fit'){
+        showTab('fit');
+        if(d.recommendation==='NO-BID'){
+          const go=confirm(LANG==='es'
+            ?'La calculadora recomienda NO LICITAR. ¿Desea generar la respuesta completa de todas formas?'
+            :'The calculator recommends NO-BID. Generate the full response anyway?');
+          if(!go){seq.slice(1).forEach(x=>pset(x,''));break}
+        }
+      }
+    }catch(e){pset(t,'');err(t,e.message)}
+  }
+  save();
+  btn.disabled=false;
+  btn.innerHTML=LANG==='es'?'Ejecutar el analisis':'Run the analysis';
+}
+
+function err(task,msg){
+  document.getElementById('results').style.display='block';
+  document.getElementById('pane-'+task).innerHTML=
+    `<div class="alert red"><b>${LANG==='es'?'Fallo el analisis.':'Analysis failed.'}</b><br>${esc(msg)}
+     <div style="margin-top:10px;font-size:12.5px;opacity:.85">${LANG==='es'
+       ?'Verifique que la aplicacion Railway este activa, que el punto de conexion sea correcto y que ANTHROPIC_API_KEY este configurada en Railway.'
+       :'Check that the Railway app is awake, the endpoint is correct, and ANTHROPIC_API_KEY is set in Railway.'}</div></div>`;
+  showTab(task);
+}
+
+/* ---------------- tabs ---------------- */
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+function showTab(t){
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));
+  document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id==='pane-'+t));
+}
+
+/* =====================================================================
+   RENDER: FIT
+   ===================================================================== */
+function renderFit(d){
+  const T=LANG==='es';
+  const scores=d.scores||{};
+  let wsum=0,tot=0;
+  FACTORS.forEach(f=>{const s=+(scores[f.k]?.score)||0; if(s){wsum+=s*WEIGHTS[f.k]; tot+=WEIGHTS[f.k]}});
+  const avg = tot? wsum/tot : 0;
+  const anyOne = FACTORS.some(f=>+(scores[f.k]?.score)===1);
+  const blockers = d.critical_blockers||[];
+
+  let rec, cls;
+  if(anyOne||blockers.length){rec=T?'NO LICITAR':'NO-BID'; cls='v-no'}
+  else if(avg>=3.5){rec=T?'LICITAR':'BID'; cls='v-bid'}
+  else if(avg>=2.75){rec=T?'LICITAR CON CONDICIONES':'BID WITH CONDITIONS'; cls='v-cond'}
+  else{rec=T?'NO LICITAR':'NO-BID'; cls='v-no'}
+  d.recommendation = cls==='v-bid'?'BID':cls==='v-cond'?'BID WITH CONDITIONS':'NO-BID';
+  d.computed_score = avg;
+
+  const pct=Math.max(0,Math.min(1,(avg-1)/4));
+  const R=78, C=2*Math.PI*R;
+  const col = cls==='v-bid'?'var(--green)':cls==='v-cond'?'var(--amber)':'var(--red)';
+
+  const s=d.summary||{};
+  const days = daysLeft(s.due_date||document.getElementById('dueDate').value);
+
+  let h='';
+
+  if(blockers.length){
+    h+=`<div class="alert red"><b>${T?'BLOQUEADORES CRITICOS':'CRITICAL BLOCKERS'}</b>
+      <ul style="margin:8px 0 0;padding-left:18px">${blockers.map(b=>`<li>${esc(b)}</li>`).join('')}</ul></div>`;
+  }
+  if(days!==null&&days<0){
+    h+=`<div class="alert red"><b>${T?'La fecha limite ya paso.':'The deadline has passed.'}</b></div>`;
+  }else if(days!==null&&days<7){
+    h+=`<div class="alert amb"><b>${T?'Calendario ajustado.':'Tight timeline.'}</b> ${days} ${T?'dias hasta la entrega. El minimo comodo de Apto es 7 dias.':'days to submission. Apto\'s comfortable minimum is 7 days.'}</div>`;
+  }
+
+  /* verdict */
+  h+=`<div class="card"><div class="verdict">
+    <div class="dial">
+      <svg width="180" height="180" viewBox="0 0 180 180">
+        <circle cx="90" cy="90" r="${R}" fill="none" stroke="rgba(255,255,255,.075)" stroke-width="12"/>
+        <circle cx="90" cy="90" r="${R}" fill="none" stroke="${col}" stroke-width="12"
+          stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}"/>
+      </svg>
+      <div class="mid"><div class="num" style="color:${col}">${avg.toFixed(2)}</div>
+      <div class="of">${T?'de 5.00':'of 5.00'}</div></div>
+    </div>
+    <div>
+      <span class="vpill ${cls}">${rec}</span>
+      <p class="vline">${esc(d.rationale||'')}</p>
+      <div class="vmeta">
+        <div><b>${esc(s.agency||document.getElementById('agency').value||'-')}</b>${T?'Agencia':'Agency'}</div>
+        <div><b>${esc(s.solicitation_no||document.getElementById('solno').value||'-')}</b>${T?'Numero':'Number'}</div>
+        <div><b>${esc(s.type||MODE)}</b>${T?'Tipo':'Type'}</div>
+        <div><b>${esc(s.estimated_value||fmtVal()||'-')}</b>${T?'Valor':'Value'}</div>
+        <div><b>${days===null?'-':days+(T?' dias':' days')}</b>${T?'Hasta la entrega':'To deadline'}</div>
+      </div>
+    </div>
+  </div></div>`;
+
+  /* factors */
+  h+=`<div class="card"><h3>${T?'Puntuacion por factor':'Factor scores'}</h3>
+    <p class="sub">${T?'Escala de 1 a 5. Cualquier factor en 1 fuerza no licitar salvo mitigacion.':'Scale of 1 to 5. Any factor at 1 forces a no-bid unless mitigated.'}</p>`;
+  FACTORS.forEach(f=>{
+    const o=scores[f.k]||{}, sc=+o.score||0;
+    const c = sc>=4?'var(--green)':sc>=3?'var(--amber)':'var(--red)';
+    h+=`<div class="fac${sc===1?' crit':''}">
+      <div class="top">
+        <span class="nm">${T?f.es:f.en}</span>
+        <span class="wt">${WEIGHTS[f.k]}%</span>
+        <span class="sc" style="color:${c}">${sc||'-'}/5</span>
+      </div>
+      <div class="bar"><i style="width:${sc?(sc/5*100):0}%;background:${c}"></i></div>
+      <div class="why">${esc(o.rationale||'')}</div>
+    </div>`;
+  });
+  h+=`</div>`;
+
+  /* scope */
+  if(s.scope||s.evaluation_criteria){
+    h+=`<div class="card"><h3>${T?'Resumen de la solicitud':'Solicitation summary'}</h3>`;
+    if(s.scope)h+=`<p style="font-size:13.5px;line-height:1.7;color:#dbe4f0;margin:0 0 4px">${esc(s.scope)}</p>`;
+    const rows=[
+      [T?'Tipo de contrato':'Contract type', s.contract_type],
+      [T?'Periodo de ejecucion':'Period of performance', s.period_of_performance],
+      [T?'Codigos NAICS o de clase':'NAICS or class codes', s.codes],
+      [T?'Estado de reserva':'Set-aside status', s.set_aside],
+      [T?'Metodo de entrega':'Submission method', s.submission_method],
+      [T?'Preguntas antes de':'Questions due', s.questions_due],
+      [T?'Reunion previa':'Pre-bid conference', s.pre_bid],
+      [T?'Fecha limite':'Response due', s.due_date],
+      [T?'Adjudicacion prevista':'Anticipated award', s.anticipated_award]
+    ].filter(r=>r[1]);
+    if(rows.length){
+      h+=`<div class="blk"><h4>${T?'Datos clave':'Key facts'}</h4><ul class="cl">`;
+      rows.forEach(r=>h+=`<li><b style="color:var(--mut);font-weight:600">${r[0]}:</b> ${esc(r[1])}</li>`);
+      h+=`</ul></div>`;
+    }
+    if(Array.isArray(s.evaluation_criteria)&&s.evaluation_criteria.length){
+      h+=`<div class="blk"><h4>${T?'Criterios de evaluacion':'Evaluation criteria'}</h4><ul class="cl">`;
+      s.evaluation_criteria.forEach(c=>h+=`<li>${esc(typeof c==='string'?c:(c.criterion+(c.weight?' - '+c.weight:'')))}</li>`);
+      h+=`</ul></div>`;
+    }
+    h+=`</div>`;
+  }
+
+  /* themes, risks, gaps, conditions */
+  const blocks=[
+    [T?'Temas ganadores':'Win themes', d.win_themes, 'ok'],
+    [T?'Condiciones para licitar':'Conditions to bid', d.conditions, ''],
+    [T?'Riesgos principales':'Top risks', d.risks, 'warn'],
+    [T?'Brechas y elementos por completar':'Gaps and items to resolve', d.gaps, 'warn'],
+    [T?'Socios de equipo sugeridos':'Suggested teaming partners', d.teaming, '']
+  ];
+  const any=blocks.some(b=>Array.isArray(b[1])&&b[1].length);
+  if(any){
+    h+=`<div class="card">`;
+    blocks.forEach(([t,arr,c])=>{
+      if(!Array.isArray(arr)||!arr.length)return;
+      h+=`<div class="blk"><h4>${t}</h4><ul class="cl ${c}">`;
+      arr.forEach(x=>{
+        if(typeof x==='string'){h+=`<li>${esc(x)}</li>`}
+        else{
+          h+=`<li><b style="color:var(--txt)">${esc(x.theme||x.title||'')}</b>`;
+          if(x.feature)h+=`<br><span style="color:var(--mut)">${T?'Caracteristica':'Feature'}: ${esc(x.feature)}</span>`;
+          if(x.benefit)h+=`<br><span style="color:var(--mut)">${T?'Beneficio':'Benefit'}: ${esc(x.benefit)}</span>`;
+          if(x.proof)h+=`<br><span style="color:var(--mut)">${T?'Prueba':'Proof'}: ${esc(x.proof)}</span>`;
+          if(x.mitigation)h+=`<br><span style="color:var(--mut)">${T?'Mitigacion':'Mitigation'}: ${esc(x.mitigation)}</span>`;
+          h+=`</li>`;
+        }
+      });
+      h+=`</ul></div>`;
+    });
+    h+=`</div>`;
+  }
+
+  h+=`<div class="actions" style="margin-bottom:24px">
+    <button class="btn ghost sm" onclick="dlMemo()">${T?'Descargar memorando':'Download memo'}</button>
+    <button class="btn ghost sm" onclick="copyMemo()">${T?'Copiar memorando':'Copy memo'}</button>
+  </div>`;
+
+  document.getElementById('pane-fit').innerHTML=h;
+}
+
+/* =====================================================================
+   RENDER: COMPLIANCE
+   ===================================================================== */
+function renderCompliance(d){
+  const T=LANG==='es';
+  const rows=d.requirements||[];
+  document.getElementById('cComp').textContent=rows.length;
+  if(!rows.length){
+    document.getElementById('pane-compliance').innerHTML=
+      `<div class="empty"><div class="ic">&#128203;</div><p>${T?'No se extrajeron requisitos.':'No requirements were extracted.'}</p></div>`;
+    return;
+  }
+  const M=rows.filter(r=>(r.type||'').toUpperCase().startsWith('M')).length;
+  let h=`<div class="alert blu">
+    <b>${rows.length}</b> ${T?'requisitos extraidos':'requirements extracted'} &middot;
+    <b>${M}</b> ${T?'obligatorios':'mandatory'}.
+    ${T?'Un requisito obligatorio omitido descalifica la propuesta sin importar la calidad de la redaccion.'
+       :'One missed mandatory requirement disqualifies the proposal no matter how well it is written.'}
+  </div>`;
+
+  if(Array.isArray(d.forms)&&d.forms.length){
+    h+=`<div class="card"><h3>${T?'Formularios y anexos requeridos':'Required forms and attachments'}</h3>
+      <ul class="cl warn">${d.forms.map(f=>`<li>${esc(typeof f==='string'?f:f.name)}</li>`).join('')}</ul></div>`;
+  }
+  if(Array.isArray(d.format_rules)&&d.format_rules.length){
+    h+=`<div class="card"><h3>${T?'Reglas de formato':'Format rules'}</h3>
+      <ul class="cl">${d.format_rules.map(f=>`<li>${esc(f)}</li>`).join('')}</ul></div>`;
+  }
+
+  h+=`<div class="card"><h3>${T?'Matriz de cumplimiento':'Compliance matrix'}</h3>
+    <p class="sub">${T?'Marque cada elemento al completarlo. El progreso se guarda en este navegador.'
+                     :'Check each item as you complete it. Progress is saved in this browser.'}</p>
+    <div class="tw"><table><thead><tr>
+      <th style="width:34px"></th><th style="width:44px">#</th>
+      <th style="width:104px">${T?'Seccion':'Section'}</th>
+      <th>${T?'Requisito':'Requirement'}</th>
+      <th style="width:56px">M/D</th>
+      <th style="width:140px">${T?'Seccion de respuesta':'Response section'}</th>
+      <th style="width:120px">${T?'Notas':'Notes'}</th>
+    </tr></thead><tbody>`;
+  rows.forEach((r,i)=>{
+    const ty=(r.type||'D').toUpperCase().charAt(0);
+    h+=`<tr id="cr${i}" class="${r.done?'done':''}">
+      <td><input type="checkbox" ${r.done?'checked':''} onchange="tick(${i},this.checked)"></td>
+      <td style="color:var(--dim)">${i+1}</td>
+      <td style="color:var(--mut);font-size:11.5px">${esc(r.section||'-')}</td>
+      <td class="rq">${esc(r.requirement||'')}</td>
+      <td><span class="tag ${ty}">${ty}</span></td>
+      <td style="color:var(--mut);font-size:11.5px">${esc(r.proposal_section||'-')}</td>
+      <td style="color:var(--dim);font-size:11.5px">${esc(r.notes||'')}</td>
+    </tr>`;
+  });
+  h+=`</tbody></table></div>
+    <div class="actions">
+      <button class="btn ghost sm" onclick="dlCSV()">${T?'Exportar CSV para Excel':'Export CSV for Excel'}</button>
+      <span style="font-size:12px;color:var(--dim)" id="cProg"></span>
+    </div></div>`;
+  document.getElementById('pane-compliance').innerHTML=h;
+  cprog();
+}
+function tick(i,v){
+  STATE.compliance.requirements[i].done=v;
+  document.getElementById('cr'+i).classList.toggle('done',v);
+  cprog(); save();
+}
+function cprog(){
+  const r=STATE.compliance?.requirements||[];
+  const n=r.filter(x=>x.done).length;
+  const el=document.getElementById('cProg');
+  if(el)el.textContent=`${n} / ${r.length} ${LANG==='es'?'completados':'complete'}`;
+}
+
+/* =====================================================================
+   RENDER: PROPOSAL
+   ===================================================================== */
+function renderProposal(d){
+  const T=LANG==='es';
+  const secs=d.sections||[];
+  if(!secs.length){
+    document.getElementById('pane-proposal').innerHTML=
+      `<div class="empty"><div class="ic">&#128221;</div><p>${T?'Aun no se han generado secciones.':'No sections generated yet.'}</p></div>`;
+    return;
+  }
+  const fills=(JSON.stringify(secs).match(/\[(?:FILL|NEED|VERIFY|PLACEHOLDER)[^\]]*\]/g)||[]).length;
+  let h='';
+  if(d.structure_note){
+    h+=`<div class="alert blu"><b>${T?'Estructura requerida':'Required structure'}:</b> ${esc(d.structure_note)}</div>`;
+  }
+  if(fills){
+    h+=`<div class="alert amb"><b>${fills}</b> ${T?'elementos resaltados requieren su verificacion antes de enviar. Busque los bloques amarillos.'
+      :'highlighted items need your verification before submission. Look for the yellow blocks.'}</div>`;
+  }
+  h+=`<div class="card"><h3>${T?'Borrador de la respuesta':'Response draft'}</h3>
+    <p class="sub">${T?'Haga clic en cada seccion para expandirla. Nada se envia. Usted revisa, edita y aprueba.'
+                     :'Click each section to expand. Nothing is submitted. You review, edit, and approve.'}</p>`;
+  secs.forEach((s,i)=>{
+    h+=`<div class="sec${i===0?' open':''}" id="ps${i}">
+      <div class="h" onclick="document.getElementById('ps${i}').classList.toggle('open')">
+        <span class="no">${i+1}</span><span class="ti">${esc(s.title||'')}</span>
+        <span class="ar">&#9654;</span>
+      </div>
+      <div class="b">
+        ${s.guidance?`<div class="alert blu" style="font-size:12.5px;padding:10px 13px">${esc(s.guidance)}</div>`:''}
+        <div class="body">${mark(s.content||'')}</div>
+        <div class="actions" style="margin-top:14px">
+          <button class="btn ghost sm" onclick="copySec(${i})">${T?'Copiar seccion':'Copy section'}</button>
+        </div>
+      </div>
+    </div>`;
+  });
+  h+=`<div class="actions">
+    <button class="btn sm" onclick="dlDoc()">${T?'Descargar como Word':'Download as Word'}</button>
+    <button class="btn ghost sm" onclick="dlMd()">${T?'Descargar Markdown':'Download Markdown'}</button>
+    <button class="btn ghost sm" onclick="copyAll()">${T?'Copiar todo':'Copy all'}</button>
+  </div></div>`;
+  document.getElementById('pane-proposal').innerHTML=h;
+}
+function mark(t){
+  return esc(t)
+    .replace(/\[(FILL|NEED|VERIFY|PLACEHOLDER)([^\]]*)\]/g,'<span class="fill">[$1$2]</span>')
+    .replace(/^###\s+(.+)$/gm,'<h5>$1</h5>')
+    .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+}
+
+/* =====================================================================
+   RENDER: QA
+   ===================================================================== */
+function renderQA(d){
+  const T=LANG==='es';
+  const g=d.groups||[];
+  if(!g.length){
+    document.getElementById('pane-qa').innerHTML=
+      `<div class="empty"><div class="ic">&#9989;</div><p>${T?'Sin lista de verificacion.':'No checklist yet.'}</p></div>`;
+    return;
+  }
+  const days=daysLeft(d.due_date||STATE.fit?.summary?.due_date||document.getElementById('dueDate').value);
+  let h='';
+  h+=`<div class="alert ${days!==null&&days<2?'red':'amb'}">
+    <b>${T?'Entregue con al menos 24 horas de anticipacion.':'Submit at least 24 hours early.'}</b>
+    ${T?'Tarde equivale a rechazado, sin excepciones.':'Late equals rejected, with no exceptions.'}
+    ${days!==null?` ${T?'Quedan':'Remaining'}: <b>${days} ${T?'dias':'days'}</b>.`:''}
+  </div>`;
+  g.forEach(grp=>{
+    h+=`<div class="card"><h3>${esc(grp.name||'')}</h3><ul class="cl">`;
+    (grp.items||[]).forEach(it=>h+=`<li>${esc(typeof it==='string'?it:it.item)}</li>`);
+    h+=`</ul></div>`;
+  });
+  if(Array.isArray(d.open_items)&&d.open_items.length){
+    h+=`<div class="card"><h3>${T?'Pendientes antes de enviar':'Open before submitting'}</h3>
+      <ul class="cl warn">${d.open_items.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`;
+  }
+  h+=`<div class="actions" style="margin-bottom:24px">
+    <button class="btn ghost sm" onclick="dlQA()">${T?'Descargar lista':'Download checklist'}</button></div>`;
+  document.getElementById('pane-qa').innerHTML=h;
+}
+
+/* =====================================================================
+   EXPORTS
+   ===================================================================== */
+function memoText(){
+  const d=STATE.fit; if(!d)return'';
+  const s=d.summary||{}, T=LANG==='es';
+  let o=`APTO STRATEGIC CONSULTING LLC\n${T?'MEMORANDO DE DECISION LICITAR O NO LICITAR':'BID / NO-BID DECISION MEMORANDUM'}\n`;
+  o+=`${'='.repeat(64)}\n\n`;
+  o+=`${T?'Agencia':'Agency'}: ${s.agency||document.getElementById('agency').value||'-'}\n`;
+  o+=`${T?'Solicitud':'Solicitation'}: ${s.solicitation_no||document.getElementById('solno').value||'-'}\n`;
+  o+=`${T?'Tipo':'Type'}: ${s.type||MODE}\n`;
+  o+=`${T?'Fecha limite':'Due'}: ${s.due_date||document.getElementById('dueDate').value||'-'}\n`;
+  o+=`${T?'Valor estimado':'Estimated value'}: ${s.estimated_value||fmtVal()||'-'}\n`;
+  o+=`${T?'Preparado':'Prepared'}: ${new Date().toISOString().slice(0,10)}\n\n`;
+  o+=`${T?'RECOMENDACION':'RECOMMENDATION'}: ${d.recommendation}  (${(d.computed_score||0).toFixed(2)} / 5.00)\n\n`;
+  o+=`${d.rationale||''}\n\n`;
+  if((d.critical_blockers||[]).length){
+    o+=`${T?'BLOQUEADORES CRITICOS':'CRITICAL BLOCKERS'}\n`;
+    d.critical_blockers.forEach(b=>o+=`  ! ${b}\n`); o+=`\n`;
+  }
+  o+=`${T?'PUNTUACION POR FACTOR':'FACTOR SCORES'}\n`;
+  FACTORS.forEach(f=>{
+    const x=(d.scores||{})[f.k]||{};
+    o+=`\n  ${T?f.es:f.en} [${WEIGHTS[f.k]}%] - ${x.score||'-'}/5\n    ${(x.rationale||'').replace(/\n/g,'\n    ')}\n`;
+  });
+  if(s.scope)o+=`\n${T?'ALCANCE':'SCOPE'}\n${s.scope}\n`;
+  [[T?'TEMAS GANADORES':'WIN THEMES',d.win_themes],
+   [T?'CONDICIONES':'CONDITIONS',d.conditions],
+   [T?'RIESGOS':'RISKS',d.risks],
+   [T?'BRECHAS':'GAPS',d.gaps]].forEach(([t,a])=>{
+    if(!Array.isArray(a)||!a.length)return;
+    o+=`\n${t}\n`;
+    a.forEach(x=>{
+      if(typeof x==='string')o+=`  - ${x}\n`;
+      else{
+        o+=`  - ${x.theme||x.title||''}\n`;
+        if(x.feature)o+=`      ${T?'Caracteristica':'Feature'}: ${x.feature}\n`;
+        if(x.benefit)o+=`      ${T?'Beneficio':'Benefit'}: ${x.benefit}\n`;
+        if(x.proof)o+=`      ${T?'Prueba':'Proof'}: ${x.proof}\n`;
+        if(x.mitigation)o+=`      ${T?'Mitigacion':'Mitigation'}: ${x.mitigation}\n`;
+      }
+    });
+  });
+  o+=`\n${'='.repeat(64)}\n${T
+    ?'Solo apoyo a la decision. No es asesoria legal, contable ni contractual. Verifique todo estado de certificacion, termino legal, umbral monetario, fecha limite y requisito de entrega contra los documentos oficiales antes de presentar.'
+    :'Decision support only. Not legal, accounting, or contractual advice. Verify every certification status, legal term, dollar threshold, deadline, and submission requirement against the official solicitation documents before submitting.'}\n`;
+  return o;
+}
+function propText(){
+  const d=STATE.proposal; if(!d)return'';
+  let o=`# ${document.getElementById('agency').value||'Solicitation'} - ${document.getElementById('solno').value||MODE}\n`;
+  o+=`## Apto Strategic Consulting LLC - DRAFT response\n\n`;
+  if(d.structure_note)o+=`> Required structure: ${d.structure_note}\n\n`;
+  (d.sections||[]).forEach((s,i)=>{o+=`\n---\n\n# ${i+1}. ${s.title}\n\n${s.content}\n`});
+  o+=`\n\n---\nDRAFT. Not for submission until reviewed and approved by Juan R. Cuellar.\n`;
+  return o;
+}
+function qaText(){
+  const d=STATE.qa; if(!d)return'';
+  let o=`APTO SUBMISSION QA CHECKLIST\n${document.getElementById('solno').value||MODE}\n${'='.repeat(52)}\n`;
+  (d.groups||[]).forEach(g=>{
+    o+=`\n${(g.name||'').toUpperCase()}\n`;
+    (g.items||[]).forEach(i=>o+=`  [ ] ${typeof i==='string'?i:i.item}\n`);
+  });
+  if((d.open_items||[]).length){o+=`\nOPEN ITEMS\n`;d.open_items.forEach(i=>o+=`  ! ${i}\n`)}
+  o+=`\nSubmit at least 24 hours early. Late equals rejected.\n`;
+  return o;
+}
+function fname(ext){
+  const a=(document.getElementById('agency').value||'Bid').replace(/[^A-Za-z0-9]+/g,'_').slice(0,28);
+  const n=(document.getElementById('solno').value||new Date().toISOString().slice(0,10)).replace(/[^A-Za-z0-9]+/g,'_').slice(0,24);
+  return `DRAFT_${a}_${n}.${ext}`;
+}
+function dl(name,txt,mime){
+  const b=new Blob([txt],{type:mime||'text/plain;charset=utf-8'});
+  const u=URL.createObjectURL(b), a=document.createElement('a');
+  a.href=u; a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(u),1500);
+}
+function dlMemo(){dl(fname('txt').replace('DRAFT_','DRAFT_BidNoBid_'),memoText())}
+function dlQA(){dl(fname('txt').replace('DRAFT_','DRAFT_SubmissionQA_'),qaText())}
+function dlMd(){dl(fname('md').replace('DRAFT_','DRAFT_Response_'),propText(),'text/markdown;charset=utf-8')}
+function dlDoc(){
+  const body=esc(propText())
+    .replace(/^# (.+)$/gm,'<h1>$1</h1>').replace(/^## (.+)$/gm,'<h2>$1</h2>')
+    .replace(/^### (.+)$/gm,'<h3>$1</h3>').replace(/\n/g,'<br>');
+  const html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8">
+    <style>body{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.5}
+    h1{font-size:16pt;color:#1f3864}h2{font-size:13pt;color:#2e5496}h3{font-size:11.5pt}
+    @page{size:8.5in 11in;margin:1in}</style></head><body>${body}</body></html>`;
+  dl(fname('doc').replace('DRAFT_','DRAFT_Response_'),html,'application/msword');
+}
+function dlCSV(){
+  const r=STATE.compliance?.requirements||[];
+  const q=v=>`"${String(v==null?'':v).replace(/"/g,'""')}"`;
+  const rows=[['#','Section / page','Requirement','M or D','Proposal section','Owner','Status','Notes']];
+  r.forEach((x,i)=>rows.push([i+1,x.section||'',x.requirement||'',(x.type||'D').toUpperCase().charAt(0),
+    x.proposal_section||'','JC',x.done?'Verified':'Open',x.notes||'']));
+  dl(fname('csv').replace('DRAFT_','DRAFT_ComplianceMatrix_'),
+     '﻿'+rows.map(r=>r.map(q).join(',')).join('\r\n'),'text/csv;charset=utf-8');
+}
+function copy(t){
+  navigator.clipboard.writeText(t).then(()=>toast(LANG==='es'?'Copiado':'Copied'),
+    ()=>toast(LANG==='es'?'No se pudo copiar':'Copy failed'));
+}
+function copyMemo(){copy(memoText())}
+function copyAll(){copy(propText())}
+function copySec(i){const s=STATE.proposal.sections[i];copy(`${s.title}\n\n${s.content}`)}
+function toast(m){
+  const d=document.createElement('div');
+  d.textContent=m;
+  d.style.cssText='position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--gold);color:#14100a;padding:10px 20px;border-radius:22px;font-size:13px;font-weight:650;z-index:9998;box-shadow:0 6px 22px rgba(0,0,0,.4)';
+  document.body.appendChild(d); setTimeout(()=>d.remove(),1700);
+}
+
+/* =====================================================================
+   HELPERS + PERSISTENCE
+   ===================================================================== */
+function esc(s){return String(s==null?'':s)
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+  .replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
+function daysLeft(d){
+  if(!d)return null;
+  const t=Date.parse(d); if(isNaN(t))return null;
+  return Math.ceil((t-Date.now())/86400000);
+}
+function fmtVal(){
+  const v=document.getElementById('estVal').value;
+  return v?('$'+(+v).toLocaleString()):'';
+}
+function save(){
+  try{localStorage.setItem('apto_bid_state',JSON.stringify({
+    state:STATE, mode:MODE, weights:WEIGHTS,
+    meta:{agency:document.getElementById('agency').value,solno:document.getElementById('solno').value,
+          due:document.getElementById('dueDate').value,val:document.getElementById('estVal').value},
+    ts:Date.now()
+  }))}catch(e){}
+}
+function load(){
+  try{
+    const r=localStorage.getItem('apto_bid_state'); if(!r)return;
+    const o=JSON.parse(r);
+    if(Date.now()-(o.ts||0)>1000*60*60*24*45)return;
+    STATE=o.state||{}; MODE=o.mode||'RFP';
+    if(o.weights)WEIGHTS=Object.assign(WEIGHTS,o.weights);
+    const m=o.meta||{};
+    document.getElementById('agency').value=m.agency||'';
+    document.getElementById('solno').value=m.solno||'';
+    document.getElementById('dueDate').value=m.due||'';
+    document.getElementById('estVal').value=m.val||'';
+    const b=document.querySelector(`#modeSeg button[data-mode="${MODE}"]`);
+    if(b)document.querySelectorAll('#modeSeg button').forEach(x=>x.classList.toggle('on',x===b));
+    buildWeights();
+    if(Object.keys(STATE).length){
+      document.getElementById('results').style.display='block';
+      if(STATE.fit)renderFit(STATE.fit);
+      if(STATE.compliance)renderCompliance(STATE.compliance);
+      if(STATE.proposal)renderProposal(STATE.proposal);
+      if(STATE.qa)renderQA(STATE.qa);
+      showTab(STATE.fit?'fit':Object.keys(STATE)[0]);
+    }
+  }catch(e){}
+}
+function resetAll(){
+  if(!confirm(LANG==='es'?'¿Borrar esta licitacion y empezar de nuevo?':'Clear this bid and start over?'))return;
+  try{localStorage.removeItem('apto_bid_state')}catch(e){}
+  STATE={}; DOCTEXT='';
+  ['agency','solno','dueDate','estVal','rfpText'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('fileInfo').innerHTML='';
+  document.getElementById('results').style.display='none';
+  document.getElementById('prog').classList.remove('on');
+  document.querySelectorAll('.prog .li').forEach(l=>l.classList.remove('run','ok'));
+  syncText();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+load(); syncText();
+</script>
+</body>
+</html>

@@ -686,13 +686,39 @@ async function runAll(){
   btn.innerHTML=LANG==='es'?'Ejecutar el analisis':'Run the analysis';
 }
 
+/* Map the server error to the thing actually worth checking. */
+function hint(m){
+  const T=LANG==='es', s=String(m||'');
+  if(/ANTHROPIC_API_KEY/i.test(s))
+    return T?'Configure ANTHROPIC_API_KEY en las variables de Railway.'
+            :'Set ANTHROPIC_API_KEY in the Railway variables.';
+  if(/apto_profile|Could not load/i.test(s))
+    return T?'apto_profile.json falta o esta mal ubicado. Debe estar junto a app.py en apto-cos.'
+            :'apto_profile.json is missing or misplaced. It must sit beside app.py in apto-cos.';
+  if(/token ceiling|max_tokens/i.test(s))
+    return T?'La respuesta fue demasiado larga. Ejecute las etapas una por una en lugar de las cuatro juntas.'
+            :'The response ran too long. Run the stages one at a time instead of all four at once.';
+  if(/parse|JSON/i.test(s))
+    return T?'El modelo devolvio una respuesta con formato invalido. Vuelva a intentarlo; casi siempre funciona en el segundo intento.'
+            :'The model returned malformed output. Try again, which usually succeeds on the second attempt.';
+  if(/too short/i.test(s))
+    return T?'Se extrajo muy poco texto. Si el PDF es escaneado, haga OCR primero o pegue el texto.'
+            :'Too little text was extracted. If the PDF is scanned, run OCR first or paste the text.';
+  if(/overloaded|529|rate/i.test(s))
+    return T?'La API esta saturada en este momento. Espere un minuto y vuelva a intentarlo.'
+            :'The API is busy right now. Wait a minute and try again.';
+  if(/Failed to fetch|NetworkError|502|503/i.test(s))
+    return T?'Railway puede estar dormido. Abra /bid-agent/health una vez y vuelva a intentarlo.'
+            :'Railway may be asleep. Load /bid-agent/health once, then try again.';
+  return T?'Revise los registros de Railway para ver el detalle.'
+          :'Check the Railway deploy logs for the full detail.';
+}
+
 function err(task,msg){
   document.getElementById('results').style.display='block';
   document.getElementById('pane-'+task).innerHTML=
     `<div class="alert red"><b>${LANG==='es'?'Fallo el analisis.':'Analysis failed.'}</b><br>${esc(msg)}
-     <div style="margin-top:10px;font-size:12.5px;opacity:.85">${LANG==='es'
-       ?'Verifique que la aplicacion Railway este activa, que el punto de conexion sea correcto y que ANTHROPIC_API_KEY este configurada en Railway.'
-       :'Check that the Railway app is awake, the endpoint is correct, and ANTHROPIC_API_KEY is set in Railway.'}</div></div>`;
+     <div style="margin-top:10px;font-size:12.5px;opacity:.85">${hint(msg)}</div></div>`;
   showTab(task);
 }
 

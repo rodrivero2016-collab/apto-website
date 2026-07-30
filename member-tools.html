@@ -99,6 +99,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,10,10,.95
 .toolkit-card-link{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);text-decoration:none;border-bottom:1px solid rgba(232,93,32,.3);padding-bottom:2px;transition:border-color .2s}
 .toolkit-card-link:hover{border-color:var(--orange)}
 .toolkit-section-title{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin:28px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.bid-frame{width:100%;border:0;min-height:900px;display:block;background:transparent}
+.bid-loading{text-align:center;color:var(--grey);font-size:13px;padding:60px 0}
 @media(max-width:640px){
   .nav-inner{padding:0 20px}
   .tools-header,.tab-bar,.tab-content{padding-left:20px;padding-right:20px}
@@ -134,7 +136,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,10,10,.95
     <div class="tools-title"><span>APTO</span> Member Tools</div>
     <div class="tools-sub">Private workspace · Juan R. Cuellar · Founder & CEO</div>
     <div class="member-note">
-      <strong>Welcome back, JC.</strong> Paste any Substack article into the Content Engine and generate a full week of bilingual content in one click. Chief of Staff is your AI strategic advisor. AI Toolkit links to all your tools.
+      <strong>Welcome back, JC.</strong> Paste any Substack article into the Content Engine and generate a full week of bilingual content in one click. Chief of Staff is your AI strategic advisor. Bid Agent scores RFPs against the Apto profile. AI Toolkit links to all your tools.
     </div>
   </div>
 
@@ -142,6 +144,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,10,10,.95
     <button class="tab-btn active" onclick="switchTab('ce')">Content Engine</button>
     <button class="tab-btn" onclick="switchTab('cos')">Chief of Staff</button>
     <button class="tab-btn" onclick="switchTab('toolkit')">AI Toolkit</button>
+    <button class="tab-btn" onclick="switchTab('bid')">Bid Agent</button>
   </div>
 
   <div class="tab-content">
@@ -194,6 +197,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,10,10,.95
           <div class="toolkit-card-title">Chief of Staff Agent</div>
           <div class="toolkit-card-desc">Claude Sonnet + LlamaIndex + Pinecone RAG. Deployed on Railway. Your strategic AI advisor with full Apto context.</div>
           <a href="#" onclick="switchTab('cos');return false" class="toolkit-card-link">Open Chief of Staff →</a>
+        </div>
+        <div class="toolkit-card">
+          <div class="toolkit-card-icon">🎯</div>
+          <div class="toolkit-card-title">Bid Agent</div>
+          <div class="toolkit-card-desc">Upload an RFP, RFQ, or RFI. Fit score against the Apto profile, bid or no-bid memo, compliance matrix, and a drafted response. Texas state and federal.</div>
+          <a href="#" onclick="switchTab('bid');return false" class="toolkit-card-link">Open Bid Agent →</a>
         </div>
         <div class="toolkit-card">
           <div class="toolkit-card-icon">⚡</div>
@@ -249,6 +258,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,10,10,.95
       </div>
     </div>
 
+    <div class="tab-pane" id="pane-bid">
+      <div class="bid-loading" id="bid-loading">Loading Bid Agent...</div>
+      <iframe id="bid-frame" class="bid-frame" title="Apto Bid Agent" scrolling="no" style="display:none"></iframe>
+    </div>
+
   </div>
 </div>
 
@@ -276,13 +290,33 @@ if(sessionStorage.getItem('apto-auth')==='1'){
 }
 
 function switchTab(id){
+  const ids=['ce','cos','toolkit','bid'];
   document.querySelectorAll('.tab-btn').forEach((b,i)=>{
-    const ids=['ce','cos','toolkit'];
     b.classList.toggle('active', ids[i]===id);
   });
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
-  document.getElementById('pane-'+id).classList.add('active');
+  const pane = document.getElementById('pane-'+id);
+  if(pane) pane.classList.add('active');
+  if(id === 'bid') loadBidAgent();
 }
+
+/* ---------- Bid Agent ---------- */
+function loadBidAgent(){
+  const f = document.getElementById('bid-frame');
+  if(!f || f.getAttribute('src')) return;
+  f.onload = function(){
+    document.getElementById('bid-loading').style.display = 'none';
+    f.style.display = 'block';
+  };
+  f.setAttribute('src', 'bid-agent.html?embed=1');
+}
+
+window.addEventListener('message', function(e){
+  if(e.data && e.data.aptoBidAgent === 'height' && e.data.value > 300){
+    const f = document.getElementById('bid-frame');
+    if(f) f.style.height = e.data.value + 'px';
+  }
+});
 
 document.getElementById('ce-article').addEventListener('input', function(){
   document.getElementById('ce-char').textContent = this.value.length.toLocaleString();

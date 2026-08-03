@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Veteran Resources | Apto Strategic Consulting</title>
+<meta name="description" content="95 curated tools, programs, and scholarships for veterans and military families. Education, employment, entrepreneurship, legal, financial, and wellness resources. Curated by Juan R. Cuellar, Army veteran.">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apto-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A0A0A;--ink-2:#141414;--ink-70:#4A4A4A;--ink-45:#6E6E6E;
+  --paper:#FFFFFF;--paper-alt:#F7F6F4;--line:#E4E1DD;--line-dark:#2A2A2A;
+  --orange:#FF6A00;--orange-txt:#B34700;--orange-dim:#FF8A38;
+  --s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:64px;--s7:96px;
+  --wrap:1240px;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:1.0625rem;line-height:1.65;color:var(--ink);background:var(--paper);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}a{color:inherit}
+h1,h2,h3{margin:0;font-weight:600;line-height:1.1;letter-spacing:-.03em}
+h1{font-size:clamp(2.15rem,6.5vw,4rem);letter-spacing:-.04em}
+h2{font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-.03em}
+p{margin:0}ul{margin:0;padding:0;list-style:none}
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 20px;position:relative;z-index:1}
+@media(min-width:600px){.wrap{padding:0 var(--s4)}}
+@media(min-width:900px){.wrap{padding:0 var(--s5)}}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--line-dark)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);padding:12px 0}
+.nav-in img{height:38px;width:auto}
+@media(min-width:600px){.nav-in img{height:48px}}
+.back{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#9A9A9A;
+  text-decoration:none;display:inline-flex;align-items:center;gap:9px;transition:color .18s;min-height:44px}
+.back:hover{color:var(--paper)}
+.back::before{content:"";width:7px;height:7px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg)}
+
+/* hero */
+.hero{background:var(--ink);color:var(--paper);padding:var(--s6) 0;position:relative;overflow:hidden}
+@media(min-width:900px){.hero{padding:var(--s7) 0}}
+.gridtex{position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--line-dark) 1px,transparent 1px),linear-gradient(90deg,var(--line-dark) 1px,transparent 1px);
+  background-size:88px 88px;opacity:.6;
+  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000,transparent 78%);
+          mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000,transparent 78%)}
+.eyebrow{font-family:var(--mono);font-size:.6875rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--orange-dim);display:flex;align-items:center;gap:var(--s2);margin-bottom:var(--s4)}
+.eyebrow::before{content:"";width:9px;height:9px;background:var(--orange);flex:none}
+.eyebrow::after{content:"";height:1px;flex:1;background:var(--line-dark);max-width:180px}
+.hero h1{max-width:16ch;margin-bottom:var(--s3)}
+.hero h1 em{font-style:normal;color:var(--orange-dim)}
+.hero p{font-size:clamp(1rem,1.5vw,1.2rem);color:#C4C4C4;max-width:60ch;line-height:1.6}
+
+/* controls */
+.controls{background:var(--ink);border-top:1px solid var(--line-dark);padding:var(--s4) 0 var(--s5)}
+.search{position:relative;max-width:520px;margin-bottom:var(--s4)}
+.search input{width:100%;font-family:inherit;font-size:16px;color:var(--paper);background:#141414;
+  border:1px solid var(--line-dark);padding:15px 15px 15px 44px;border-radius:0;-webkit-appearance:none}
+.search input::placeholder{color:#6E6E6E}
+.search input:focus{outline:none;border-color:var(--orange)}
+.search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:#6E6E6E;fill:none;stroke-width:2}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  padding:10px 13px;border:1px solid var(--line-dark);background:none;color:#9A9A9A;cursor:pointer;
+  transition:.18s;min-height:40px;display:inline-flex;align-items:center;gap:7px}
+.chip:hover{border-color:#5A5A5A;color:var(--paper)}
+.chip.on{background:var(--orange);border-color:var(--orange);color:#0A0A0A}
+.chip b{font-weight:600;opacity:.62}
+.chip.on b{opacity:.72}
+
+/* results */
+.results{padding:var(--s6) 0 var(--s7);background:var(--paper)}
+.count{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-45);margin-bottom:var(--s4)}
+.group{margin-bottom:var(--s6)}
+.group-head{display:flex;align-items:center;gap:var(--s3);padding-bottom:14px;border-bottom:3px solid var(--orange);margin-bottom:0}
+.group-head h2{font-size:1.35rem}
+.group-head span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--ink-45);margin-left:auto}
+.grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-top:0}
+@media(min-width:680px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1040px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--paper);padding:var(--s4) var(--s3);text-decoration:none;display:flex;flex-direction:column;
+  gap:9px;min-height:150px;transition:background .2s;position:relative}
+.card:hover{background:var(--ink);color:var(--paper)}
+.card h3{font-size:1.0625rem;letter-spacing:-.02em;line-height:1.3;padding-right:22px}
+.card p{font-size:.875rem;color:var(--ink-70);line-height:1.55;transition:color .2s}
+.card:hover p{color:#B0B0B0}
+.card .host{margin-top:auto;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--ink-45);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:color .2s}
+.card:hover .host{color:var(--orange-dim)}
+.card::after{content:"";position:absolute;top:var(--s4);right:var(--s3);width:9px;height:9px;
+  border-top:2px solid var(--orange);border-right:2px solid var(--orange);transform:rotate(45deg);transition:transform .2s}
+.card:hover::after{transform:rotate(45deg) translate(3px,-3px)}
+.empty{padding:var(--s6) 0;text-align:center;color:var(--ink-45)}
+
+/* crisis callout */
+.crisis{background:var(--orange);color:#0A0A0A;padding:var(--s4) 0}
+.crisis .wrap{display:flex;flex-wrap:wrap;gap:12px var(--s4);align-items:center}
+.crisis b{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
+.crisis p{font-size:.9375rem;font-weight:500}
+.crisis a{font-weight:700;text-underline-offset:3px}
+
+footer{background:var(--ink);color:var(--paper);padding:var(--s6) 0 var(--s5)}
+footer .fl{display:flex;flex-wrap:wrap;gap:var(--s3) var(--s5);align-items:center;margin-bottom:var(--s5)}
+footer a{color:#A8A8A8;text-decoration:none;font-size:.875rem;transition:color .15s}
+footer a:hover{color:var(--paper)}
+.disc{font-size:.75rem;color:#8A8A8A;line-height:1.7;max-width:82ch;border-top:1px solid var(--line-dark);padding-top:var(--s4)}
+.skip{position:absolute;left:-9999px;background:var(--orange);color:#0A0A0A;padding:12px 20px;z-index:200;font-weight:600}
+.skip:focus{left:0}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap">
+    <div class="nav-in">
+      <a href="index.html" aria-label="Apto Strategic Consulting home">
+        <img src="apto-logo-h.png" alt="Apto Strategic Consulting" width="546" height="200">
+      </a>
+      <a href="index.html" class="back">Back to site</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero">
+  <div class="gridtex"></div>
+  <div class="wrap">
+    <div class="eyebrow">Veteran Resources</div>
+    <h1>95 resources. <em>No gatekeeping.</em></h1>
+    <p>Tools, programs, and scholarships for veterans, service members, and military families. Curated by Juan R. Cuellar, Army veteran. Free to use, no signup, no email capture. Search it or filter by category.</p>
+  </div>
+</section>
+
+<section class="controls">
+  <div class="wrap">
+    <div class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <label for="q" class="skip">Search resources</label>
+      <input id="q" type="search" placeholder="Search resources, e.g. GI Bill, scholarship, legal" autocomplete="off">
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
+  </div>
+</section>
+
+<section class="results">
+  <div class="wrap">
+    <div class="count" id="count"></div>
+    <div id="out"></div>
+  </div>
+</section>
+
+<div class="crisis">
+  <div class="wrap">
+    <b>If you are in crisis</b>
+    <p>Veterans Crisis Line: dial <a href="tel:988">988</a> then press 1, or text 838255. Free, confidential, 24/7.</p>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fl">
+      <a href="index.html">Apto Strategic Consulting</a>
+      <a href="capabilities.html">Capabilities</a>
+      <a href="https://aptostrategic.com/member-tools.html">Member Tools</a>
+      <a href="mailto:JCuellar@aptostrategic.com">JCuellar@aptostrategic.com</a>
+    </div>
+    <p class="disc">
+      Resources curated by Juan R. Cuellar. Apto Strategic Consulting LLC is not affiliated with, endorsed by, or representing any organization listed on this page, including the U.S. Department of Veterans Affairs or any branch of the U.S. Armed Forces. Links are provided for informational purposes only and are not an endorsement. Program eligibility, funding, deadlines, and availability change frequently; verify all details directly with the sponsoring organization before acting. This page is not legal, financial, medical, or benefits advice. Last reviewed 2026.
+    </p>
+  </div>
+</footer>
+
+<script>
+var CATS=[
+ ["tech","Tech / IT"],["education","Training &amp; Education"],["fellowships","Fellowships &amp; Hiring"],
+ ["jobs","Job Boards"],["resume","Resume &amp; Skills"],["networking","Networking"],
+ ["entrepreneurship","Entrepreneurship"],["financial","Financial Support"],["legal","Legal &amp; Admin"],
+ ["wellness","Wellness"],["recreation","Recreation &amp; Travel"],["scholarships","Scholarships"]
+];
+
+var DATA={
+tech:[
+{n:"Hire Heroes USA",d:"Free career coaching and job placement for veterans.",u:"https://www.hireheroesusa.org"},
+{n:"VET TEC (VA)",d:"Paid training program for tech skills, fully funded by VA.",u:"https://www.va.gov/education/other-va-education-benefits/vet-tec/"},
+{n:"Microsoft MSSA",d:"Microsoft Software & Systems Academy: 16-week tech training.",u:"https://military.microsoft.com/mssa/"},
+{n:"Amazon TechVets",d:"AWS cloud and tech training for transitioning veterans.",u:"https://www.amazon.jobs/en/landing_pages/mil"},
+{n:"Salesforce Military",d:"Free Salesforce certifications for veterans and spouses.",u:"https://trailhead.salesforce.com/en/career-path/military"},
+{n:"Google Career Certificates",d:"Affordable Google certifications in IT, data, UX, and more.",u:"https://grow.google/certificates/"}
+],
+education:[
+{n:"GI Bill (VA)",d:"Federal education benefit covering tuition, housing, and books.",u:"https://www.va.gov/education/about-gi-bill-benefits/"},
+{n:"MyCAA Scholarship",d:"Up to $4,000 for military spouses pursuing education.",u:"https://mycaa.militaryonesource.mil/"},
+{n:"Service2School",d:"Free Ivy League admissions counseling for veterans.",u:"https://service2school.org"},
+{n:"Pat Tillman Foundation",d:"Scholarships and leadership network for military scholars.",u:"https://pattillmanfoundation.org"},
+{n:"Student Veterans of America",d:"Network and advocacy for student veterans nationwide.",u:"https://studentveterans.org"},
+{n:"Yellow Ribbon Program",d:"Covers tuition costs above GI Bill limits at private schools.",u:"https://www.va.gov/education/about-gi-bill-benefits/post-9-11/yellow-ribbon-program/"},
+{n:"American Corporate Partners",d:"Free mentorship from business professionals for veterans.",u:"https://www.acp-usa.org"},
+{n:"Warrior-Scholar Project",d:"Academic boot camps at top universities for enlisted veterans.",u:"https://warrior-scholar.org"},
+{n:"Institute for Veterans & Military Families",d:"Research, education, and entrepreneurship programs.",u:"https://ivmf.syracuse.edu"},
+{n:"Veterans Education Success",d:"Policy advocacy and support for student veterans.",u:"https://vetsedsuccess.org"},
+{n:"College Transition Collaborative",d:"Resources for first-generation and veteran college students.",u:"https://www.collegetransitioncollaborative.org"}
+],
+fellowships:[
+{n:"Presidential Management Fellows",d:"Federal leadership development program for advanced degree holders.",u:"https://www.pmf.gov"},
+{n:"White House Fellows",d:"Prestigious one-year fellowship working directly with senior officials.",u:"https://www.whitehousefellows.gov"},
+{n:"Hiring Our Heroes",d:"Corporate fellowship programs placing veterans in top companies.",u:"https://www.hiringourheroes.org/career-services/fellowships/"}
+],
+jobs:[
+{n:"USAJobs.gov",d:"Official federal government job board: search all civilian federal positions.",u:"https://www.usajobs.gov"},
+{n:"Hire Heroes USA Job Board",d:"Veteran-focused private sector job listings with career coaching.",u:"https://www.hireheroesusa.org/job-board/"},
+{n:"RecruitMilitary",d:"Career fairs and job board specifically for veterans.",u:"https://recruitmilitary.com"}
+],
+resume:[
+{n:"American Job Centers",d:"Free resume help, job coaching, and career services nationwide.",u:"https://www.careeronestop.org/LocalHelp/AmericanJobCenters/"},
+{n:"VA TAP Program",d:"Transition Assistance Program: career prep before separation.",u:"https://www.tapevents.org/courses"},
+{n:"LinkedIn for Veterans",d:"Free LinkedIn Premium for one year for all veterans.",u:"https://socialimpact.linkedin.com/programs/veterans/premiumform"},
+{n:"SkillMil",d:"AI-powered tool to translate military skills to civilian language.",u:"https://skillmil.com"}
+],
+networking:[
+{n:"Team Red White & Blue",d:"Active community connecting veterans through physical and social activity.",u:"https://www.teamrwb.org"},
+{n:"The Mission Continues",d:"Veteran service platoons doing community impact across the U.S.",u:"https://www.missioncontinues.org/"},
+{n:"Veterans of Foreign Wars (VFW)",d:"One of the largest veteran organizations with local posts nationwide.",u:"https://www.vfw.org"},
+{n:"American Legion",d:"Veterans service organization with programs, advocacy, and community.",u:"https://www.legion.org"},
+{n:"Got Your 6",d:"Veteran community partnerships with entertainment and media.",u:"https://gotyour6.org"}
+],
+entrepreneurship:[
+{n:"SBA Boots to Business",d:"Free entrepreneurship training for transitioning service members.",u:"https://www.sba.gov/business-guide/grow-your-business/veteran-owned-businesses"},
+{n:"Bunker Labs",d:"Startup accelerator and community for veteran entrepreneurs.",u:"https://bunkerlabs.org"},
+{n:"V-WISE (Syracuse)",d:"Veteran Women Igniting the Spirit of Entrepreneurship program.",u:"https://ivmf.syracuse.edu/programs/entrepreneurship/v-wise/"},
+{n:"Hivers & Strivers",d:"Angel investment fund focused on veteran-founded startups.",u:"https://hiversandstrivers.com"},
+{n:"StreetShares Foundation",d:"Small business funding and grants for veteran entrepreneurs.",u:"https://www.streetshares.com/foundation"}
+],
+financial:[
+{n:"Operation Homefront",d:"Financial assistance grants for military families in need.",u:"https://www.operationhomefront.org"},
+{n:"Veterans Benefits Administration",d:"Full list of VA financial benefits, disability, and pensions.",u:"https://www.benefits.va.gov"},
+{n:"USAA Foundation",d:"Financial literacy resources and tools for military members.",u:"https://www.usaafoundation.org"},
+{n:"Unmet Needs (VFW)",d:"Emergency financial grants for veterans facing hardship.",u:"https://www.vfw.org/assistance/financial-grants"}
+],
+legal:[
+{n:"Veterans Legal Services Clinic",d:"Free legal representation for low-income veterans.",u:"https://www.veteranslegalservices.org"},
+{n:"Stateside Legal",d:"Legal help and resources for active duty members and veterans.",u:"https://statesidelegal.org"},
+{n:"National Veterans Legal Services Program",d:"Advocacy and legal resources for veterans benefits claims.",u:"https://www.nvlsp.org"},
+{n:"VA Fiduciary Program",d:"Financial management assistance for veterans who need it.",u:"https://www.benefits.va.gov/fiduciary/"},
+{n:"Armed Forces Legal Assistance",d:"Free legal services through military installations.",u:"https://legalassistance.law.af.mil"},
+{n:"VA Benefits Hotline",d:"1-800-827-1000: direct line to VA benefits support.",u:"https://www.va.gov/contact-us/"}
+],
+wellness:[
+{n:"Veterans Crisis Line",d:"24/7 confidential crisis support: call 988, press 1.",u:"https://www.veteranscrisisline.net"}
+],
+recreation:[
+{n:"National Park Service Free Pass",d:"Free lifetime National Parks pass for veterans.",u:"https://www.nps.gov/planyourvisit/passes.htm"},
+{n:"Space A Travel",d:"Free or low-cost military flights on available Air Force planes.",u:"https://www.amc.af.mil/AMC-Travel-Site/"},
+{n:"Warrior Sailing Program",d:"Free sailing and outdoor adventure programs for veterans.",u:"https://warriorsailing.org"},
+{n:"Disabled Sports USA",d:"Adaptive sports programs for wounded warriors nationwide.",u:"https://www.disabledsportsusa.org"}
+],
+scholarships:[
+{n:"American Legion Scholarships",d:"Multiple scholarships for veterans, dependents, and ROTC.",u:"https://www.legion.org/scholarships"},
+{n:"VFW Scholarships",d:"Voice of Democracy, Patriots Pen, and more.",u:"https://www.vfw.org/scholarship"},
+{n:"Pat Tillman Scholarship",d:"Up to $11,000/year for military students with demonstrated leadership.",u:"https://pattillmanfoundation.org/apply/"},
+{n:"Folds of Honor",d:"Scholarships for dependents of fallen or disabled service members.",u:"https://foldsofhonor.org"},
+{n:"Army Emergency Relief",d:"Interest-free loans and grants for Army soldiers.",u:"https://www.armyemergencyrelief.org"},
+{n:"Navy-Marine Corps Relief Society",d:"Financial assistance and scholarships for Navy and Marine families.",u:"https://www.nmcrs.org"},
+{n:"Air Force Aid Society",d:"Financial help and scholarships for Air Force members.",u:"https://www.afas.org"},
+{n:"Coast Guard Mutual Assistance",d:"Emergency financial help and scholarships for Coast Guard.",u:"https://www.cgmahq.org"},
+{n:"Scholarships for Military Children",d:"Military commissaries scholarship program.",u:"https://www.militaryscholar.org"},
+{n:"AMVETS Scholarships",d:"Multiple scholarships for veterans and children of veterans.",u:"https://amvets.org/scholarships/"},
+{n:"Disabled American Veterans Scholarship",d:"Advocacy and scholarship programs for disabled vets.",u:"https://www.dav.org"},
+{n:"Student Veterans of America Scholarship",d:"Network scholarships for student veterans nationwide.",u:"https://studentveterans.org/programs/scholarships/"},
+{n:"ThanksUSA Scholarship",d:"Scholarships for children and spouses of active and veteran military.",u:"https://www.thanksusa.org"},
+{n:"Udall Foundation Veterans Scholarship",d:"Environmental policy scholarships for Native veterans.",u:"https://www.udall.gov"},
+{n:"Health Professions Scholarship Program",d:"VA-funded scholarships for students entering health careers.",u:"https://vacareers.va.gov/career-guidance/va-scholarship-programs/"},
+{n:"Bob Woodruff Foundation",d:"Grants and resources for post-9/11 veterans and caregivers.",u:"https://bobwoodruff.org"},
+{n:"Iraq & Afghanistan Veterans of America",d:"Advocacy, benefits, and scholarships for post-9/11 vets.",u:"https://iava.org"},
+{n:"National Military Family Association",d:"Scholarships for military spouses and children.",u:"https://www.militaryfamily.org/programs/scholarships/"},
+{n:"United Military Scholarship",d:"Annual scholarships for active duty and veteran students.",u:"https://www.scholarships.com/financial-aid/college-scholarships/scholarships-by-type/military-scholarships"},
+{n:"Warrior-Scholar Project",d:"Scholarships and academic boot camps at top universities.",u:"https://warrior-scholar.org"},
+{n:"Wells Fargo Veterans Scholarship",d:"Scholarships for veterans pursuing higher education.",u:"https://scholarshipamerica.org/scholarship/wellsfargoveterans/"},
+{n:"Chase Military Banking",d:"Fee-free banking, early military pay, and financial benefits for veterans and service members.",u:"https://www.chase.com/digital/military"},
+{n:"Society of Military Widows",d:"Nonprofit serving women whose husbands died on active duty or from service-connected causes. Scholarships and support.",u:"https://www.militarywidows.org/home.html"},
+{n:"Gold Star Wives of America",d:"Congressionally chartered organization for military widows with scholarship programs and survivor support.",u:"https://www.goldstarwives.org/Scholarships"},
+{n:"Marine Corps Scholarship Foundation",d:"Scholarships for children of Marines and Navy Corpsmen.",u:"https://mcsf.org"},
+{n:"Navy League Foundation",d:"Scholarships for sea service members and their families.",u:"https://www.navyleague.org/what-we-do/scholarships/"},
+{n:"Air Force Association Scholarships",d:"Aerospace education scholarships for Air Force families.",u:"https://www.afa.org/education/scholarships/"},
+{n:"Armed Forces Communications & Electronics",d:"STEM scholarships for military-affiliated students.",u:"https://www.afcea.org/scholarships"},
+{n:"ROTC Scholarships",d:"Full college scholarships through Army, Navy, and Air Force ROTC.",u:"https://www.goarmy.com/rotc/scholarships.html"},
+{n:"National Guard Tuition Assistance",d:"State-funded tuition assistance for National Guard members.",u:"https://www.nationalguard.mil/Benefits/Guard-Your-Future/Tuition-Assistance/"},
+{n:"Reserve Educational Assistance Program",d:"Education benefits for Army, Navy, Marine, and Coast Guard reserves.",u:"https://www.va.gov/education/other-va-education-benefits/reap/"},
+{n:"Vocational Rehabilitation & Employment",d:"VA-funded training for veterans with service-connected disabilities.",u:"https://www.va.gov/careers-employment/vocational-rehabilitation/"},
+{n:"Fisher House Foundation Scholarships",d:"Scholarships for military children and spouses.",u:"https://www.fisherhouse.org/programs/scholarships/"},
+{n:"Legionnaire Scholarship",d:"American Legion education scholarships for youth.",u:"https://www.legion.org/scholarships"},
+{n:"Post-9/11 GI Bill Transferability",d:"Transfer GI Bill benefits to spouse or dependents.",u:"https://www.va.gov/education/transfer-post-9-11-gi-bill-to-dependents"},
+{n:"Tuition Assistance (Active Duty)",d:"DoD-funded tuition assistance for active duty education.",u:"https://myarmybenefits.us.army.mil/Benefit-Library/Federal-Benefits/Tuition-Assistance-(TA)"},
+{n:"VA Work-Study Program",d:"Part-time work at VA facilities while attending school.",u:"https://www.va.gov/education/work-learn/work-study/"},
+{n:"GoArmyEd Portal",d:"Army education portal for managing tuition assistance.",u:"https://myarmybenefits.us.army.mil/Benefit-Library/Federal-Benefits/Tuition-Assistance-(TA)"},
+{n:"Military OneSource Scholarships",d:"Comprehensive list of education benefits and scholarships.",u:"https://www.militaryonesource.mil/education-employment/adults/college-education/scholarships-and-financial-assistance/"},
+{n:"Salute Inc Scholarships",d:"Scholarships for LGBTQ+ veterans pursuing higher education.",u:"https://www.saluteinc.org"},
+{n:"DAV Scholarship Database",d:"Comprehensive scholarship database from Disabled American Veterans.",u:"https://www.dav.org/learn-more/news/2019/scholarships-for-veterans/"},
+{n:"CollegeRecon Military Scholarships",d:"Comprehensive finder tool for all military, veteran, spouse, and dependent scholarships.",u:"https://collegerecon.com/military-veteran-scholarships/"},
+{n:"U.S. Veterans Magazine Scholarships",d:"Annually updated list of 100+ scholarships for veterans, spouses, and dependents.",u:"https://usveteransmagazine.com/scholarships/"}
+]
+};
+
+var active="all", query="";
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});};
+var host=function(u){try{return new URL(u).hostname.replace(/^www\./,"");}catch(e){return "";}};
+
+/* chips */
+var total=0; CATS.forEach(function(c){total+=(DATA[c[0]]||[]).length;});
+var chipHtml='<button class="chip on" data-c="all">All <b>'+total+'</b></button>';
+CATS.forEach(function(c){
+  chipHtml+='<button class="chip" data-c="'+c[0]+'">'+c[1]+' <b>'+(DATA[c[0]]||[]).length+'</b></button>';
+});
+document.getElementById('chips').innerHTML=chipHtml;
+
+function render(){
+  var out="", shown=0, q=query.trim().toLowerCase();
+  CATS.forEach(function(c){
+    var key=c[0];
+    if(active!=="all" && active!==key) return;
+    var items=(DATA[key]||[]).filter(function(it){
+      if(!q) return true;
+      return (it.n+" "+it.d).toLowerCase().indexOf(q)>-1;
+    });
+    if(!items.length) return;
+    shown+=items.length;
+    out+='<div class="group"><div class="group-head"><h2>'+c[1]+'</h2><span>'+items.length+'</span></div><div class="grid">';
+    items.forEach(function(it){
+      out+='<a class="card" href="'+esc(it.u)+'" target="_blank" rel="noopener nofollow">'+
+           '<h3>'+esc(it.n)+'</h3><p>'+esc(it.d)+'</p><span class="host">'+esc(host(it.u))+'</span></a>';
+    });
+    out+='</div></div>';
+  });
+  document.getElementById('out').innerHTML = out || '<p class="empty">No resources match that search. Try a broader term.</p>';
+  document.getElementById('count').textContent = shown+" of "+total+" resources";
+}
+
+document.getElementById('chips').addEventListener('click',function(e){
+  var b=e.target.closest('.chip'); if(!b) return;
+  active=b.getAttribute('data-c');
+  Array.prototype.forEach.call(this.querySelectorAll('.chip'),function(x){x.classList.toggle('on',x===b);});
+  render();
+});
+document.getElementById('q').addEventListener('input',function(){ query=this.value; render(); });
+render();
+</script>
+</body>
+</html>

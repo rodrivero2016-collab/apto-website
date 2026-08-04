@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Recommended Reading · Apto Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0A0A0A;--navy2:#141414;--navy3:#1d1d1d;--orange:#E85D20;--orange2:#ff7a3d;
+--white:#F0F0EE;--grey:#999;--grey2:#666;--line:rgba(255,255,255,0.09);--soft:#F5F0EC}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',system-ui,sans-serif;background:var(--navy);color:var(--white);-webkit-font-smoothing:antialiased;margin:0}
+.wrap{max-width:1060px;margin:0 auto;padding:0 28px}
+a{color:inherit}
+/* language bar */
+.langbar{background:var(--soft);border-bottom:3px solid var(--orange)}
+.langbar .wrap{padding:13px 28px;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.langbar .msg{font-size:12.5px;color:#33312e;line-height:1.5}
+.langbar button{font-family:'Outfit';font-size:12px;letter-spacing:.08em;padding:7px 16px;border:1px solid var(--orange);cursor:pointer}
+header{padding:54px 0 30px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:10px}
+h1{font-family:'Barlow',sans-serif;font-size:clamp(32px,5vw,50px);font-weight:800;line-height:1.04;margin:0}
+.sub{color:var(--grey);font-size:15px;margin-top:14px;max-width:680px;line-height:1.6}
+.disc{font-size:12px;color:var(--grey2);margin-top:18px;line-height:1.55;max-width:680px}
+section{padding:48px 0;border-bottom:1px solid var(--line)}
+h2{font-family:'Barlow',sans-serif;font-size:24px;font-weight:700;margin:0 0 4px}
+.course-tag{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange)}
+.bar{width:34px;height:2px;background:var(--orange);margin:14px 0 26px}
+.books{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:680px){.books{grid-template-columns:1fr}}
+.book{display:flex;gap:18px;background:var(--navy2);border:1px solid var(--line);padding:20px;align-items:flex-start}
+.book img{width:96px;height:auto;flex:0 0 96px;border-radius:3px;background:var(--navy3);box-shadow:0 4px 14px rgba(0,0,0,.4);cursor:pointer;transition:transform .15s}
+.book a:hover img{transform:scale(1.03)}
+.book .info{flex:1;min-width:0}
+.book .title{font-family:'Barlow';font-size:16px;font-weight:700;line-height:1.25;margin:0 0 3px}
+.book .author{font-size:12.5px;color:var(--grey);margin-bottom:10px}
+.book .why{font-size:13px;color:#bbb;line-height:1.5;margin-bottom:14px}
+.book .btn{display:inline-block;padding:9px 18px;background:var(--orange);color:#fff;text-decoration:none;font-family:'Outfit';font-size:11px;letter-spacing:.09em;text-transform:uppercase;transition:background .2s}
+.book .btn:hover{background:var(--orange2)}
+footer{padding:40px 0 60px}
+.foot{font-size:12px;color:var(--grey2);line-height:1.6}
+.backlink{display:inline-block;margin-top:18px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="langbar">
+  <div class="wrap">
+    <div class="msg" data-en="The books behind the Apto Academy courses. Links go to Amazon." data-es="Los libros detrás de los cursos de Apto Academy. Los enlaces van a Amazon.">The books behind the Apto Academy courses. Links go to Amazon.</div>
+    <div style="display:flex;gap:6px;flex:0 0 auto">
+      <button onclick="setLang('en')" id="langEn" style="background:var(--orange);color:#fff">EN</button>
+      <button onclick="setLang('es')" id="langEs" style="background:none;color:#33312e">ES</button>
+    </div>
+  </div>
+</div>
+<header><div class="wrap">
+  <span class="eyebrow" data-en="Apto Academy · Recommended Reading" data-es="Apto Academy · Lectura Recomendada">Apto Academy · Recommended Reading</span>
+  <h1 data-en="The Books Behind the Courses" data-es="Los Libros Detrás de los Cursos">The Books Behind the Courses</h1>
+  <p class="sub" data-en="Every Apto Academy course is built on real research, not just opinion. These are the books behind the ideas: the ones worth reading if you want to go deeper on a topic, grouped by the course they support." data-es="Cada curso de Apto Academy está construido sobre investigación real, no solo opiniones. Estos son los libros detrás de las ideas: los que vale la pena leer si quieres profundizar en un tema, agrupados por el curso que respaldan.">Every Apto Academy course is built on real research, not just opinion. These are the books behind the ideas: the ones worth reading if you want to go deeper on a topic, grouped by the course they support.</p>
+  <p class="disc" data-en="As an Amazon Associate, Apto Strategic Consulting earns from qualifying purchases. Book covers and titles are property of their respective publishers and authors." data-es="Como Afiliado de Amazon, Apto Strategic Consulting gana por las compras que califican. Las portadas y títulos son propiedad de sus respectivos editores y autores.">As an Amazon Associate, Apto Strategic Consulting earns from qualifying purchases. Book covers and titles are property of their respective publishers and authors.</p>
+</div></header>
+<!-- COURSE 1 -->
+<section><div class="wrap">
+  <div class="course-tag" data-en="Course 1" data-es="Curso 1">Course 1</div>
+  <h2 data-en="AI for Non-Technical Leaders" data-es="IA para Líderes No Técnicos">AI for Non-Technical Leaders</h2>
+  <div class="bar"></div>
+  <div class="books" id="c1"></div>
+</div></section>
+<!-- COURSE 2 -->
+<section><div class="wrap">
+  <div class="course-tag" data-en="Course 2" data-es="Curso 2">Course 2</div>
+  <h2 data-en="AI Strategy &amp; Governance" data-es="Estrategia y Gobernanza de IA">AI Strategy &amp; Governance</h2>
+  <div class="bar"></div>
+  <div class="books" id="c2"></div>
+</div></section>
+<!-- COURSE 3 -->
+<section><div class="wrap">
+  <div class="course-tag" data-en="Course 3" data-es="Curso 3">Course 3</div>
+  <h2 data-en="Agile &amp; Scrum for Government" data-es="Agile y Scrum para el Gobierno">Agile &amp; Scrum for Government</h2>
+  <div class="bar"></div>
+  <div class="books" id="c3"></div>
+</div></section>
+<!-- COURSE 4 -->
+<section><div class="wrap">
+  <div class="course-tag" data-en="Course 4" data-es="Curso 4">Course 4</div>
+  <h2 data-en="Leadership Under Pressure" data-es="Liderazgo Bajo Presión">Leadership Under Pressure</h2>
+  <div class="bar"></div>
+  <div class="books" id="c4"></div>
+</div></section>
+<!-- COURSE 5 -->
+<section><div class="wrap">
+  <div class="course-tag" data-en="Course 5" data-es="Curso 5">Course 5</div>
+  <h2 data-en="Leading Across Borders" data-es="Liderazgo Sin Fronteras">Leading Across Borders</h2>
+  <div class="bar"></div>
+  <div class="books" id="c5"></div>
+</div></section>
+<!-- COURSE 6 -->
+<section><div class="wrap">
+  <div class="course-tag" data-en="Course 6" data-es="Curso 6">Course 6</div>
+  <h2 data-en="Strategic Planning Bootcamp" data-es="Bootcamp de Planificación Estratégica">Strategic Planning Bootcamp</h2>
+  <div class="bar"></div>
+  <div class="books" id="c6"></div>
+</div></section>
+<footer><div class="wrap">
+  <p class="foot" data-en="© 2026 Apto Strategic Consulting LLC · Lakeway, Texas · Service-Disabled Veteran-Owned Small Business. As an Amazon Associate we earn from qualifying purchases. Prices and availability are set by Amazon and may change." data-es="© 2026 Apto Strategic Consulting LLC · Lakeway, Texas · Empresa propiedad de veterano con discapacidad por servicio. Como Afiliado de Amazon ganamos por las compras que califican. Los precios y la disponibilidad los fija Amazon y pueden cambiar.">© 2026 Apto Strategic Consulting LLC · Lakeway, Texas · Service-Disabled Veteran-Owned Small Business. As an Amazon Associate we earn from qualifying purchases. Prices and availability are set by Amazon and may change.</p>
+  <a class="backlink" href="index.html" data-en="← Back to aptostrategic.com" data-es="← Volver a aptostrategic.com">← Back to aptostrategic.com</a>
+</div></footer>
+<script>
+/* ---- Amazon affiliate config ---- */
+var AFF_TAG = "aptostrateg0b-20";
+function amzn(asin){ return "https://www.amazon.com/dp/"+asin+"/?tag="+AFF_TAG; }
+function cover(asin){ return "https://images-na.ssl-images-amazon.com/images/P/"+asin+".01._SCLZZZZZZZ_.jpg"; }
+/* ---- Book data, grouped by course ---- */
+var BOOKS = {
+  c1: [
+    { asin:"B0DY87M6PY", title:"The AI Executive Playbook", author:"Sharon Gee",
+      en:"Executive-level and governance-focused — the closest match to leading AI as a non-technical decision-maker.",
+      es:"Nivel ejecutivo y enfocado en gobernanza — la coincidencia más cercana a liderar la IA como un tomador de decisiones no técnico." },
+    { asin:"1962280500", title:"AI Leadership Handbook", author:"Andreas Welsch",
+      en:"A practical guide to turning AI hype into business outcomes, built from interviews with 60+ AI leaders.",
+      es:"Una guía práctica para convertir la expectativa sobre la IA en resultados de negocio, a partir de entrevistas con más de 60 líderes de IA." }
+  ],
+  c2: [
+    { asin:"0197579329", title:"The Oxford Handbook of AI Governance", author:"Bullock et al. (eds.)",
+      en:"Authoritative, comprehensive, and global — 49 chapters spanning the theory and practice of governing AI.",
+      es:"Autoritativo, exhaustivo y global — 49 capítulos que abarcan la teoría y la práctica de gobernar la IA." },
+    { asin:"B0GJYW8N1J", title:"AI Governance: Building AI With Responsibility", author:"Ravi Rajput",
+      en:"Actionable and enterprise-ready: frameworks, risk assessments, and checklists for responsible AI.",
+      es:"Accionable y listo para la empresa: marcos, evaluaciones de riesgo y listas de verificación para una IA responsable." }
+  ],
+  c3: [
+    { asin:"0957223404", title:"Agile Project Management for Government", author:"Brian Wernham",
+      en:"The best fit for public-sector realities — real case studies of agile leadership on large government programs.",
+      es:"El mejor ajuste para las realidades del sector público — casos reales de liderazgo ágil en grandes programas de gobierno." }
+  ],
+  c4: [
+    { asin:"0812968255", title:"Meditations", author:"Marcus Aurelius (trans. Gregory Hays)",
+      en:"The source text for BALLAST™ — Stoic self-coaching written by a leader at war, on staying steady under pressure.",
+      es:"El texto fuente de BALLAST™ — autoentrenamiento estoico escrito por un líder en guerra, sobre mantenerse firme bajo presión." },
+    { asin:"1591848016", title:"Leaders Eat Last", author:"Simon Sinek",
+      en:"The Circle of Safety and the BUD/S insight referenced in Module 7 — why teams pull together under pressure.",
+      es:"El Círculo de Seguridad y la enseñanza de BUD/S referida en el Módulo 7 — por qué los equipos se unen bajo presión." },
+    { asin:"1591846447", title:"Start With Why", author:"Simon Sinek",
+      en:"The Golden Circle (Why / How / What) used in Module 4 to frame the honest message in a crisis.",
+      es:"El Círculo Dorado (Porqué / Cómo / Qué) usado en el Módulo 4 para enmarcar el mensaje honesto en una crisis." }
+  ],
+  c5: [
+    { asin:"1610392760", title:"The Culture Map", author:"Erin Meyer",
+      en:"The eight cultural scales at the heart of BRIDGE™ — the field-tested model for decoding cross-cultural difference.",
+      es:"Las ocho escalas culturales en el corazón de BRIDGE™ — el modelo probado en campo para descifrar la diferencia intercultural." },
+    { asin:"0367434334", title:"Handbook of International &amp; Cross-Cultural Leadership Research", author:"Tolstikov-Mast, Bieri &amp; Walker (eds.)",
+      en:"The strongest research foundation for leading across cultures — for readers who want the academic depth.",
+      es:"La base de investigación más sólida para liderar entre culturas — para lectores que quieren la profundidad académica." },
+    { asin:"0143058029", title:"The Prince", author:"Niccolò Machiavelli",
+      en:"The field notebook of the working diplomat whose craft anchors the BRIDGE™ hook.",
+      es:"El cuaderno de campo del diplomático de trabajo cuyo oficio fundamenta el gancho de BRIDGE™." }
+  ],
+  c6: [
+    { asin:"1625274491", title:"Blue Ocean Strategy (Expanded Edition)", author:"W. Chan Kim & Renée Mauborgne",
+      en:"The INSEAD classic on creating uncontested market space — one of the core frameworks taught in the COMPASS™ navigator's kit.",
+      es:"El clásico de INSEAD sobre crear espacio de mercado no disputado — uno de los marcos centrales que se enseñan en el kit de navegante de COMPASS™." },
+    { asin:"0743260880", title:"Competitive Strategy", author:"Michael E. Porter",
+      en:"Porter's foundational work behind the Five Forces — the instrument for reading the competitive structure of any industry.",
+      es:"La obra fundacional de Porter detrás de las Cinco Fuerzas — el instrumento para leer la estructura competitiva de cualquier industria." },
+    { asin:"0738203092", title:"The Alchemy of Growth", author:"Baghai, Coley & White",
+      en:"The McKinsey book that introduced the Three Horizons model used in COMPASS™ to set objectives across time.",
+      es:"El libro de McKinsey que introdujo el modelo de los Tres Horizontes usado en COMPASS™ para fijar objetivos a través del tiempo." }
+  ]
+};
+var LANG = (localStorage.getItem('aptolang')||document.documentElement.lang||'en').slice(0,2);
+if(LANG!=='es') LANG='en';
+function renderBooks(){
+  Object.keys(BOOKS).forEach(function(cid){
+    var el = document.getElementById(cid);
+    if(!el) return;
+    el.innerHTML = BOOKS[cid].map(function(b){
+      var why = (LANG==='es') ? b.es : b.en;
+      var btn = (LANG==='es') ? "Comprar en Amazon" : "Buy on Amazon";
+      return '<div class="book">'
+        + '<a href="'+amzn(b.asin)+'" target="_blank" rel="nofollow sponsored noopener"><img src="'+cover(b.asin)+'" alt="'+b.title+'" loading="lazy" onerror="this.style.visibility=\'hidden\'"/></a>'
+        + '<div class="info">'
+        + '<p class="title">'+b.title+'</p>'
+        + '<p class="author">'+b.author+'</p>'
+        + '<p class="why">'+why+'</p>'
+        + '<a class="btn" href="'+amzn(b.asin)+'" target="_blank" rel="nofollow sponsored noopener">'+btn+' →</a>'
+        + '</div></div>';
+    }).join('');
+  });
+}
+function applyStatic(){
+  document.querySelectorAll('[data-en]').forEach(function(el){
+    var v = el.getAttribute('data-'+LANG);
+    if(v!==null && v!==undefined) el.innerHTML = v;
+  });
+  document.documentElement.lang = LANG;
+}
+function setLang(l){
+  LANG = (l==='es') ? 'es' : 'en';
+  localStorage.setItem('aptolang', LANG);
+  applyStatic(); renderBooks();
+  var en=document.getElementById('langEn'), es=document.getElementById('langEs');
+  en.style.cssText = "font-family:'Outfit';font-size:12px;letter-spacing:.08em;padding:7px 16px;border:1px solid var(--orange);cursor:pointer;" + (LANG==='en'?"background:var(--orange);color:#fff":"background:none;color:#33312e");
+  es.style.cssText = "font-family:'Outfit';font-size:12px;letter-spacing:.08em;padding:7px 16px;border:1px solid var(--orange);cursor:pointer;" + (LANG==='es'?"background:var(--orange);color:#fff":"background:none;color:#33312e");
+}
+applyStatic(); renderBooks(); setLang(LANG);
+</script>
+</body>
+</html>

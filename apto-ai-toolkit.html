@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Apto AI Tools Guide · Apto Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0A0A0A;--navy2:#141414;--navy3:#1d1d1d;--orange:#E85D20;--orange2:#ff7a3d;
+--white:#F0F0EE;--grey:#999;--grey2:#666;--line:rgba(255,255,255,0.09);--green:#3ba55c;--red:#d9534f}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',system-ui,sans-serif;background:var(--navy);color:var(--white);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1060px;margin:0 auto;padding:0 28px}
+header{padding:56px 0 28px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:10px}
+h1{font-family:'Barlow',sans-serif;font-size:clamp(34px,5vw,54px);font-weight:800;line-height:1.02}
+h1 em{color:var(--orange);font-style:italic}
+.sub{color:var(--grey);font-size:15px;margin-top:14px;max-width:640px;line-height:1.6}
+section{padding:54px 0;border-bottom:1px solid var(--line)}
+h2{font-family:'Barlow',sans-serif;font-size:26px;font-weight:700;margin-bottom:6px}
+.bar{width:34px;height:2px;background:var(--orange);margin:12px 0 22px}
+.note{font-size:12px;color:var(--grey2);margin-top:16px;line-height:1.5}
+.pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.pill{font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:7px 14px;border:1px solid var(--line);background:none;color:var(--grey);cursor:pointer;transition:all .2s;font-family:'Outfit'}
+.pill.active,.pill:hover{background:var(--orange);color:#fff;border-color:var(--orange)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);text-align:left;padding:10px 12px;border-bottom:1px solid var(--orange)}
+td{padding:13px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:#ccc}
+tr:hover td{background:var(--navy2)}
+.tool-ic{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:7px;font-family:'Barlow';font-weight:800;font-size:13px;margin-right:10px;color:#fff;flex:0 0 30px}
+.tool-name{display:flex;align-items:center;font-weight:500;color:var(--white)}
+.tool-name a{color:var(--white);text-decoration:none;border-bottom:1px dotted var(--grey2)}
+.tool-name a:hover{color:var(--orange2);border-color:var(--orange2)}
+.cost{color:var(--orange2);font-weight:500;white-space:nowrap}
+.tag{display:inline-block;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);border:1px solid var(--line);padding:2px 8px;border-radius:3px;margin-bottom:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{background:var(--navy2);border:1px solid var(--line);padding:22px}
+.card h3{font-family:'Barlow';font-size:16px;font-weight:700;margin-bottom:10px}
+.do h3{color:var(--green)} .dont h3{color:var(--red)}
+.card li{font-size:13.5px;color:#bbb;line-height:1.55;margin:0 0 9px 18px}
+.q-card{background:var(--navy2);border:1px solid var(--line);padding:26px;margin-bottom:10px}
+.q-num{font-size:10px;letter-spacing:.18em;color:var(--orange);text-transform:uppercase}
+.q-text{font-size:16px;margin:8px 0 14px;line-height:1.45}
+.yn{display:flex;gap:8px}
+.yn button{flex:1;padding:11px;font-family:'Outfit';font-size:13px;letter-spacing:.06em;text-transform:uppercase;background:none;border:1px solid var(--line);color:var(--grey);cursor:pointer;transition:all .15s}
+.yn button.sel-yes{background:var(--green);border-color:var(--green);color:#fff}
+.yn button.sel-no{background:var(--red);border-color:var(--red);color:#fff}
+.verdict{padding:26px;border:1px solid var(--line);margin-top:14px;text-align:center;display:none}
+.verdict.show{display:block}
+.verdict .v-title{font-family:'Barlow';font-size:24px;font-weight:800}
+.verdict .v-sub{color:var(--grey);font-size:13.5px;margin-top:8px;line-height:1.5}
+.v-buy{border-color:var(--green)} .v-buy .v-title{color:var(--green)}
+.v-no{border-color:var(--red)} .v-no .v-title{color:var(--red)}
+.btn{display:inline-block;padding:12px 26px;background:var(--orange);color:#fff;border:none;font-family:'Outfit';font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+.btn:hover{background:var(--orange2)}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--grey)}
+.btn.ghost:hover{border-color:var(--orange);color:var(--orange)}
+input[type=text],input[type=number],select{width:100%;padding:10px 12px;background:var(--navy3);border:1px solid var(--line);color:var(--white);font-family:'Outfit';font-size:13.5px}
+select option{background:var(--navy3)}
+.audit-row{display:grid;grid-template-columns:2fr 1.4fr 1fr 1.2fr 36px;gap:8px;margin-bottom:8px;align-items:center}
+.audit-head{display:grid;grid-template-columns:2fr 1.4fr 1fr 1.2fr 36px;gap:8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+.del-x{background:none;border:1px solid var(--line);color:var(--grey);cursor:pointer;height:38px;font-size:15px}
+.del-x:hover{border-color:var(--red);color:var(--red)}
+.totals{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.tot{background:var(--navy2);border:1px solid var(--line);padding:18px;text-align:center}
+.tot .n{font-family:'Barlow';font-size:30px;font-weight:800;color:var(--orange)}
+.tot .l{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin-top:4px}
+.kpi-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:8px;align-items:center;margin-bottom:8px}
+.kpi-head{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+.kpi-label{font-size:13.5px;color:#ccc}
+.acro{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:18px 0}
+.acro3{grid-template-columns:repeat(3,1fr)}
+.acro div{background:var(--navy2);border:1px solid var(--line);border-top:2px solid var(--orange);padding:16px 12px}
+.acro .big{font-family:'Barlow';font-size:30px;font-weight:800;color:var(--orange)}
+.acro .w{font-size:13px;font-weight:600;color:var(--white);margin:4px 0}
+.acro .d{font-size:11.5px;color:var(--grey);line-height:1.45}
+.diagram{margin-top:8px;border:1px solid var(--line)}
+.dg-band{background:var(--navy3);border:1px solid var(--orange);padding:16px;text-align:center;margin-bottom:14px}
+.dg-band b{font-family:'Barlow';font-size:15px;letter-spacing:.06em}
+.dg-band span{display:block;font-size:11.5px;color:var(--grey);margin-top:4px}
+.dg-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;padding:0 0 14px}
+.dg-col h4{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin-bottom:8px;text-align:center}
+.dg-box{background:var(--navy2);border:1px solid var(--line);padding:12px;margin-bottom:8px;font-size:12.5px;text-align:center;color:#ccc}
+.dg-box b{display:block;color:var(--white);font-size:13px;margin-bottom:2px}
+.dg-tier{background:var(--orange);border:none;color:#fff}
+.dg-tier b{color:#fff}
+.dg-arrow{text-align:center;color:var(--orange);font-size:16px;margin:2px 0 8px}
+.dg-row{display:grid;grid-template-columns:1fr 26px 1fr 26px 1fr;gap:8px;align-items:stretch;margin-bottom:8px}
+.dg-ar{display:flex;align-items:center;justify-content:center;color:var(--orange);font-size:15px}
+.dg-lane{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin:16px 0 8px;font-weight:600}
+.dg-row .dg-box{margin-bottom:0;display:flex;flex-direction:column;justify-content:center}
+footer{padding:36px 0;font-size:11.5px;color:var(--grey2);line-height:1.6}
+@media(max-width:760px){.grid2,.acro,.acro3,.dg-cols,.totals{grid-template-columns:1fr}
+.audit-row,.audit-head{grid-template-columns:1.6fr 1fr 1fr 36px}.audit-head span:nth-child(2),.audit-row select{display:none}
+.kpi-grid,.kpi-head{grid-template-columns:1.3fr 1fr 1fr}
+.dg-row{grid-template-columns:1fr}.dg-ar{transform:rotate(90deg);padding:2px 0}}
+</style>
+</head>
+<body>
+<div style="background:#F5F0EC;border-bottom:3px solid var(--orange)">
+  <div class="wrap" style="padding:13px 28px;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+    <div style="font-size:12.5px;color:#33312e;line-height:1.5" data-en="Interactive tools — they run live in your browser. Nothing is saved or sent anywhere." data-es="Herramientas interactivas — funcionan en vivo en tu navegador. Nada se guarda ni se envía.">Interactive tools — they run live in your browser. Nothing is saved or sent anywhere.</div>
+    <div style="display:flex;gap:6px;flex:0 0 auto">
+      <button onclick="setLang('en')" id="langEn" style="font-family:'Outfit';font-size:12px;letter-spacing:.08em;padding:7px 16px;border:1px solid var(--orange);background:var(--orange);color:#fff;cursor:pointer">EN</button>
+      <button onclick="setLang('es')" id="langEs" style="font-family:'Outfit';font-size:12px;letter-spacing:.08em;padding:7px 16px;border:1px solid var(--orange);background:none;color:#33312e;cursor:pointer">ES</button>
+    </div>
+  </div>
+</div>
+<header><div class="wrap">
+  <span class="eyebrow" data-en="Apto Academy · Companion to AI for Non-Technical Leaders" data-es="Apto Academy · Complemento de IA para Líderes No Técnicos">Apto Academy · Companion to AI for Non-Technical Leaders</span>
+  <h1>Apto <em>AI Tools Guide</em></h1>
+  <p class="sub" data-en="Interactive tools from the course: the tool directory, the Stack Test, the Stack Audit, and the KPI Matrix — plus the BRIEF and DVD quick-reference cards. Nothing here is stored or sent anywhere; it all runs in your browser." data-es="Herramientas interactivas del curso: el directorio de herramientas, el Stack Test, el Stack Audit y la KPI Matrix — más las tarjetas de referencia BRIEF y DVD. Nada se almacena ni se envía; todo funciona en tu navegador.">Interactive tools from the course: the tool directory, the Stack Test, the Stack Audit, and the KPI Matrix — plus the BRIEF and DVD quick-reference cards. Nothing here is stored or sent anywhere; it all runs in your browser.</p>
+</div></header>
+<!-- ============ 1. TOOLS DIRECTORY ============ -->
+<section id="directory"><div class="wrap">
+  <span class="eyebrow" data-en="01 · Reference" data-es="01 · Referencia">01 · Reference</span>
+  <h2 data-en="AI Tools Directory" data-es="Directorio de Herramientas de IA">AI Tools Directory</h2>
+  <div class="bar"></div>
+  <div class="pill-row" id="catPills">
+    <button class="pill active" data-cat="all" data-en="All" data-es="Todas">All</button>
+    <button class="pill" data-cat="assistant" data-en="Tier 1 · Assistants" data-es="Nivel 1 · Asistentes">Tier 1 · Assistants</button>
+    <button class="pill" data-cat="automation" data-en="Tier 2 · Automation" data-es="Nivel 2 · Automatización">Tier 2 · Automation</button>
+    <button class="pill" data-cat="research" data-en="Research & Knowledge" data-es="Investigación y Conocimiento">Research & Knowledge</button>
+    <button class="pill" data-cat="content" data-en="Content & Design" data-es="Contenido y Diseño">Content & Design</button>
+    <button class="pill" data-cat="video" data-en="Video" data-es="Video">Video</button>
+  </div>
+  <table id="toolTable">
+    <thead><tr><th style="width:26%" data-en="Tool" data-es="Herramienta">Tool</th><th style="width:18%" data-en="Cost (USD/mo)" data-es="Costo (USD/mes)">Cost (USD/mo)</th><th data-en="What it's for" data-es="Para qué sirve">What it's for</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <p class="note" data-en="Prices verified June 2026 and change frequently — confirm on each vendor's site before buying. Letter badges are used in place of logos; all names are trademarks of their owners. Apto Strategic is not affiliated with and does not represent any listed company." data-es="Precios verificados en junio de 2026 y cambian con frecuencia — confirma en el sitio de cada proveedor antes de comprar. Se usan insignias de letras en lugar de logotipos; todos los nombres son marcas de sus dueños. Apto Strategic no está afiliada con ninguna empresa listada ni la representa.">Prices verified June 2026 and change frequently — confirm on each vendor's site before buying. Letter badges are used in place of logos; all names are trademarks of their owners. Apto Strategic is not affiliated with and does not represent any listed company.</p>
+</div></section>
+<!-- ============ 2. WHICH AI FOR WHAT ============ -->
+<section id="whichai"><div class="wrap">
+  <span class="eyebrow" data-en="02 · Reference" data-es="02 · Referencia">02 · Reference</span>
+  <h2 data-en="Which AI for What?" data-es="¿Cuál IA para Qué?">Which AI for What?</h2>
+  <div class="bar"></div>
+  <p class="sub" style="margin-bottom:18px" data-en="Pick the task — get the tool the field consensus favors. All four frontier assistants can do all of these; this is about where each one shines." data-es="Elige la tarea — obtén la herramienta que el consenso del campo prefiere. Los cuatro asistentes de frontera pueden hacer todo esto; esto es sobre dónde brilla cada uno.">Pick the task — get the tool the field consensus favors. All four frontier assistants can do all of these; this is about where each one shines.</p>
+  <div style="max-width:480px;margin-bottom:18px"><select id="taskPick">
+    <option value="" data-en="— Select your task —" data-es="— Selecciona tu tarea —">— Select your task —</option>
+    <option value="write" data-en="Long-form writing & editing (reports, proposals, articles)" data-es="Escritura y edición de formato largo (reportes, propuestas, artículos)">Long-form writing & editing (reports, proposals, articles)</option>
+    <option value="brainstorm" data-en="Brainstorming, general Q&A, everyday prompting" data-es="Lluvia de ideas, preguntas generales, uso diario">Brainstorming, general Q&A, everyday prompting</option>
+    <option value="code" data-en="Coding, scripts & automation logic" data-es="Programación, scripts y lógica de automatización">Coding, scripts & automation logic</option>
+    <option value="docs" data-en="Analyzing long documents & contracts" data-es="Análisis de documentos largos y contratos">Analyzing long documents & contracts</option>
+    <option value="google" data-en="Working inside Google Workspace (Gmail, Docs, Sheets)" data-es="Trabajar dentro de Google Workspace (Gmail, Docs, Sheets)">Working inside Google Workspace (Gmail, Docs, Sheets)</option>
+    <option value="ms" data-en="Working inside Microsoft 365 (Word, Excel, Outlook)" data-es="Trabajar dentro de Microsoft 365 (Word, Excel, Outlook)">Working inside Microsoft 365 (Word, Excel, Outlook)</option>
+    <option value="research" data-en="Cited web research & fact-finding" data-es="Investigación web con citas y verificación de datos">Cited web research & fact-finding</option>
+    <option value="owndocs" data-en="Q&A grounded in YOUR documents" data-es="Preguntas basadas en TUS documentos">Q&A grounded in YOUR documents</option>
+    <option value="image" data-en="Image generation & visual content" data-es="Generación de imágenes y contenido visual">Image generation & visual content</option>
+    <option value="slides" data-en="Slide decks from an outline" data-es="Presentaciones a partir de un esquema">Slide decks from an outline</option>
+  </select></div>
+  <div id="taskOut" class="q-card" style="display:none"></div>
+</div></section>
+<!-- ============ 3. THE CONNECTED STACK ============ -->
+<section id="stack"><div class="wrap">
+  <span class="eyebrow" data-en="03 · The Architecture" data-es="03 · La Arquitectura">03 · The Architecture</span>
+  <h2 data-en="The Connected AI Stack" data-es="El Stack de IA Conectado">The Connected AI Stack</h2>
+  <div class="bar"></div>
+  <div class="diagram" style="border:none">
+    <div class="dg-band"><b data-en="THE HUMAN DECISION LAYER — YOU" data-es="LA CAPA DE DECISIÓN HUMANA — TÚ">THE HUMAN DECISION LAYER — YOU</b><span data-en="Frames the problem · Supplies context · Verifies claims · Makes the call · Owns the outcome" data-es="Enmarca el problema · Aporta contexto · Verifica afirmaciones · Toma la decisión · Es dueño del resultado">Frames the problem · Supplies context · Verifies claims · Makes the call · Owns the outcome</span></div>
+    <div class="dg-cols" style="display:block;padding-bottom:14px">
+      <div style="display:grid;grid-template-columns:1fr 26px 1fr 26px 1fr;gap:8px;margin-bottom:4px" class="dg-row">
+        <h4 style="margin:0;text-align:center;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey)" data-en="What goes in" data-es="Qué entra">What goes in</h4><span></span>
+        <h4 style="margin:0;text-align:center;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey)" data-en="Who does the work" data-es="Quién hace el trabajo">Who does the work</h4><span></span>
+        <h4 style="margin:0;text-align:center;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey)" data-en="What comes out" data-es="Qué sale">What comes out</h4>
+      </div>
+      <div class="dg-lane" data-en="Interactive — you, present, prompting" data-es="Interactivo — tú, presente, dando instrucciones">Interactive — you, present, prompting</div>
+      <div class="dg-row">
+        <div class="dg-box"><b>Your BRIEF</b><span data-en="Background · Role · Intent · Expectations · Format" data-es="Background · Role · Intent · Expectations · Format (Contexto · Rol · Intención · Expectativas · Formato)">Background · Role · Intent · Expectations · Format</span></div><div class="dg-ar">→</div>
+        <div class="dg-box dg-tier"><b data-en="Tier 1 — AI Assistant" data-es="Nivel 1 — Asistente de IA">Tier 1 — AI Assistant</b>Claude · ChatGPT · Gemini · Copilot</div><div class="dg-ar">→</div>
+        <div class="dg-box"><b data-en="A draft you edit" data-es="Un borrador que editas">A draft you edit</b><span data-en="you verify, you sign, you ship" data-es="tú verificas, tú firmas, tú envías">you verify, you sign, you ship</span></div>
+      </div>
+      <div class="dg-lane" data-en="Automated — runs while you don’t · build in order 1 → 2 → 3" data-es="Automatizado — funciona mientras tú no · constrúyelo en orden 1 → 2 → 3">Automated — runs while you don’t · build in order 1 → 2 → 3</div>
+      <div class="dg-row">
+        <div class="dg-box"><b data-en="Industry sources" data-es="Fuentes del sector">Industry sources</b><span data-en="RSS · news · journals" data-es="RSS · noticias · revistas">RSS · news · journals</span></div><div class="dg-ar">→</div>
+        <div class="dg-box"><b data-en="Pattern 1 · Signal Monitor" data-es="Patrón 1 · Monitor de Señales">Pattern 1 · Signal Monitor</b>Make.com / Zapier + AI</div><div class="dg-ar">→</div>
+        <div class="dg-box"><b data-en="Monday briefing" data-es="Informe del lunes">Monday briefing</b><span data-en="one email, ranked & summarized" data-es="un correo, clasificado y resumido">one email, ranked & summarized</span></div>
+      </div>
+      <div class="dg-row">
+        <div class="dg-box"><b data-en="One source draft" data-es="Un borrador fuente">One source draft</b><span data-en="memo · article · notes" data-es="memo · artículo · notas">memo · article · notes</span></div><div class="dg-ar">→</div>
+        <div class="dg-box"><b data-en="Pattern 2 · Content Engine" data-es="Patrón 2 · Motor de Contenido">Pattern 2 · Content Engine</b>Apps Script / Make + AI</div><div class="dg-ar">→</div>
+        <div class="dg-box"><b data-en="Five formats out" data-es="Cinco formatos de salida">Five formats out</b><span data-en="newsletter · posts · scripts · decks" data-es="boletín · publicaciones · guiones · presentaciones">newsletter · posts · scripts · decks</span></div>
+      </div>
+      <div class="dg-row">
+        <div class="dg-box"><b data-en="Your documents" data-es="Tus documentos">Your documents</b><span data-en="SOPs · proposals · policies" data-es="procedimientos · propuestas · políticas">SOPs · proposals · policies</span></div><div class="dg-ar">→</div>
+        <div class="dg-box"><b data-en="Pattern 3 · The Brain" data-es="Patrón 3 · El Cerebro">Pattern 3 · The Brain</b>NotebookLM / RAG</div><div class="dg-ar">→</div>
+        <div class="dg-box"><b data-en="Answers with sources" data-es="Respuestas con fuentes">Answers with sources</b><span data-en="institutional memory on demand" data-es="memoria institucional a demanda">institutional memory on demand</span></div>
+      </div>
+    </div>
+    <div class="dg-band" style="border-color:var(--line)"><b style="color:var(--orange)" data-en="GOVERNANCE WRAPPER — THE DVD RULE" data-es="ENVOLTURA DE GOBERNANZA — LA REGLA DVD">GOVERNANCE WRAPPER — THE DVD RULE</b><span data-en="Data (know what never goes in) · Verify (AI drafts, humans sign) · Disclose (decide once, in advance)" data-es="Data/Datos (saber qué nunca entra) · Verify/Verificar (la IA redacta, los humanos firman) · Disclose/Divulgar (decide una vez, por adelantado)">Data (know what never goes in) · Verify (AI drafts, humans sign) · Disclose (decide once, in advance)</span></div>
+  </div>
+</div></section>
+<!-- ============ 4. BRIEF & DVD CARDS ============ -->
+<section id="cards"><div class="wrap">
+  <span class="eyebrow" data-en="04 · Memory Aids" data-es="04 · Ayudas de Memoria">04 · Memory Aids</span>
+  <h2 data-en="Write a BRIEF. Follow the DVD." data-es="Escribe un BRIEF. Sigue el DVD.">Write a BRIEF. Follow the DVD.</h2>
+  <div class="bar"></div>
+  <p class="sub" data-en="Prompting is briefing — so write a BRIEF. The five letters are a checklist, not a script: cover all five in any order." data-es="Dar instrucciones es informar — así que escribe un BRIEF. Las cinco letras son una lista de verificación, no un guion: cubre las cinco en cualquier orden.">Prompting is briefing — so write a BRIEF. The five letters are a checklist, not a script: cover all five in any order.</p>
+  <div class="acro">
+    <div><div class="big">B</div><div class="w" data-en="Background" data-es="Background (Contexto)">Background</div><div class="d" data-en="The context. Paste the data, the history, the prior emails." data-es="El contexto. Pega los datos, el historial, los correos previos.">The context. Paste the data, the history, the prior emails.</div></div>
+    <div><div class="big">R</div><div class="w" data-en="Role" data-es="Role (Rol)">Role</div><div class="d" data-en="Who the AI should be. &quot;You are a communications director…&quot;" data-es="Quién debe ser la IA. «Eres un director de comunicaciones…»">Who the AI should be. "You are a communications director…"</div></div>
+    <div><div class="big">I</div><div class="w" data-en="Intent" data-es="Intent (Intención)">Intent</div><div class="d" data-en="The mission — the specific deliverable and its audience." data-es="La misión — el entregable específico y su audiencia.">The mission — the specific deliverable and its audience.</div></div>
+    <div><div class="big">E</div><div class="w" data-en="Expectations" data-es="Expectations (Expectativas)">Expectations</div><div class="d" data-en="The constraints — length, tone, format, what to avoid." data-es="Las restricciones — extensión, tono, formato, qué evitar.">The constraints — length, tone, format, what to avoid.</div></div>
+    <div><div class="big">F</div><div class="w" data-en="Format &amp; standard" data-es="Format (Formato y estándar)">Format &amp; standard</div><div class="d" data-en="What excellent looks like — an example, or the criteria you'll judge by." data-es="Cómo se ve lo excelente — un ejemplo, o los criterios con que juzgarás.">What excellent looks like — an example, or the criteria you'll judge by.</div></div>
+  </div>
+  <p class="sub" style="margin-top:30px" data-en="Your one-page AI policy has three rules — the DVD Rule. Dated like the disc; impossible to forget." data-es="Tu política de IA de una página tiene tres reglas — la Regla DVD. Anticuada como el disco; imposible de olvidar.">Your one-page AI policy has three rules — the DVD Rule. Dated like the disc; impossible to forget.</p>
+  <div class="acro acro3">
+    <div><div class="big">D</div><div class="w" data-en="Data" data-es="Data (Datos)">Data</div><div class="d" data-en="Know what never goes in: client PII, employee records, financials under NDA, credentials. Exposed credentials get rotated immediately." data-es="Saber qué nunca entra: datos personales de clientes, registros de empleados, finanzas bajo NDA, credenciales. Las credenciales expuestas se rotan de inmediato.">Know what never goes in: client PII, employee records, financials under NDA, credentials. Exposed credentials get rotated immediately.</div></div>
+    <div><div class="big">V</div><div class="w" data-en="Verify" data-es="Verify (Verificar)">Verify</div><div class="d" data-en="AI drafts, humans sign. Names, numbers, dates, and citations get independently checked before anything ships." data-es="La IA redacta, los humanos firman. Nombres, números, fechas y citas se verifican de forma independiente antes de enviar nada.">AI drafts, humans sign. Names, numbers, dates, and citations get independently checked before anything ships.</div></div>
+    <div><div class="big">D</div><div class="w" data-en="Disclose" data-es="Disclose (Divulgar)">Disclose</div><div class="d" data-en="Decide once, in advance, where you disclose AI assistance — and write the decision down." data-es="Decide una vez, por adelantado, dónde divulgas la asistencia de IA — y escribe la decisión.">Decide once, in advance, where you disclose AI assistance — and write the decision down.</div></div>
+  </div>
+</div></section>
+<!-- ============ 5. DOs & DON'Ts ============ -->
+<section id="dosdonts"><div class="wrap">
+  <span class="eyebrow" data-en="05 · Field Discipline" data-es="05 · Disciplina de Campo">05 · Field Discipline</span>
+  <h2 data-en="DOs &amp; DON'Ts of Using AI" data-es="Qué SÍ y qué NO al Usar IA">DOs &amp; DON'Ts of Using AI</h2>
+  <div class="bar"></div>
+  <div class="grid2">
+    <div class="card do"><h3 data-en="✓ DO" data-es="✓ SÍ">✓ DO</h3><ul>
+      <li data-en="<b>Treat the first output as a staff estimate</b> — iterate in the same conversation instead of restarting." data-es="<b>Trata el primer resultado como un estimado preliminar</b> — itera en la misma conversación en vez de reiniciar."><b>Treat the first output as a staff estimate</b> — iterate in the same conversation instead of restarting.</li>
+      <li data-en="<b>Paste context generously.</b> The model only knows what it was trained on plus what you give it." data-es="<b>Pega contexto generosamente.</b> El modelo solo sabe lo que se le entrenó más lo que tú le das."><b>Paste context generously.</b> The model only knows what it was trained on plus what you give it.</li>
+      <li data-en="<b>Make it interrogate you:</b> &quot;Before drafting, ask me the five questions you need answered.&quot;" data-es="<b>Haz que te interrogue:</b> «Antes de redactar, hazme las cinco preguntas que necesitas responder»."><b>Make it interrogate you:</b> "Before drafting, ask me the five questions you need answered."</li>
+      <li data-en="<b>Use it for T-tasks</b> — drafts, summaries, options, reformatting — where unverified output is tolerable." data-es="<b>Úsala para tareas-T</b> — borradores, resúmenes, opciones, reformateo — donde el resultado sin verificar es tolerable."><b>Use it for T-tasks</b> — drafts, summaries, options, reformatting — where unverified output is tolerable.</li>
+      <li data-en="<b>Verify names, numbers, dates, and citations</b> independently, every time, before anything ships." data-es="<b>Verifica nombres, números, fechas y citas</b> de forma independiente, cada vez, antes de enviar nada."><b>Verify names, numbers, dates, and citations</b> independently, every time, before anything ships.</li>
+      <li data-en="<b>Master one assistant deeply</b> before adding any other tool." data-es="<b>Domina un asistente a fondo</b> antes de añadir cualquier otra herramienta."><b>Master one assistant deeply</b> before adding any other tool.</li>
+      <li data-en="<b>Capture a baseline</b> before rollout so progress claims are credible." data-es="<b>Captura una línea base</b> antes del despliegue para que las afirmaciones de progreso sean creíbles."><b>Capture a baseline</b> before rollout so progress claims are credible.</li>
+      <li data-en="<b>Tell your team what you use it for.</b> Modeled behavior beats mandated behavior." data-es="<b>Dile a tu equipo para qué la usas.</b> El comportamiento modelado le gana al comportamiento impuesto."><b>Tell your team what you use it for.</b> Modeled behavior beats mandated behavior.</li>
+    </ul></div>
+    <div class="card dont"><h3 data-en="✗ DON'T" data-es="✗ NO">✗ DON'T</h3><ul>
+      <li data-en="<b>Don't paste client PII, employee records, NDA material, or credentials</b> into consumer AI tools. Ever." data-es="<b>No pegues datos personales de clientes, registros de empleados, material bajo NDA o credenciales</b> en herramientas de IA de consumo. Nunca."><b>Don't paste client PII, employee records, NDA material, or credentials</b> into consumer AI tools. Ever.</li>
+      <li data-en="<b>Don't ship AI output unreviewed.</b> Accountability is not transferable — &quot;the AI suggested it&quot; survives nothing." data-es="<b>No envíes resultados de IA sin revisar.</b> La responsabilidad no es transferible — «la IA lo sugirió» no sobrevive a nada."><b>Don't ship AI output unreviewed.</b> Accountability is not transferable — "the AI suggested it" survives nothing.</li>
+      <li data-en="<b>Don't trust confident citations, statistics, or legal/medical claims</b> without checking. Confidence is not accuracy." data-es="<b>No confíes en citas, estadísticas o afirmaciones legales/médicas seguras</b> sin verificar. La confianza no es exactitud."><b>Don't trust confident citations, statistics, or legal/medical claims</b> without checking. Confidence is not accuracy.</li>
+      <li data-en="<b>Don't buy six tools to feel like you're adopting.</b> Subscriptions are easy to start and invisible to carry." data-es="<b>No compres seis herramientas para sentir que estás adoptando.</b> Las suscripciones son fáciles de iniciar e invisibles de cargar."><b>Don't buy six tools to feel like you're adopting.</b> Subscriptions are easy to start and invisible to carry.</li>
+      <li data-en="<b>Don't use it as a search engine</b> and conclude it's overhyped. Shallow usage produces shallow results." data-es="<b>No la uses como motor de búsqueda</b> y concluyas que está sobrevalorada. El uso superficial produce resultados superficiales."><b>Don't use it as a search engine</b> and conclude it's overhyped. Shallow usage produces shallow results.</li>
+      <li data-en="<b>Don't mandate by ambush</b> — a tool announced Monday, mandatory Friday, builds resistance, not adoption." data-es="<b>No impongas por emboscada</b> — una herramienta anunciada el lunes y obligatoria el viernes genera resistencia, no adopción."><b>Don't mandate by ambush</b> — a tool announced Monday, mandatory Friday, builds resistance, not adoption.</li>
+      <li data-en="<b>Don't investigate an exposed API key or password.</b> Rotate it immediately; investigate after." data-es="<b>No investigues una clave de API o contraseña expuesta.</b> Rótala de inmediato; investiga después."><b>Don't investigate an exposed API key or password.</b> Rotate it immediately; investigate after.</li>
+      <li data-en="<b>Don't let the tool decide.</b> It generates options; you own outcomes." data-es="<b>No dejes que la herramienta decida.</b> Genera opciones; tú eres dueño de los resultados."><b>Don't let the tool decide.</b> It generates options; you own outcomes.</li>
+    </ul></div>
+  </div>
+</div></section>
+<!-- ============ 6. THE APTO STACK TEST ============ -->
+<section id="stacktest"><div class="wrap">
+  <span class="eyebrow" data-en="06 · Module 3 Tool" data-es="06 · Herramienta del Módulo 3">06 · Module 3 Tool</span>
+  <h2 data-en="The Apto Stack Test" data-es="El Apto Stack Test">The Apto Stack Test</h2>
+  <div class="bar"></div>
+  <p class="sub" style="margin-bottom:20px" data-en="Thinking about a new AI subscription? Answer four questions, in order. The test runs at the door — not at renewal." data-es="¿Pensando en una nueva suscripción de IA? Responde cuatro preguntas, en orden. La prueba se hace en la puerta — no en la renovación.">Thinking about a new AI subscription? Answer four questions, in order. The test runs at the door — not at renewal.</p>
+  <div style="max-width:480px;margin-bottom:18px"><input type="text" id="stName" data-en-ph="Tool you're considering (e.g., 'MagicSlides Pro')" data-es-ph="Herramienta que consideras (ej., 'MagicSlides Pro')" placeholder="Tool you're considering (e.g., 'MagicSlides Pro')"/></div>
+  <div class="q-card"><div class="q-num" data-en="Question 1 of 4" data-es="Pregunta 1 de 4">Question 1 of 4</div><div class="q-text" data-en="Can your Tier 1 assistant (Claude / ChatGPT / Gemini / Copilot) already do this well enough?" data-es="¿Tu asistente de Nivel 1 (Claude / ChatGPT / Gemini / Copilot) ya hace esto suficientemente bien?">Can your Tier 1 assistant (Claude / ChatGPT / Gemini / Copilot) already do this well enough?</div><div class="yn" data-q="0"><button data-v="yes" data-en="Yes" data-es="Sí">Yes</button><button data-v="no" data-en="No" data-es="No">No</button></div></div>
+  <div class="q-card"><div class="q-num" data-en="Question 2 of 4" data-es="Pregunta 2 de 4">Question 2 of 4</div><div class="q-text" data-en="Does a tool you already pay for do this? (Check the AI features inside Workspace / 365 / Canva first.)" data-es="¿Una herramienta que ya pagas hace esto? (Revisa primero las funciones de IA dentro de Workspace / 365 / Canva.)">Does a tool you already pay for do this? (Check the AI features inside Workspace / 365 / Canva first.)</div><div class="yn" data-q="1"><button data-v="yes" data-en="Yes" data-es="Sí">Yes</button><button data-v="no" data-en="No" data-es="No">No</button></div></div>
+  <div class="q-card"><div class="q-num" data-en="Question 3 of 4" data-es="Pregunta 3 de 4">Question 3 of 4</div><div class="q-text" data-en="Will it save more hours per month than it costs in dollars AND attention?" data-es="¿Ahorrará más horas al mes de lo que cuesta en dólares Y atención?">Will it save more hours per month than it costs in dollars AND attention?</div><div class="yn" data-q="2"><button data-v="yes" data-en="Yes" data-es="Sí">Yes</button><button data-v="no" data-en="No / Not sure" data-es="No / No estoy seguro">No / Not sure</button></div></div>
+  <div class="q-card"><div class="q-num" data-en="Question 4 of 4" data-es="Pregunta 4 de 4">Question 4 of 4</div><div class="q-text" data-en="Will you still be using it in 90 days?" data-es="¿Seguirás usándola en 90 días?">Will you still be using it in 90 days?</div><div class="yn" data-q="3"><button data-v="yes" data-en="Yes" data-es="Sí">Yes</button><button data-v="no" data-en="No / Not sure" data-es="No / No estoy seguro">No / Not sure</button></div></div>
+  <div class="verdict" id="stVerdict"></div>
+  <p style="margin-top:14px"><button class="btn ghost" onclick="resetStackTest()" data-en="Reset Test" data-es="Reiniciar Prueba">Reset Test</button></p>
+</div></section>
+<!-- ============ 7. STACK AUDIT ============ -->
+<section id="audit"><div class="wrap">
+  <span class="eyebrow" data-en="07 · Module 3 Tool" data-es="07 · Herramienta del Módulo 3">07 · Module 3 Tool</span>
+  <h2 data-en="The Stack Audit" data-es="El Stack Audit">The Stack Audit</h2>
+  <div class="bar"></div>
+  <p class="sub" style="margin-bottom:20px" data-en="List every subscription your organization pays for. Most leaders discover they already pay for AI they've never turned on." data-es="Lista cada suscripción que paga tu organización. La mayoría de los líderes descubren que ya pagan por IA que nunca han activado.">List every subscription your organization pays for. Most leaders discover they already pay for AI they've never turned on.</p>
+  <div class="audit-head"><span data-en="Subscription" data-es="Suscripción">Subscription</span><span data-en="Category" data-es="Categoría">Category</span><span data-en="$ / month" data-es="$ / mes">$ / month</span><span data-en="Includes AI features?" data-es="¿Incluye funciones de IA?">Includes AI features?</span><span></span></div>
+  <div id="auditRows"></div>
+  <p style="margin:14px 0 6px"><button class="btn ghost" onclick="addAuditRow()" data-en="+ Add subscription" data-es="+ Añadir suscripción">+ Add subscription</button></p>
+  <div class="totals">
+    <div class="tot"><div class="n" id="totSpend">$0</div><div class="l" data-en="Total monthly spend" data-es="Gasto mensual total">Total monthly spend</div></div>
+    <div class="tot"><div class="n" id="totYear">$0</div><div class="l" data-en="Annualized" data-es="Anualizado">Annualized</div></div>
+    <div class="tot"><div class="n" id="totAI">0</div><div class="l" data-en="Tools with unused AI inside" data-es="Herramientas con IA sin usar">Tools with unused AI inside</div></div>
+  </div>
+  <div class="q-card" id="auditInsight" style="margin-top:14px;display:none"></div>
+</div></section>
+<!-- ============ 8. KPI MATRIX ============ -->
+<section id="kpi"><div class="wrap">
+  <span class="eyebrow" data-en="08 · Module 7 Tool" data-es="08 · Herramienta del Módulo 7">08 · Module 7 Tool</span>
+  <h2 data-en="The KPI Matrix — Is It Working?" data-es="La KPI Matrix — ¿Está Funcionando?">The KPI Matrix — Is It Working?</h2>
+  <div class="bar"></div>
+  <p class="sub" style="margin-bottom:20px" data-en="Four numbers, fifteen minutes a month. Enter your baseline and current values; the verdict updates live." data-es="Cuatro números, quince minutos al mes. Ingresa tu línea base y valores actuales; el veredicto se actualiza en vivo.">Four numbers, fifteen minutes a month. Enter your baseline and current values; the verdict updates live.</p>
+  <div class="kpi-head"><span data-en="Metric" data-es="Métrica">Metric</span><span data-en="Baseline (Day 0)" data-es="Línea base (Día 0)">Baseline (Day 0)</span><span data-en="Current" data-es="Actual">Current</span></div>
+  <div class="kpi-grid"><span class="kpi-label" data-en="Team hours/week on AI-assisted tasks" data-es="Horas/semana del equipo en tareas con IA">Team hours/week on AI-assisted tasks</span><input type="number" id="hb" min="0" placeholder="e.g., 40"/><input type="number" id="hc" min="0" placeholder="e.g., 28"/></div>
+  <div class="kpi-grid"><span class="kpi-label" data-en="AI stack cost ($/month)" data-es="Costo del stack de IA ($/mes)">AI stack cost ($/month)</span><input type="number" id="cb" min="0" placeholder="e.g., 0"/><input type="number" id="cc" min="0" placeholder="e.g., 60"/></div>
+  <div class="kpi-grid"><span class="kpi-label" data-en="Flagship process cycle time (days)" data-es="Tiempo de ciclo del proceso clave (días)">Flagship process cycle time (days)</span><input type="number" id="tb" min="0" placeholder="e.g., 10"/><input type="number" id="tc" min="0" placeholder="e.g., 6"/></div>
+  <div class="kpi-grid"><span class="kpi-label" data-en="Quality incidents this month (#)" data-es="Incidentes de calidad este mes (#)">Quality incidents this month (#)</span><input type="number" id="ib" min="0" placeholder="e.g., 0"/><input type="number" id="ic" min="0" placeholder="e.g., 1"/></div>
+  <div class="kpi-grid"><span class="kpi-label" data-en="Loaded value of one team hour ($)" data-es="Valor cargado de una hora del equipo ($)">Loaded value of one team hour ($)</span><input type="number" id="hr" min="0" placeholder="e.g., 75"/><span></span></div>
+  <div class="totals">
+    <div class="tot"><div class="n" id="kHours">—</div><div class="l" data-en="Hours recovered / week" data-es="Horas recuperadas / semana">Hours recovered / week</div></div>
+    <div class="tot"><div class="n" id="kValue">—</div><div class="l" data-en="Value recovered / month" data-es="Valor recuperado / mes">Value recovered / month</div></div>
+    <div class="tot"><div class="n" id="kROI">—</div><div class="l" data-en="Return per $1 of stack" data-es="Retorno por $1 del stack">Return per $1 of stack</div></div>
+  </div>
+  <div class="verdict show" id="kVerdict" style="margin-top:14px;border-color:var(--line)"><div class="v-title" style="color:var(--grey)" data-en="Enter your numbers" data-es="Ingresa tus números">Enter your numbers</div><div class="v-sub" data-en="The verdict appears here as you type." data-es="El veredicto aparece aquí mientras escribes.">The verdict appears here as you type.</div></div>
+</div></section>
+<footer><div class="wrap">
+  © 2026 Apto Strategic Consulting LLC · Lakeway, Texas · Service-Disabled Veteran-Owned Small Business · aptostrategic.com<br/>
+  <span data-en="Companion to the Apto Academy course &quot;AI for Non-Technical Leaders.&quot; All calculations run locally in your browser; nothing is stored or transmitted. All product names and trademarks are property of their respective owners; pricing shown as of June 2026 — verify before purchasing." data-es="Complemento del curso de Apto Academy «IA para Líderes No Técnicos». Todos los cálculos se ejecutan localmente en tu navegador; nada se almacena ni se transmite. Todos los nombres de productos y marcas son propiedad de sus respectivos dueños; precios mostrados a junio de 2026 — verifica antes de comprar.">Companion to the Apto Academy course "AI for Non-Technical Leaders." All calculations run locally in your browser; nothing is stored or transmitted. All product names and trademarks are property of their respective owners; pricing shown as of June 2026 — verify before purchasing.</span>
+</div></footer>
+<script>
+/* ---------- 0. Language ---------- */
+let LANG = (localStorage.getItem('aptolang')||document.documentElement.lang||'en').slice(0,2);
+if(LANG!=='es')LANG='en';
+function applyStatic(){
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const v=el.getAttribute('data-'+LANG);
+    if(v!==null && v!==undefined) el.textContent=v;
+  });
+  document.querySelectorAll('[data-en-ph]').forEach(el=>{
+    const v=el.getAttribute('data-'+LANG+'-ph');
+    if(v) el.setAttribute('placeholder',v);
+  });
+  document.documentElement.lang=LANG;
+}
+function setLang(l){
+  LANG=(l==='es')?'es':'en';
+  localStorage.setItem('aptolang',LANG);
+  applyStatic();
+  // re-render dynamic pieces
+  const active=document.querySelector('#catPills .pill.active');
+  renderTools(active?active.dataset.cat:'all');
+  const tp=document.getElementById('taskPick'); if(tp&&tp.value) tp.dispatchEvent(new Event('change'));
+  if(typeof stVerdictCheck==='function' && !stAns.some(a=>a===null)) stVerdictCheck();
+  auditCalc(); kpiCalc();
+  // toggle button styles
+  const en=document.getElementById('langEn'), es=document.getElementById('langEs');
+  if(en&&es){
+    const on='background:var(--orange);color:#fff', off='background:none;color:#33312e';
+    en.style.cssText="font-family:'Outfit';font-size:12px;letter-spacing:.08em;padding:7px 16px;border:1px solid var(--orange);cursor:pointer;"+(LANG==='en'?on:off);
+    es.style.cssText="font-family:'Outfit';font-size:12px;letter-spacing:.08em;padding:7px 16px;border:1px solid var(--orange);cursor:pointer;"+(LANG==='es'?on:off);
+  }
+}
+/* ---------- 1. Tools directory ---------- */
+const TOOLS=[
+ {n:"Claude",c:"assistant",ic:"C",col:"#D97757",url:"https://claude.ai",cost:"Free · Pro $20 · Max from $100",f:"Long-form writing, coding, and long-document analysis; Pro includes Claude Code for developers.",fes:"Escritura larga, programación y análisis de documentos extensos; Pro incluye Claude Code para desarrolladores."},
+ {n:"ChatGPT",c:"assistant",ic:"G",col:"#10A37F",url:"https://chatgpt.com",cost:"Free · Go $8 · Plus $20 · Pro $100+",f:"The all-rounder with the biggest ecosystem — custom GPTs, voice, image generation, broad plugin support.",fes:"El todoterreno con el mayor ecosistema — GPTs personalizados, voz, generación de imágenes, amplio soporte de plugins."},
+ {n:"Google Gemini",c:"assistant",ic:"♦",col:"#4285F4",url:"https://gemini.google.com",cost:"Free · AI Pro $19.99",f:"Deep Google Workspace integration and a very large context window; generous free tier.",fes:"Integración profunda con Google Workspace y una ventana de contexto muy grande; nivel gratuito generoso."},
+ {n:"Microsoft Copilot",c:"assistant",ic:"M",col:"#0078D4",url:"https://copilot.microsoft.com",cost:"Free · w/ M365 Personal $19.99 · Business ~$21/seat",f:"AI inside Word, Excel, Outlook, and Teams — strongest pick if your organization lives in Microsoft 365.",fes:"IA dentro de Word, Excel, Outlook y Teams — la mejor opción si tu organización vive en Microsoft 365."},
+ {n:"Make.com",c:"automation",ic:"Mk",col:"#6D00CC",url:"https://www.make.com",cost:"Free · Core $12 · Pro ~$19",f:"Visual automation canvas; powers the Signal Monitor and Content Engine patterns. Pay-per-operation pricing.",fes:"Lienzo visual de automatización; impulsa los patrones Monitor de Señales y Motor de Contenido. Precio por operación."},
+ {n:"Zapier",c:"automation",ic:"Z",col:"#FF4F00",url:"https://zapier.com",cost:"Free (100 tasks) · Starter $19.99 · Pro $49",f:"The easiest automation entry point with the largest app library; simpler than Make, pricier at volume.",fes:"El punto de entrada más fácil a la automatización con la mayor biblioteca de apps; más simple que Make, más caro a volumen."},
+ {n:"Google Apps Script",c:"automation",ic:"As",col:"#34A853",url:"https://script.google.com",cost:"Free with Google account",f:"Free automation inside Google Workspace — schedules, email, Drive. Pairs with any AI API.",fes:"Automatización gratuita dentro de Google Workspace — programaciones, correo, Drive. Se combina con cualquier API de IA."},
+ {n:"NotebookLM",c:"research",ic:"N",col:"#1A73E8",url:"https://notebooklm.google.com",cost:"Free · more via Google AI plans",f:"Q&A grounded in YOUR documents with citations, plus Audio Overviews — the gentlest entry to the Brain pattern.",fes:"Preguntas basadas en TUS documentos con citas, más Resúmenes de Audio — la entrada más suave al patrón del Cerebro."},
+ {n:"Perplexity",c:"research",ic:"P",col:"#20808D",url:"https://www.perplexity.ai",cost:"Free · Pro $20",f:"Web research with inline citations — built for sourced fact-finding rather than drafting.",fes:"Investigación web con citas en línea — hecha para encontrar datos con fuentes más que para redactar."},
+ {n:"Canva",c:"content",ic:"Cv",col:"#8B3DFF",url:"https://www.canva.com",cost:"Free · Pro $15",f:"Design suite with AI features (Magic Studio) — graphics, social posts, documents, simple video.",fes:"Suite de diseño con funciones de IA (Magic Studio) — gráficos, publicaciones sociales, documentos, video simple."},
+ {n:"Gamma",c:"content",ic:"Γ",col:"#7B61FF",url:"https://gamma.app",cost:"Free credits · paid from ~$10",f:"Generates polished slide decks and docs from an outline in under a minute; exports to PPT/PDF.",fes:"Genera presentaciones y documentos pulidos a partir de un esquema en menos de un minuto; exporta a PPT/PDF."},
+ {n:"CapCut",c:"video",ic:"Cc",col:"#00E5D0",url:"https://www.capcut.com",cost:"Free · Pro ~$10 (verify)",f:"Video editing with AI captions, cuts, and templates — the short-form content workhorse.",fes:"Edición de video con subtítulos, cortes y plantillas con IA — el caballo de batalla del contenido corto."},
+ {n:"Animoto",c:"video",ic:"A",col:"#19B5A4",url:"https://animoto.com",cost:"Free · paid from ~$9 (verify)",f:"Template-driven video builder — fast promo and social videos without an editing learning curve.",fes:"Constructor de video con plantillas — videos promocionales y sociales rápidos sin curva de aprendizaje de edición."},
+];
+const tbody=document.querySelector('#toolTable tbody');
+function renderTools(cat){
+  tbody.innerHTML='';
+  TOOLS.filter(t=>cat==='all'||t.c===cat).forEach(t=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td><span class="tool-name"><span class="tool-ic" style="background:'+t.col+'">'+t.ic+'</span><a href="'+t.url+'" target="_blank" rel="noopener">'+t.n+' ↗</a></span></td>'+
+      '<td class="cost">'+t.cost+'</td><td>'+((LANG==='es'&&t.fes)?t.fes:t.f)+'</td>';
+    tbody.appendChild(tr);
+  });
+}
+renderTools('all');
+document.querySelectorAll('#catPills .pill').forEach(p=>p.addEventListener('click',()=>{
+  document.querySelectorAll('#catPills .pill').forEach(x=>x.classList.remove('active'));
+  p.classList.add('active'); renderTools(p.dataset.cat);
+}));
+/* ---------- 2. Which AI for what ---------- */
+const TASKMAP={
+ write:["Claude","Field consensus favors Claude for long-form writing and editing — strong sustained voice and structure over long documents. ChatGPT is a close second.","#D97757","C","El consenso del campo prefiere a Claude para escritura y edición de formato largo — voz y estructura sostenidas en documentos extensos. ChatGPT es un segundo cercano."],
+ brainstorm:["ChatGPT","The everyday all-rounder: fastest ecosystem, custom GPTs, voice mode. Great default for general prompting and ideation.","#10A37F","G","El todoterreno diario: el ecosistema más rápido, GPTs personalizados, modo de voz. Excelente opción por defecto para ideación y uso general."],
+ code:["Claude","Widely favored for coding and multi-step automation logic; Claude Code ships with the Pro plan. GitHub Copilot ($10) is the in-IDE alternative.","#D97757","C","Ampliamente preferido para programación y lógica de automatización de varios pasos; Claude Code viene con el plan Pro. GitHub Copilot ($10) es la alternativa dentro del IDE."],
+ docs:["Claude","Long-context document analysis is a core strength — contracts, reports, and multi-file review. Gemini's large context window is the alternative.","#D97757","C","El análisis de documentos de contexto largo es una fortaleza central — contratos, reportes y revisión de varios archivos. La gran ventana de contexto de Gemini es la alternativa."],
+ google:["Gemini","If you live in Gmail, Docs, and Sheets, Gemini is built in — drafting, summarizing, and data help inside the tools you already pay for.","#4285F4","♦","Si vives en Gmail, Docs y Sheets, Gemini está integrado — redacción, resumen y ayuda con datos dentro de las herramientas que ya pagas."],
+ ms:["Copilot","Inside Word, Excel, Outlook, and Teams, Copilot is the native choice — AI where your files already live.","#0078D4","M","Dentro de Word, Excel, Outlook y Teams, Copilot es la opción nativa — IA donde tus archivos ya viven."],
+ research:["Perplexity","Built for cited, sourced web research. Ask, get an answer with footnotes, follow the trail. Gemini Deep Research is the alternative.","#20808D","P","Hecha para investigación web citada y con fuentes. Pregunta, obtén una respuesta con notas al pie, sigue el rastro. Gemini Deep Research es la alternativa."],
+ owndocs:["NotebookLM","Grounded answers from YOUR uploaded documents, with citations and audio overviews — the gentlest version of the Brain pattern, free.","#1A73E8","N","Respuestas fundamentadas en TUS documentos subidos, con citas y resúmenes de audio — la versión más suave del patrón del Cerebro, gratis."],
+ image:["ChatGPT","Strong native image generation in the chat flow. Canva's Magic Studio is the alternative when the image lives inside a design.","#10A37F","G","Fuerte generación de imágenes nativa en el flujo de chat. Magic Studio de Canva es la alternativa cuando la imagen vive dentro de un diseño."],
+ slides:["Gamma","Outline in, polished deck out in under a minute, exportable to PPT. NotebookLM generates decks grounded in your documents as the accuracy-first alternative.","#7B61FF","Γ","Esquema adentro, presentación pulida afuera en menos de un minuto, exportable a PPT. NotebookLM genera presentaciones basadas en tus documentos como la alternativa que prioriza exactitud."],
+};
+document.getElementById('taskPick').addEventListener('change',e=>{
+  const out=document.getElementById('taskOut'), v=e.target.value;
+  if(!v){out.style.display='none';return}
+  const entry=TASKMAP[v];const t=entry[0],col=entry[2],ic=entry[3];const d=(LANG==="es"&&entry[4])?entry[4]:entry[1];
+  out.style.display='block';
+  out.innerHTML='<div class="tool-name" style="margin-bottom:10px"><span class="tool-ic" style="background:'+col+'">'+ic+'</span><b style="font-size:18px">'+t+'</b></div><div style="font-size:14px;color:#bbb;line-height:1.6">'+d+'</div><div class="note">'+((LANG==="es")?"Todos los asistentes de frontera son capaces en todas las tareas — esto refleja el posicionamiento común del campo a mediados de 2026, no una limitación.":"All frontier assistants are capable across tasks — this reflects common field positioning as of mid-2026, not a limitation.")+'</div>';
+});
+/* ---------- 6. Stack Test ---------- */
+const stAns=[null,null,null,null];
+document.querySelectorAll('.yn').forEach(g=>{
+  g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    g.querySelectorAll('button').forEach(x=>x.classList.remove('sel-yes','sel-no'));
+    b.classList.add(b.dataset.v==='yes'?'sel-yes':'sel-no');
+    stAns[+g.dataset.q]=b.dataset.v;
+    stVerdictCheck();
+  }));
+});
+function stVerdictCheck(){
+  if(stAns.some(a=>a===null))return;
+  const v=document.getElementById('stVerdict');
+  const name=document.getElementById('stName').value.trim()||(LANG==='es'?'Esta herramienta':'This tool');
+  v.classList.add('show');
+  // Pass requires: Q1 no, Q2 no, Q3 yes, Q4 yes
+  const pass=stAns[0]==='no'&&stAns[1]==='no'&&stAns[2]==='yes'&&stAns[3]==='yes';
+  if(pass){v.className='verdict show v-buy';
+    if(LANG==='es'){v.innerHTML='<div class="v-title">APROBADA PARA COMPRAR</div><div class="v-sub">'+name+' pasó las cuatro puertas: nada de lo que tienes lo cubre, las horas le ganan al costo y la seguirás usando en 90 días. Pon un recordatorio en el calendario para el día 90 y repite esta prueba antes de renovar.</div>';}
+    else{v.innerHTML='<div class="v-title">CLEARED TO BUY</div><div class="v-sub">'+name+' passed all four gates: nothing you have covers it, the hours beat the cost, and you’ll still use it in 90 days. Set a calendar reminder for day 90 to re-run this test before renewal.</div>';}
+  }else{
+    let why=[];
+    const ES=LANG==='es';
+    if(stAns[0]==='yes')why.push(ES?'tu asistente de Nivel 1 ya hace esto':'your Tier 1 assistant already does this');
+    if(stAns[1]==='yes')why.push(ES?'una herramienta que ya pagas hace esto':'a tool you already pay for does this');
+    if(stAns[2]!=='yes')why.push(ES?'las horas no le ganan claramente al costo':'the hours don’t clearly beat the cost');
+    if(stAns[3]!=='yes')why.push(ES?'no estás seguro de que la usarás en 90 días':'you’re not confident you’ll use it in 90 days');
+    v.className='verdict show v-no';
+    if(ES){v.innerHTML='<div class="v-title">NO COMPRAR — TODAVÍA NO</div><div class="v-sub">'+name+' no pasó la prueba: '+why.join('; ')+'. Un «no» o «no estoy seguro» en cualquier punto es un no. Domina lo que tienes; vuelve a probar en un trimestre si la necesidad persiste.</div>';}
+    else{v.innerHTML='<div class="v-title">DON’T BUY — NOT YET</div><div class="v-sub">'+name+' failed the test: '+why.join('; ')+'. A “no” or “not sure” anywhere is a no. Master what you have; re-test in a quarter if the need persists.</div>';}
+  }
+  v.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function resetStackTest(){
+  stAns.fill(null);
+  document.querySelectorAll('.yn button').forEach(x=>x.classList.remove('sel-yes','sel-no'));
+  document.getElementById('stVerdict').className='verdict';
+  document.getElementById('stName').value='';
+}
+/* ---------- 7. Stack Audit ---------- */
+const CATS_EN=["AI assistant","Automation","Design / content","Video","Office suite","CRM / sales","Accounting","Project mgmt","Communication","Storage / cloud","Other"];
+const CATS_ES=["Asistente de IA","Automatización","Diseño / contenido","Video","Suite de oficina","CRM / ventas","Contabilidad","Gestión de proyectos","Comunicación","Almacenamiento / nube","Otro"];
+function CATS(){return LANG==='es'?CATS_ES:CATS_EN;}
+function addAuditRow(name='',cat='Other',cost='',ai='unknown'){
+  const r=document.createElement('div');r.className='audit-row';
+  r.innerHTML='<input type="text" placeholder="'+(LANG==='es'?'ej., Canva Pro':'e.g., Canva Pro')+'" value="'+name+'"/>'+
+    '<select>'+CATS().map(c=>'<option'+(c===cat?' selected':'')+'>'+c+'</option>').join('')+'</select>'+
+    '<input type="number" min="0" placeholder="0" value="'+cost+'"/>'+
+    '<select class="aiq"><option value="unknown"'+(ai==='unknown'?' selected':'')+'>'+(LANG==='es'?'No estoy seguro':'Not sure')+'</option><option value="yes-using"'+(ai==='yes-using'?' selected':'')+'>'+(LANG==='es'?'Sí — las usamos':'Yes — we use them')+'</option><option value="yes-unused"'+(ai==='yes-unused'?' selected':'')+'>'+(LANG==='es'?'Sí — sin usar':'Yes — unused')+'</option><option value="no"'+(ai==='no'?' selected':'')+'>No</option></select>'+
+    '<button class="del-x" title="Remove">×</button>';
+  r.querySelector('.del-x').addEventListener('click',()=>{r.remove();auditCalc()});
+  r.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',auditCalc));
+  document.getElementById('auditRows').appendChild(r);
+  auditCalc();
+}
+function auditCalc(){
+  let spend=0,unused=0,unusedNames=[],unknown=0;
+  document.querySelectorAll('.audit-row').forEach(r=>{
+    const cost=parseFloat(r.children[2].value)||0;spend+=cost;
+    const ai=r.querySelector('.aiq').value;
+    if(ai==='yes-unused'){unused++;unusedNames.push(r.children[0].value||'unnamed tool')}
+    if(ai==='unknown')unknown++;
+  });
+  document.getElementById('totSpend').textContent='$'+spend.toFixed(0);
+  document.getElementById('totYear').textContent='$'+(spend*12).toFixed(0);
+  document.getElementById('totAI').textContent=unused;
+  const ins=document.getElementById('auditInsight');
+  if(document.querySelectorAll('.audit-row').length===0){ins.style.display='none';return}
+  ins.style.display='block';
+  let msg='';const ES=LANG==='es';
+  if(ES){
+    if(unused>0)msg+='<b style="color:var(--orange)">Ya estás pagando por IA que no usas</b> — '+unusedNames.join(', ')+'. Actívalas antes de comprar algo nuevo. ';
+    if(unknown>0)msg+='<b>'+unknown+' suscripci'+(unknown>1?'ones':'ón')+' marcada'+(unknown>1?'s':'')+' como «no estoy seguro»</b> — quince minutos en el sitio de cada proveedor te dirán qué IA ya tienes. ';
+    if(spend>0)msg+='Tu stack cuesta <b>$'+(spend*12).toFixed(0)+'/año</b>. La pregunta del Módulo 7: ¿las horas recuperadas le ganan a ese número?';
+  }else{
+    if(unused>0)msg+='<b style="color:var(--orange)">You are already paying for AI you don’t use</b> — '+unusedNames.join(', ')+'. Turn those on before buying anything new. ';
+    if(unknown>0)msg+='<b>'+unknown+' subscription'+(unknown>1?'s':'')+' marked “not sure”</b> — fifteen minutes on each vendor’s site will tell you what AI you already own. ';
+    if(spend>0)msg+='Your stack costs <b>$'+(spend*12).toFixed(0)+'/year</b>. The Module 7 question: do recovered hours beat that number?';
+  }
+  ins.innerHTML='<div style="font-size:14px;line-height:1.65;color:#bbb">'+msg+'</div>';
+}
+addAuditRow();addAuditRow();addAuditRow();
+/* ---------- 8. KPI Matrix ---------- */
+['hb','hc','cb','cc','tb','tc','ib','ic','hr'].forEach(id=>document.getElementById(id).addEventListener('input',kpiCalc));
+function kpiCalc(){
+  const g=id=>parseFloat(document.getElementById(id).value);
+  const hb=g('hb'),hc=g('hc'),cb=g('cb')||0,cc=g('cc'),tb=g('tb'),tc=g('tc'),ib=g('ib'),ic=g('ic'),hr=g('hr');
+  const v=document.getElementById('kVerdict');
+  const hoursSaved=(!isNaN(hb)&&!isNaN(hc))?(hb-hc):NaN;
+  document.getElementById('kHours').textContent=isNaN(hoursSaved)?'—':(hoursSaved>0?hoursSaved.toFixed(1):'0');
+  const monthlyValue=(!isNaN(hoursSaved)&&!isNaN(hr))?hoursSaved*hr*4.33:NaN;
+  document.getElementById('kValue').textContent=isNaN(monthlyValue)?'—':'$'+Math.max(0,monthlyValue).toFixed(0);
+  const netStack=(!isNaN(cc))?(cc-cb):NaN;
+  const roi=(!isNaN(monthlyValue)&&!isNaN(netStack)&&netStack>0)?(monthlyValue/netStack):NaN;
+  document.getElementById('kROI').textContent=isNaN(roi)?'—':'$'+roi.toFixed(2);
+  // verdict
+  const ES=LANG==='es';
+  let title=ES?'Ingresa tus números':'Enter your numbers',sub=ES?'El veredicto aparece aquí mientras escribes.':'The verdict appears here as you type.',cls='';
+  const cycleImproved=(!isNaN(tb)&&!isNaN(tc))?tb-tc:NaN;
+  const incidentsUp=(!isNaN(ib)&&!isNaN(ic))?ic>ib:false;
+  if(!isNaN(hoursSaved)){
+    if(hoursSaved<=0&&(isNaN(cycleImproved)||cycleImproved<=0)){
+      title=ES?'AÚN NO FUNCIONA':'NOT WORKING YET';cls='v-no';
+      sub=ES?'Las horas están planas y el tiempo de ciclo no se ha movido. La causa usual es el uso superficial — el equipo trata la IA como un motor de búsqueda. La solución es re-entrenar en el Módulo 4 (BRIEF), no una nueva suscripción.':'Hours are flat and cycle time hasn’t moved. The usual cause is shallow usage — the team is treating AI as a search engine. The fix is re-training on Module 4 (BRIEF), not a new subscription.';
+    }else if(!isNaN(roi)&&roi>=3){
+      title=ES?'FUNCIONA — ESCÁLALO':'WORKING — SCALE IT';cls='v-buy';
+      sub=ES?('Estás recuperando aproximadamente $'+roi.toFixed(2)+' por cada $1 del stack. Estandariza lo que funciona, añade el siguiente patrón de automatización este trimestre'+(incidentsUp?' — y aprieta la regla Verificar: los incidentes están subiendo.':'.')):('You’re recovering roughly $'+roi.toFixed(2)+' for every $1 of stack. Standardize what’s working, add the next automation pattern this quarter'+(incidentsUp?' — and tighten the Verify rule: incidents are rising.':'.'));
+    }else if(!isNaN(roi)&&roi>=1){
+      title=ES?'PUNTO DE EQUILIBRIO — PROFUNDIZA':'BREAK-EVEN — PUSH DEEPER';cls='';
+      sub=ES?('El retorno es positivo pero delgado ($'+roi.toFixed(2)+' por $1). Busca la siguiente automatización (Módulo 5) y revisa si el equipo superó el uso de una sola instrucción.'+(incidentsUp?' Los incidentes están subiendo — reemite la regla DVD.':'')):('Return is positive but thin ($'+roi.toFixed(2)+' per $1). Look for the next automation (Module 5) and check whether the team has moved past one-shot prompting.'+(incidentsUp?' Incidents are rising — re-issue the DVD rule.':''));
+    }else{
+      title=ES?'SEÑAL TEMPRANA — SIGUE MIDIENDO':'EARLY SIGNAL — KEEP MEASURING';cls='';
+      sub=ES?('Se detectó algo de movimiento. Llena el valor por hora y el costo del stack para calcular el retorno por dólar.'+(incidentsUp?' Vigila los incidentes — están subiendo.':'')):('Some movement detected. Fill in the hourly value and stack cost to compute return per dollar.'+(incidentsUp?' Watch incidents — they’re rising.':''));
+    }
+  }
+  v.className='verdict show '+cls;
+  v.innerHTML='<div class="v-title"'+(cls?'':' style="color:var(--grey)"')+'>'+title+'</div><div class="v-sub">'+sub+'</div>';
+}
+applyStatic();setLang(LANG);
+</script>
+</body>
+</html>

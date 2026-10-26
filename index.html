@@ -36,7 +36,7 @@
     "knowsLanguage":["en","es"],
     "sameAs":["https://www.linkedin.com/company/aptostrategic","https://aptostrategic78.substack.com"]
   },
-  "sameAs":["https://www.linkedin.com/company/aptostrategic","https://www.youtube.com/@JuanRCuellar74","https://www.tiktok.com/@aptostrategic","https://www.instagram.com/aptostrategic","https://aptostrategic78.substack.com"],
+  "sameAs":["https://www.linkedin.com/company/aptostrategic","https://www.youtube.com/@JuanRCuellar74","https://www.youtube.com/@OfficeTok","https://www.tiktok.com/@aptostrategic","https://www.instagram.com/aptostrategic","https://aptostrategic78.substack.com"],
   "knowsAbout":["Leadership development","Strategic planning","AI for non-technical leaders","After action reviews","Facilitation"]
 }
 </script>
@@ -338,6 +338,16 @@ section{padding:var(--s6) 0;position:relative}
 .social .sact{margin-top:auto;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange-txt);transition:color .22s}
 .social a:hover .sact{color:var(--orange-dim)}
 
+/* ═══ SIDE CHANNEL (Office Tok) ═══ */
+.side-channel{margin-top:var(--s5);border:1px solid var(--line);border-left:4px solid var(--orange);background:var(--paper);
+  padding:var(--s4);display:grid;gap:var(--s3);align-items:center}
+@media(min-width:900px){.side-channel{grid-template-columns:auto 1fr auto;gap:var(--s4);padding:var(--s4) var(--s5)}}
+.side-channel .brand{color:var(--ink);width:34px;height:34px}
+.side-channel .sc-kicker{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange-txt)}
+.side-channel h3{font-size:1.35rem;font-weight:700;letter-spacing:-.03em;margin:4px 0 6px}
+.side-channel p{font-size:.95rem;color:var(--ink-70);line-height:1.55;max-width:60ch;margin:0}
+.side-channel .btn-row{flex-wrap:wrap}
+
 /* ═══ ABOUT ═══ */
 .portrait{position:relative;max-width:440px;margin:0 auto}
 @media(min-width:900px){.portrait{max-width:none;margin:0}}
@@ -472,6 +482,7 @@ footer{background:var(--ink);color:var(--paper);padding:var(--s6) 0 var(--s5);po
           <a href="https://aptostrategic78.substack.com" target="_blank" rel="noopener"><svg class="brand-sm" aria-hidden="true"><use href="#i-substack"/></svg>Substack</a>
           <a href="https://www.linkedin.com/company/aptostrategic" target="_blank" rel="noopener"><svg class="brand-sm" aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</a>
           <a href="https://www.youtube.com/@JuanRCuellar74" target="_blank" rel="noopener"><svg class="brand-sm" aria-hidden="true"><use href="#i-youtube"/></svg>YouTube</a>
+          <a href="https://www.youtube.com/@OfficeTok" target="_blank" rel="noopener"><svg class="brand-sm" aria-hidden="true"><use href="#i-youtube"/></svg>Office Tok</a>
           <a href="https://www.tiktok.com/@aptostrategic" target="_blank" rel="noopener"><svg class="brand-sm" aria-hidden="true"><use href="#i-tiktok"/></svg>TikTok</a>
           <a href="https://www.instagram.com/aptostrategic" target="_blank" rel="noopener"><svg class="brand-sm" aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</a>
           <a href="https://www.facebook.com/people/Apto-Strategic-Consulting/61593326851400/" target="_blank" rel="noopener"><svg class="brand-sm" aria-hidden="true"><use href="#i-facebook"/></svg>Facebook</a>
@@ -646,6 +657,19 @@ footer{background:var(--ink);color:var(--paper);padding:var(--s6) 0 var(--s5);po
         <span class="sact" data-i18n data-es="Ideas en 60 segundos">60-second ideas</span></a>
     </div>
 
+    <div class="side-channel">
+      <svg class="brand" aria-hidden="true"><use href="#i-youtube"/></svg>
+      <div>
+        <div class="sc-kicker" data-i18n data-es="También de Juan · Podcast y Shorts">Also from Juan · Podcast &amp; Shorts</div>
+        <h3>Office Tok</h3>
+        <p data-i18n data-es="El lado divertido y directo del trabajo. Auditorías de carrera, consejos para sobrevivir en la oficina y las verdades del trabajo que nadie pone en el manual del empleado. Episodios de podcast y Shorts rápidos.">The fun, blunt side of work. Career audits, office survival tips, and the workplace truths nobody puts in the employee handbook. Podcast episodes and quick Shorts.</p>
+      </div>
+      <div class="btn-row">
+        <a href="https://www.youtube.com/@OfficeTok" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n data-es="Ver Office Tok">Watch Office Tok</a>
+        <a href="https://www.youtube.com/@OfficeTok/shorts" target="_blank" rel="noopener" class="btn btn-ghost">Shorts</a>
+      </div>
+    </div>
+
     <div class="btn-row" style="margin-top:var(--s5);justify-content:center">
       <a href="https://aptostrategic78.substack.com" target="_blank" rel="noopener" class="btn btn-primary" data-i18n data-es="Reciba el boletín gratis">Get the free newsletter</a>
       <a href="https://www.instagram.com/aptostrategic" target="_blank" rel="noopener" class="btn btn-ghost">Instagram</a>
@@ -798,6 +822,7 @@ footer{background:var(--ink);color:var(--paper);padding:var(--s6) 0 var(--s5);po
         <li><a href="https://aptostrategic78.substack.com" target="_blank" rel="noopener"><svg class="brand-sm" aria-hidden="true"><use href="#i-substack"/></svg>Substack</a></li>
         <li><a href="https://www.linkedin.com/company/aptostrategic" target="_blank" rel="noopener"><svg class="brand-sm" aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</a></li>
         <li><a href="https://www.youtube.com/@JuanRCuellar74" target="_blank" rel="noopener"><svg class="brand-sm" aria-hidden="true"><use href="#i-youtube"/></svg>YouTube</a></li>
+        <li><a href="https://www.youtube.com/@OfficeTok" target="_blank" rel="noopener"><svg class="brand-sm" aria-hidden="true"><use href="#i-youtube"/></svg>Office Tok</a></li>
         <li><a href="https://www.tiktok.com/@aptostrategic" target="_blank" rel="noopener"><svg class="brand-sm" aria-hidden="true"><use href="#i-tiktok"/></svg>TikTok</a></li>
         <li><a href="https://www.instagram.com/aptostrategic" target="_blank" rel="noopener"><svg class="brand-sm" aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</a></li>
         <li><a href="https://www.facebook.com/people/Apto-Strategic-Consulting/61593326851400/" target="_blank" rel="noopener"><svg class="brand-sm" aria-hidden="true"><use href="#i-facebook"/></svg>Facebook</a></li>
